@@ -60,7 +60,7 @@ class DeclarationsTest extends \PHPUnit_Framework_TestCase
                 /**
                  * Always boot
                  */
-                const BOOT = true
+                const BOOT = true;
             
                 /**
                  * This is names
@@ -109,7 +109,7 @@ class DeclarationsTest extends \PHPUnit_Framework_TestCase
                  /**
                   * Always boot
                   */
-                 const BOOT = true
+                 const BOOT = true;
             
                  /**
                   * This is names
@@ -148,7 +148,7 @@ class DeclarationsTest extends \PHPUnit_Framework_TestCase
                      /**
                       * Always boot
                       */
-                     const BOOT = true
+                     const BOOT = true;
                 
                      /**
                       * This is names
