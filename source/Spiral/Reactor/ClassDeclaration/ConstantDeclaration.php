@@ -84,7 +84,6 @@ class ConstantDeclaration extends NamedDeclaration
 
         $result .= $this->addIndent("const {$this->getName()} = ", $indentLevel);
 
-        //todo: make indent level work
-        return $result . $this->getSerializer()->serialize($this->value);
+        return $result . $this->getSerializer()->serialize($this->value) . ';';
     }
 }
