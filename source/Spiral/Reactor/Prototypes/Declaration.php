@@ -8,13 +8,12 @@
 
 namespace Spiral\Reactor\Prototypes;
 
-use Spiral\Core\Component;
 use Spiral\Reactor\DeclarationInterface;
 
 /**
  * Generic element declaration.
  */
-abstract class Declaration extends Component implements DeclarationInterface
+abstract class Declaration implements DeclarationInterface
 {
     /**
      * Access level constants.
