@@ -1,18 +1,20 @@
 <?php
 /**
- * Spiral, Core Components
+ * Spiral Framework.
  *
- * @author Wolfy-J
+ * @license   MIT
+ * @author    Anton Titov (Wolfy-J)
  */
 
 namespace Spiral\Tests\Reactor;
 
-use Interop\Container\ContainerInterface;
+use PHPUnit\Framework\TestCase;
+use Psr\Container\ContainerInterface;
 use Spiral\Reactor\ClassDeclaration;
 use Spiral\Reactor\FileDeclaration;
 use Spiral\Reactor\NamespaceDeclaration;
 
-class DeclarationsTest extends \PHPUnit_Framework_TestCase
+class DeclarationsTest extends TestCase
 {
     //Simple test which touches a lot of methods
     public function testClassDeclaration()

@@ -1,16 +1,18 @@
 <?php
 /**
- * Spiral, Core Components
+ * Spiral Framework.
  *
- * @author Wolfy-J
+ * @license   MIT
+ * @author    Anton Titov (Wolfy-J)
  */
 
 namespace Spiral\Tests\Reactor;
 
+use PHPUnit\Framework\TestCase;
 use Spiral\Reactor\Prototypes\Declaration;
 use Spiral\Reactor\Traits\AccessTrait;
 
-class AccessTraitTest extends \PHPUnit_Framework_TestCase
+class AccessTraitTest extends TestCase
 {
     use AccessTrait;
 

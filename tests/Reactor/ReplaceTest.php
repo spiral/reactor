@@ -1,17 +1,19 @@
 <?php
 /**
- * Spiral, Core Components
+ * Spiral Framework.
  *
- * @author Wolfy-J
+ * @license   MIT
+ * @author    Anton Titov (Wolfy-J)
  */
 
 namespace Spiral\Tests\Reactor;
 
+use PHPUnit\Framework\TestCase;
 use Spiral\Reactor\ClassDeclaration;
 use Spiral\Reactor\FileDeclaration;
 use Spiral\Reactor\NamespaceDeclaration;
 
-class ReplaceTest extends \PHPUnit_Framework_TestCase
+class ReplaceTest extends TestCase
 {
     public function testReplace()
     {
