@@ -1,37 +1,39 @@
 <?php
 /**
- * Spiral, Core Components
+ * Spiral Framework.
  *
- * @author Wolfy-J
+ * @license   MIT
+ * @author    Anton Titov (Wolfy-J)
  */
 
 namespace Spiral\Tests\Reactor;
 
-use Spiral\Reactor\Prototypes\Declaration;
+use PHPUnit\Framework\TestCase;
+use Spiral\Reactor\AbstractDeclaration;
 use Spiral\Reactor\Traits\AccessTrait;
 
-class AccessTraitTest extends \PHPUnit_Framework_TestCase
+class AccessTraitTest extends TestCase
 {
     use AccessTrait;
 
     public function testProtected()
     {
         $this->setProtected();
-        $this->assertSame(Declaration::ACCESS_PROTECTED, $this->getAccess());
+        $this->assertSame(AbstractDeclaration::ACCESS_PROTECTED, $this->getAccess());
     }
 
 
     public function testPrivate()
     {
         $this->setPrivate();
-        $this->assertSame(Declaration::ACCESS_PRIVATE, $this->getAccess());
+        $this->assertSame(AbstractDeclaration::ACCESS_PRIVATE, $this->getAccess());
     }
 
 
     public function testPublic()
     {
         $this->setPublic();
-        $this->assertSame(Declaration::ACCESS_PUBLIC, $this->getAccess());
+        $this->assertSame(AbstractDeclaration::ACCESS_PUBLIC, $this->getAccess());
     }
 
     /**

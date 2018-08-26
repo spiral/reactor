@@ -1,17 +1,20 @@
 <?php
 /**
- * Spiral, Core Components
+ * Spiral Framework.
  *
- * @author Wolfy-J
+ * @license   MIT
+ * @author    Anton Titov (Wolfy-J)
  */
 
 namespace Spiral\Tests\Reactor;
 
+use PHPUnit\Framework\TestCase;
 use Spiral\Reactor\ClassDeclaration;
+use Spiral\Reactor\Partials;
 use Spiral\Reactor\FileDeclaration;
 use Spiral\Reactor\NamespaceDeclaration;
 
-class ReplaceTest extends \PHPUnit_Framework_TestCase
+class ReplaceTest extends TestCase
 {
     public function testReplace()
     {
@@ -19,14 +22,14 @@ class ReplaceTest extends \PHPUnit_Framework_TestCase
         $declaration->setExtends('Record');
 
         $declaration->property('names')
-            ->setAccess(ClassDeclaration\PropertyDeclaration::ACCESS_PRIVATE)
+            ->setAccess(Partials\Property::ACCESS_PRIVATE)
             ->setComment(['This is foxes', '', '@var array'])
             ->setDefault(['name' => 11, 'value' => 'hi', 'test' => []]);
 
         $method = $declaration->method('sample');
         $method->parameter('input')->setType('int');
         $method->parameter('output')->setType('int')->setDefault(null)->setPBR(true);
-        $method->setAccess(ClassDeclaration\MethodDeclaration::ACCESS_PUBLIC)->setStatic(true);
+        $method->setAccess(Partials\Method::ACCESS_PUBLIC)->setStatic(true);
         $method->setComment('Get some foxes');
 
         $method->setSource([
@@ -116,7 +119,5 @@ class ReplaceTest extends \PHPUnit_Framework_TestCase
             preg_replace('/\s+/', '', $file->render()
             )
         );
-
-
     }
 }

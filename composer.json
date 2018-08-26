@@ -1,7 +1,7 @@
 {
   "name": "spiral/reactor",
   "type": "library",
-  "description": "Code Scaffolding",
+  "description": "Reactor: Code Scaffolding",
   "license": "MIT",
   "authors": [
     {
@@ -10,22 +10,16 @@
     }
   ],
   "require": {
-    "php": "^7.0",
-    "spiral/common": "^1.0",
+    "php": "^7.1",
     "doctrine/inflector": "^1.3"
   },
   "require-dev": {
-    "phpunit/phpunit": "~5.0",
-    "mockery/mockery": "^0.9.4"
+    "phpunit/phpunit": "~7.0",
+    "mockery/mockery": "^1.1"
   },
   "autoload": {
     "psr-4": {
-      "Spiral\\": "source/Spiral/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "Spiral\\Tests\\": "tests/"
+      "Spiral\\Reactor\\": "src/"
     }
   }
 }
