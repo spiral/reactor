@@ -8,7 +8,7 @@
 
 namespace Spiral\Reactor\Traits;
 
-use Spiral\Support\Serializer;
+use Spiral\Reactor\Serializer;
 
 /**
  * Manages Serializer object inside.
