@@ -6,17 +6,17 @@
  * @author    Anton Titov (Wolfy-J)
  */
 
-namespace Spiral\Reactor\ClassDeclaration\Aggregators;
+namespace Spiral\Reactor\ClassPartials\Aggregators;
 
-use Spiral\Reactor\ClassDeclaration\ConstantDeclaration;
-use Spiral\Reactor\DeclarationAggregator;
+use Spiral\Reactor\ClassPartials\ConstantDeclaration;
+use Spiral\Reactor\Aggregator;
 
 /**
  * Constants aggregation. Can automatically create constant on demand.
  *
  * @method $this add(ConstantDeclaration $element)
  */
-class ConstantAggregator extends DeclarationAggregator
+class ConstantAggregator extends Aggregator
 {
     /**
      * @param array $constants

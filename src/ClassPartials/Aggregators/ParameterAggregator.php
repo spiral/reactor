@@ -6,17 +6,17 @@
  * @author    Anton Titov (Wolfy-J)
  */
 
-namespace Spiral\Reactor\ClassDeclaration\Aggregators;
+namespace Spiral\Reactor\ClassPartials\Aggregators;
 
-use Spiral\Reactor\ClassDeclaration\ParameterDeclaration;
-use Spiral\Reactor\DeclarationAggregator;
+use Spiral\Reactor\ClassPartials\ParameterDeclaration;
+use Spiral\Reactor\Aggregator;
 
 /**
  * Constants aggregation. Can automatically create constant on demand.
  *
  * @method $this add(ParameterDeclaration $element)
  */
-class ParameterAggregator extends DeclarationAggregator
+class ParameterAggregator extends Aggregator
 {
     /**
      * @param array $constants

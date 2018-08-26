@@ -8,9 +8,8 @@
 
 namespace Spiral\Reactor\Traits;
 
-use Spiral\Reactor\DeclarationAggregator;
+use Spiral\Reactor\AbstractDeclaration;
 use Spiral\Reactor\Exceptions\ReactorException;
-use Spiral\Reactor\Prototypes\Declaration;
 
 /**
  * Provides ability to set access level for element.
@@ -20,7 +19,7 @@ trait AccessTrait
     /**
      * @var string
      */
-    private $access = Declaration::ACCESS_PRIVATE;
+    private $access = AbstractDeclaration::ACCESS_PRIVATE;
 
     /**
      * @param string $access
@@ -28,12 +27,12 @@ trait AccessTrait
      * @return $this
      * @throws ReactorException
      */
-    public function setAccess(string $access)
+    public function setAccess(string $access): self
     {
         if (!in_array($access, [
-            Declaration::ACCESS_PRIVATE,
-            Declaration::ACCESS_PROTECTED,
-            Declaration::ACCESS_PUBLIC
+            AbstractDeclaration::ACCESS_PRIVATE,
+            AbstractDeclaration::ACCESS_PROTECTED,
+            AbstractDeclaration::ACCESS_PUBLIC
         ])
         ) {
             throw new ReactorException("Invalid declaration level '{$access}'");
@@ -55,9 +54,9 @@ trait AccessTrait
     /**
      * @return $this
      */
-    public function setPublic()
+    public function setPublic(): self
     {
-        $this->setAccess(DeclarationAggregator::ACCESS_PUBLIC);
+        $this->setAccess(AbstractDeclaration::ACCESS_PUBLIC);
 
         return $this;
     }
@@ -65,9 +64,9 @@ trait AccessTrait
     /**
      * @return $this
      */
-    public function setProtected()
+    public function setProtected(): self
     {
-        $this->setAccess(DeclarationAggregator::ACCESS_PROTECTED);
+        $this->setAccess(AbstractDeclaration::ACCESS_PROTECTED);
 
         return $this;
     }
@@ -75,9 +74,9 @@ trait AccessTrait
     /**
      * @return $this
      */
-    public function setPrivate()
+    public function setPrivate(): self
     {
-        $this->setAccess(DeclarationAggregator::ACCESS_PRIVATE);
+        $this->setAccess(AbstractDeclaration::ACCESS_PRIVATE);
 
         return $this;
     }

@@ -9,7 +9,7 @@
 namespace Spiral\Tests\Reactor;
 
 use PHPUnit\Framework\TestCase;
-use Spiral\Reactor\Prototypes\Declaration;
+use Spiral\Reactor\AbstractDeclaration;
 use Spiral\Reactor\Traits\AccessTrait;
 
 class AccessTraitTest extends TestCase
@@ -19,21 +19,21 @@ class AccessTraitTest extends TestCase
     public function testProtected()
     {
         $this->setProtected();
-        $this->assertSame(Declaration::ACCESS_PROTECTED, $this->getAccess());
+        $this->assertSame(AbstractDeclaration::ACCESS_PROTECTED, $this->getAccess());
     }
 
 
     public function testPrivate()
     {
         $this->setPrivate();
-        $this->assertSame(Declaration::ACCESS_PRIVATE, $this->getAccess());
+        $this->assertSame(AbstractDeclaration::ACCESS_PRIVATE, $this->getAccess());
     }
 
 
     public function testPublic()
     {
         $this->setPublic();
-        $this->assertSame(Declaration::ACCESS_PUBLIC, $this->getAccess());
+        $this->assertSame(AbstractDeclaration::ACCESS_PUBLIC, $this->getAccess());
     }
 
     /**

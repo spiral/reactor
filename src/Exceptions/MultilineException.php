@@ -15,5 +15,4 @@ namespace Spiral\Reactor\Exceptions;
  */
 class MultilineException extends ReactorException
 {
-
 }

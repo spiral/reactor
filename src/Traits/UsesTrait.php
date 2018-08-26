@@ -23,7 +23,7 @@ trait UsesTrait
      *
      * @return bool
      */
-    public function hasUse($class)
+    public function uses(string $class): bool
     {
         $class = ltrim($class, '\\');
 
@@ -37,7 +37,7 @@ trait UsesTrait
      *
      * @return self
      */
-    public function setUses(array $uses)
+    public function setUses(array $uses): self
     {
         $this->uses = [];
 
@@ -51,7 +51,7 @@ trait UsesTrait
      *
      * @return self
      */
-    public function addUses(array $uses)
+    public function addUses(array $uses): self
     {
         foreach ($uses as $class => $alias) {
             $this->addUse($class, $alias);
@@ -66,7 +66,7 @@ trait UsesTrait
      *
      * @return self
      */
-    public function addUse($class, $alias = null)
+    public function addUse(string $class, string $alias = null): self
     {
         $this->uses[ltrim($class, '\\')] = $alias;
 
@@ -78,7 +78,7 @@ trait UsesTrait
      *
      * @return self
      */
-    public function removeUse($class)
+    public function removeUse(string $class): self
     {
         unset($this->uses[ltrim($class, '\\')]);
 
@@ -88,7 +88,7 @@ trait UsesTrait
     /**
      * @return array
      */
-    public function getUses()
+    public function getUses(): array
     {
         return $this->uses;
     }

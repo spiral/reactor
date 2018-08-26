@@ -8,9 +8,8 @@
 
 namespace Spiral\Reactor;
 
-use Spiral\Reactor\Body\DocComment;
+use Spiral\Reactor\Body\Comment;
 use Spiral\Reactor\Body\Source;
-use Spiral\Reactor\Prototypes\NamedDeclaration;
 use Spiral\Reactor\Traits\CommentTrait;
 use Spiral\Reactor\Traits\UsesTrait;
 
@@ -22,7 +21,7 @@ class NamespaceDeclaration extends NamedDeclaration implements ReplaceableInterf
     use UsesTrait, CommentTrait;
 
     /**
-     * @var DeclarationAggregator
+     * @var Aggregator
      */
     private $elements = null;
 
@@ -34,10 +33,9 @@ class NamespaceDeclaration extends NamedDeclaration implements ReplaceableInterf
     {
         parent::__construct($name);
 
-        //todo: Function declaration
-        $this->elements = new DeclarationAggregator([
+        $this->elements = new Aggregator([
             ClassDeclaration::class,
-            DocComment::class,
+            Comment::class,
             Source::class
         ]);
 
@@ -46,8 +44,6 @@ class NamespaceDeclaration extends NamedDeclaration implements ReplaceableInterf
 
     /**
      * Method will automatically mount requested uses is any.
-     *
-     * @todo dry, see FileDeclaration
      *
      * @param DeclarationInterface $element
      *
@@ -108,9 +104,9 @@ class NamespaceDeclaration extends NamedDeclaration implements ReplaceableInterf
     }
 
     /**
-     * @return DeclarationAggregator|ClassDeclaration[]|Source[]|DocComment[]
+     * @return Aggregator|ClassDeclaration[]|Source[]|Comment[]
      */
-    public function getElements(): DeclarationAggregator
+    public function getElements(): Aggregator
     {
         return $this->elements;
     }

@@ -8,7 +8,7 @@
 
 namespace Spiral\Reactor\Traits;
 
-use Spiral\Reactor\Body\DocComment;
+use Spiral\Reactor\Body\Comment;
 
 /**
  * Element can have doc comment.
@@ -16,16 +16,16 @@ use Spiral\Reactor\Body\DocComment;
 trait CommentTrait
 {
     /**
-     * @var DocComment
+     * @var Comment
      */
     private $docComment = null;
 
     /**
      * Get associated file comment.
      *
-     * @return DocComment
+     * @return Comment
      */
-    public function getComment(): DocComment
+    public function getComment(): Comment
     {
         return $this->docComment;
     }
@@ -37,7 +37,7 @@ trait CommentTrait
      *
      * @return $this
      */
-    public function setComment($comment)
+    public function setComment($comment): self
     {
         if (!empty($comment)) {
             if (is_array($comment)) {
@@ -58,7 +58,7 @@ trait CommentTrait
     private function initComment($comment)
     {
         if (empty($this->docComment)) {
-            $this->docComment = new DocComment();
+            $this->docComment = new Comment();
         }
 
         $this->setComment($comment);

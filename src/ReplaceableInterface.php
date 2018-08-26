@@ -9,7 +9,7 @@
 namespace Spiral\Reactor;
 
 /**
- * Can replace string content.
+ * Provides ability to replace strings within the content and all inner declarations.
  */
 interface ReplaceableInterface
 {

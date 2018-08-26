@@ -6,11 +6,11 @@
  * @author    Anton Titov (Wolfy-J)
  */
 
-namespace Spiral\Reactor\ClassDeclaration;
+namespace Spiral\Reactor\ClassPartials;
 
 use Spiral\Reactor\Body\Source;
-use Spiral\Reactor\ClassDeclaration\Aggregators\ParameterAggregator;
-use Spiral\Reactor\Prototypes\NamedDeclaration;
+use Spiral\Reactor\ClassPartials\Aggregators\ParameterAggregator;
+use Spiral\Reactor\NamedDeclaration;
 use Spiral\Reactor\ReplaceableInterface;
 use Spiral\Reactor\Traits\AccessTrait;
 use Spiral\Reactor\Traits\CommentTrait;

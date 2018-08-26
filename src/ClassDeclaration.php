@@ -9,55 +9,38 @@
 namespace Spiral\Reactor;
 
 use Doctrine\Common\Inflector\Inflector;
-use Spiral\Reactor\ClassDeclaration\Aggregators\ConstantAggregator;
-use Spiral\Reactor\ClassDeclaration\Aggregators\MethodAggregator;
-use Spiral\Reactor\ClassDeclaration\Aggregators\PropertyAggregator;
-use Spiral\Reactor\ClassDeclaration\ConstantDeclaration;
-use Spiral\Reactor\ClassDeclaration\MethodDeclaration;
-use Spiral\Reactor\ClassDeclaration\PropertyDeclaration;
+use Spiral\Reactor\ClassPartials\Aggregators\ConstantAggregator;
+use Spiral\Reactor\ClassPartials\Aggregators\MethodAggregator;
+use Spiral\Reactor\ClassPartials\Aggregators\PropertyAggregator;
+use Spiral\Reactor\ClassPartials\ConstantDeclaration;
+use Spiral\Reactor\ClassPartials\MethodDeclaration;
+use Spiral\Reactor\ClassPartials\PropertyDeclaration;
 use Spiral\Reactor\Exceptions\ReactorException;
-use Spiral\Reactor\Prototypes\NamedDeclaration;
 use Spiral\Reactor\Traits\CommentTrait;
 
 /**
  * Class declaration.
- *
- * @todo interface, trait declarations
  */
 class ClassDeclaration extends NamedDeclaration implements ReplaceableInterface
 {
     use CommentTrait;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $extends = '';
 
-    /**
-     * @var array
-     */
+    /** @var array */
     private $interfaces = [];
 
-    /**
-     * Class traits.
-     *
-     * @var array
-     */
+    /** @var array */
     private $traits = [];
 
-    /**
-     * @var ConstantAggregator
-     */
+    /** @var ConstantAggregator */
     private $constants = null;
 
-    /**
-     * @var PropertyAggregator
-     */
+    /** @var PropertyAggregator */
     private $properties = null;
 
-    /**
-     * @var MethodAggregator
-     */
+    /** @var MethodAggregator */
     private $methods = null;
 
     /**

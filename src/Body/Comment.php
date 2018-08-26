@@ -13,14 +13,14 @@ use Spiral\Reactor\ReplaceableInterface;
 /**
  * Wraps docBlock comment (by representing it as string lines).
  */
-class DocComment extends Source implements ReplaceableInterface
+class Comment extends Source implements ReplaceableInterface
 {
     /**
      * {@inheritdoc}
      *
      * @return self
      */
-    public function replace($search, $replace): DocComment
+    public function replace($search, $replace): Comment
     {
         $lines = $this->getLines();
 

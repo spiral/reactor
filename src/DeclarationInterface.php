@@ -13,9 +13,6 @@ namespace Spiral\Reactor;
  */
 interface DeclarationInterface
 {
-    /**
-     * Indent is always 4 spaces.
-     */
     const INDENT = "    ";
 
     /**

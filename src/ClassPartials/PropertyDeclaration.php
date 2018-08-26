@@ -6,9 +6,9 @@
  * @author    Anton Titov (Wolfy-J)
  */
 
-namespace Spiral\Reactor\ClassDeclaration;
+namespace Spiral\Reactor\ClassPartials;
 
-use Spiral\Reactor\Prototypes\NamedDeclaration;
+use Spiral\Reactor\NamedDeclaration;
 use Spiral\Reactor\ReplaceableInterface;
 use Spiral\Reactor\Traits\AccessTrait;
 use Spiral\Reactor\Traits\CommentTrait;

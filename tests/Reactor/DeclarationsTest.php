@@ -11,6 +11,7 @@ namespace Spiral\Tests\Reactor;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 use Spiral\Reactor\ClassDeclaration;
+use Spiral\Reactor\ClassPartials;
 use Spiral\Reactor\FileDeclaration;
 use Spiral\Reactor\NamespaceDeclaration;
 
@@ -38,7 +39,7 @@ class DeclarationsTest extends TestCase
         $this->assertSame(true, $declaration->getConstants()->get('BOOT')->getValue());
 
         $declaration->property('names')
-            ->setAccess(ClassDeclaration\PropertyDeclaration::ACCESS_PRIVATE)
+            ->setAccess(ClassPartials\PropertyDeclaration::ACCESS_PRIVATE)
             ->setComment(['This is names', '', '@var array'])
             ->setDefault(['Anton', 'John']);
 
@@ -49,7 +50,7 @@ class DeclarationsTest extends TestCase
         $method = $declaration->method('sample');
         $method->parameter('input')->setType('int');
         $method->parameter('output')->setType('int')->setDefault(null)->setPBR(true);
-        $method->setAccess(ClassDeclaration\MethodDeclaration::ACCESS_PUBLIC)->setStatic(true);
+        $method->setAccess(ClassPartials\MethodDeclaration::ACCESS_PUBLIC)->setStatic(true);
 
         $method->setSource([
             '$output = $input;',
@@ -104,7 +105,7 @@ class DeclarationsTest extends TestCase
              */
              namespace Spiral\\Custom_Namespace;
              
-             use Interop\Container\ContainerInterface as Container;
+             use Psr\Container\ContainerInterface as Container;
              
              class MyClass extends Record
              {
@@ -143,7 +144,7 @@ class DeclarationsTest extends TestCase
         $this->assertSame(
             preg_replace('/\s+/', '', '
              namespace Spiral\\Custom_Namespace { 
-                 use Interop\Container\ContainerInterface as Container;
+                 use Psr\Container\ContainerInterface as Container;
                  
                  class MyClass extends Record
                  {

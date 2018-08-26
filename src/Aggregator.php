@@ -9,14 +9,12 @@
 namespace Spiral\Reactor;
 
 use Spiral\Reactor\Exceptions\ReactorException;
-use Spiral\Reactor\Prototypes\Declaration;
-use Spiral\Reactor\Prototypes\NamedDeclaration;
 
 /**
  * Provides ability to aggregate specific set of elements (type constrained), render them or
  * apply set of operations.
  */
-class DeclarationAggregator extends Declaration implements
+class Aggregator extends AbstractDeclaration implements
     \ArrayAccess,
     \IteratorAggregate,
     ReplaceableInterface
@@ -75,7 +73,7 @@ class DeclarationAggregator extends Declaration implements
      * @return self
      * @throws ReactorException
      */
-    public function add(DeclarationInterface $element): DeclarationAggregator
+    public function add(DeclarationInterface $element): Aggregator
     {
         $reflector = new \ReflectionObject($element);
 
@@ -122,7 +120,7 @@ class DeclarationAggregator extends Declaration implements
      *
      * @return self
      */
-    public function remove(string $name): DeclarationAggregator
+    public function remove(string $name): Aggregator
     {
         foreach ($this->elements as $index => $element) {
             if ($element instanceof NamedDeclaration && $element->getName() == $name) {
@@ -192,7 +190,7 @@ class DeclarationAggregator extends Declaration implements
      *
      * @return self
      */
-    public function replace($search, $replace): DeclarationAggregator
+    public function replace($search, $replace): Aggregator
     {
         foreach ($this->elements as $element) {
             if ($element instanceof ReplaceableInterface) {

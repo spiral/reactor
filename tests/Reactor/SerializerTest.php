@@ -6,15 +6,110 @@
  * @author    Anton Titov (Wolfy-J)
  */
 
-namespace Spiral\Reactor\Body;
+namespace Spiral\Tests\Reactor;
 
+use PHPUnit\Framework\TestCase;
+use Spiral\Reactor\DeclarationInterface;
 use Spiral\Reactor\Exceptions\MultilineException;
-use Spiral\Reactor\AbstractDeclaration;
+use Spiral\Reactor\Serializer;
+
+class SerializerTest extends TestCase
+{
+    //To cover this weird trait as well
+    use SerializerTrait;
+
+    public function setUp()
+    {
+        $this->setSerializer(new Serializer());
+    }
+
+    public function testEmptyArray()
+    {
+        $this->assertSame('[]', $this->getSerializer()->serialize([]));
+    }
+
+    public function testArrayOfArray()
+    {
+        $this->assertEquals(preg_replace('/\s+/', '',
+            '[
+    \'hello\' => [
+        \'name\' => 123
+    ]
+]'), preg_replace('/\s+/', '', $this->getSerializer()->serialize([
+            'hello' => ['name' => 123]
+        ])));
+    }
+
+    public function testArrayOfArray2()
+    {
+        $this->assertEquals(preg_replace('/\s+/', '',
+            '[
+    \'hello\' => [
+        \'name\' => 123,
+        \'sub\'  => magic
+    ]
+]'), preg_replace('/\s+/', '', $this->getSerializer()->serialize([
+            'hello' => ['name' => 123, 'sub' => new Source(['magic'])]
+        ])));
+    }
+
+    public function testClassNames()
+    {
+        $this->assertEquals(preg_replace('/\s+/', '',
+            '[
+    \'hello\' => [
+        \'name\' => 123,
+        \'sub\'  => \Spiral\Reactor\Serializer::class
+    ]
+]'), preg_replace('/\s+/', '', $this->getSerializer()->serialize([
+            'hello' => ['name' => 123, 'sub' => Serializer::class]
+        ])));
+    }
+}
 
 /**
- * Represents set of lines (function source, docComment).
+ * Generic element declaration.
  */
-class Source extends AbstractDeclaration
+abstract class Declaration implements DeclarationInterface
+{
+    /**
+     * Access level constants.
+     */
+    const ACCESS_PUBLIC    = 'public';
+    const ACCESS_PROTECTED = 'protected';
+    const ACCESS_PRIVATE   = 'private';
+
+    /**
+     * @param string $string
+     * @param int    $indent
+     *
+     * @return string
+     */
+    protected function addIndent(string $string, int $indent = 0): string
+    {
+        return str_repeat(self::INDENT, max($indent, 0)) . $string;
+    }
+
+    /**
+     * Normalize string endings to avoid EOL problem. Replace \n\r and multiply new lines with
+     * single \n.
+     *
+     * @param string $string       String to be normalized.
+     * @param bool   $joinMultiple Join multiple new lines into one.
+     *
+     * @return string
+     */
+    protected function normalizeEndings(string $string, bool $joinMultiple = true): string
+    {
+        if (!$joinMultiple) {
+            return str_replace("\r\n", "\n", $string);
+        }
+
+        return preg_replace('/[\n\r]+/', "\n", $string);
+    }
+}
+
+class Source extends Declaration
 {
     /**
      * @var array
@@ -71,10 +166,9 @@ class Source extends AbstractDeclaration
     {
         if (strpos($line, "\n") !== false) {
             throw new MultilineException(
-                "New line character is forbidden in addLine method argument"
+                "New line character is forbidden in addLine method argument."
             );
         }
-
         $this->lines[] = $line;
 
         return $this;
@@ -144,7 +238,6 @@ class Source extends AbstractDeclaration
         if ($cutIndents) {
             $string = $this->normalizeEndings($string, false);
         }
-
         $lines = explode("\n", $this->normalizeEndings($string, false));
 
         //Pre-processing
@@ -176,5 +269,33 @@ class Source extends AbstractDeclaration
     protected function prepareLine(string $line): string
     {
         return $line;
+    }
+}
+
+trait SerializerTrait
+{
+    /**
+     * @var Serializer|null
+     */
+    private $serializer = null;
+
+    /**
+     * Set custom serializer.
+     *
+     * @param Serializer $serializer
+     */
+    public function setSerializer(Serializer $serializer)
+    {
+        $this->serializer = $serializer;
+    }
+
+    /**
+     * Associated serializer.
+     *
+     * @return Serializer
+     */
+    private function getSerializer(): Serializer
+    {
+        return $this->serializer ?? ($this->serializer = new Serializer());
     }
 }

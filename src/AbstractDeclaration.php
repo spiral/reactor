@@ -6,14 +6,12 @@
  * @author    Anton Titov (Wolfy-J)
  */
 
-namespace Spiral\Reactor\Prototypes;
-
-use Spiral\Reactor\DeclarationInterface;
+namespace Spiral\Reactor;
 
 /**
  * Generic element declaration.
  */
-abstract class Declaration implements DeclarationInterface
+abstract class AbstractDeclaration implements DeclarationInterface
 {
     /**
      * Access level constants.

@@ -10,5 +10,4 @@ namespace Spiral\Reactor\Exceptions;
 
 class SerializeException extends \RuntimeException
 {
-
 }

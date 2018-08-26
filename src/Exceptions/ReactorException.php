@@ -8,10 +8,6 @@
 
 namespace Spiral\Reactor\Exceptions;
 
-/**
- * Exceptions while declaration generation.
- */
 class ReactorException extends \RuntimeException
 {
-
 }

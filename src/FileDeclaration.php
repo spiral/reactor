@@ -8,16 +8,15 @@
 
 namespace Spiral\Reactor;
 
-use Spiral\Reactor\Body\DocComment;
+use Spiral\Reactor\Body\Comment;
 use Spiral\Reactor\Body\Source;
-use Spiral\Reactor\Prototypes\Declaration;
 use Spiral\Reactor\Traits\CommentTrait;
 use Spiral\Reactor\Traits\UsesTrait;
 
 /**
  * Provides ability to render file content.
  */
-class FileDeclaration extends Declaration implements ReplaceableInterface
+class FileDeclaration extends AbstractDeclaration implements ReplaceableInterface
 {
     use UsesTrait, CommentTrait;
 
@@ -29,7 +28,7 @@ class FileDeclaration extends Declaration implements ReplaceableInterface
     private $namespace = '';
 
     /**
-     * @var DeclarationAggregator
+     * @var Aggregator
      */
     private $elements = null;
 
@@ -41,11 +40,10 @@ class FileDeclaration extends Declaration implements ReplaceableInterface
     {
         $this->namespace = $namespace;
 
-        //todo: Function declaration as well.
-        $this->elements = new DeclarationAggregator([
+        $this->elements = new Aggregator([
             ClassDeclaration::class,
             NamespaceDeclaration::class,
-            DocComment::class,
+            Comment::class,
             Source::class
         ]);
 
@@ -136,9 +134,9 @@ class FileDeclaration extends Declaration implements ReplaceableInterface
     }
 
     /**
-     * @return DeclarationAggregator|ClassDeclaration[]|NamespaceDeclaration[]|Source[]|DocComment[]
+     * @return Aggregator|ClassDeclaration[]|NamespaceDeclaration[]|Source[]|Comment[]
      */
-    public function getElements(): DeclarationAggregator
+    public function getElements(): Aggregator
     {
         return $this->elements;
     }

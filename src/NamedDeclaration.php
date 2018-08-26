@@ -6,14 +6,14 @@
  * @author    Anton Titov (Wolfy-J)
  */
 
-namespace Spiral\Reactor\Prototypes;
+namespace Spiral\Reactor;
 
 use Spiral\Reactor\Exceptions\ReactorException;
 
 /**
  * Declaration with name.
  */
-abstract class NamedDeclaration extends Declaration
+abstract class NamedDeclaration extends AbstractDeclaration
 {
     /**
      * @var string

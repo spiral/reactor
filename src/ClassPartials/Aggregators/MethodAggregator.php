@@ -6,10 +6,10 @@
  * @author    Anton Titov (Wolfy-J)
  */
 
-namespace Spiral\Reactor\ClassDeclaration\Aggregators;
+namespace Spiral\Reactor\ClassPartials\Aggregators;
 
-use Spiral\Reactor\ClassDeclaration\MethodDeclaration;
-use Spiral\Reactor\DeclarationAggregator;
+use Spiral\Reactor\ClassPartials\MethodDeclaration;
+use Spiral\Reactor\Aggregator;
 use Spiral\Reactor\DeclarationInterface;
 
 /**
@@ -17,7 +17,7 @@ use Spiral\Reactor\DeclarationInterface;
  *
  * @method MethodDeclaration add(MethodDeclaration $element)
  */
-class MethodAggregator extends DeclarationAggregator
+class MethodAggregator extends Aggregator
 {
     /**
      * @param array $constants

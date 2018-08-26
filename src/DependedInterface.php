@@ -10,8 +10,6 @@ namespace Spiral\Reactor;
 
 /**
  * Declares needed uses and aliases in array form.
- *
- * @todo automatically associate with class declaration?
  */
 interface DependedInterface
 {

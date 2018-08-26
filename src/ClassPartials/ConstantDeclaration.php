@@ -6,10 +6,10 @@
  * @author    Anton Titov (Wolfy-J)
  */
 
-namespace Spiral\Reactor\ClassDeclaration;
+namespace Spiral\Reactor\ClassPartials;
 
 use Doctrine\Common\Inflector\Inflector;
-use Spiral\Reactor\Prototypes\NamedDeclaration;
+use Spiral\Reactor\NamedDeclaration;
 use Spiral\Reactor\Traits\CommentTrait;
 use Spiral\Reactor\Traits\SerializerTrait;
 
