@@ -41,7 +41,7 @@ class Property extends AbstractDeclaration implements ReplaceableInterface, Name
     public function __construct(string $name, $defaultValue = null, $comment = '')
     {
         $this->setName($name);
-        $this->setDefault($defaultValue);
+        $this->setDefaultValue($defaultValue);
         $this->initComment($comment);
     }
 
@@ -50,7 +50,7 @@ class Property extends AbstractDeclaration implements ReplaceableInterface, Name
      *
      * @return bool
      */
-    public function hasDefault(): bool
+    public function hasDefaultValue(): bool
     {
         return $this->hasDefault;
     }
@@ -62,7 +62,7 @@ class Property extends AbstractDeclaration implements ReplaceableInterface, Name
      *
      * @return self
      */
-    public function setDefault($value): Property
+    public function setDefaultValue($value): Property
     {
         $this->hasDefault = true;
         $this->defaultValue = $value;
@@ -75,7 +75,7 @@ class Property extends AbstractDeclaration implements ReplaceableInterface, Name
      *
      * @return self
      */
-    public function removeDefault(): Property
+    public function removeDefaultValue(): Property
     {
         $this->hasDefault = false;
         $this->defaultValue = null;
@@ -86,7 +86,7 @@ class Property extends AbstractDeclaration implements ReplaceableInterface, Name
     /**
      * @return mixed
      */
-    public function getDefault()
+    public function getDefaultValue()
     {
         return $this->defaultValue;
     }

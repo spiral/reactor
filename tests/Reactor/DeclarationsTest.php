@@ -47,15 +47,15 @@ class DeclarationsTest extends TestCase
         $declaration->property('names')
             ->setAccess(Partials\Property::ACCESS_PRIVATE)
             ->setComment(['This is names', '', '@var array'])
-            ->setDefault(['Anton', 'John']);
+            ->setDefaultValue(['Anton', 'John']);
 
         $this->assertTrue($declaration->getProperties()->has('names'));
         $this->assertSame(['Anton', 'John'],
-            $declaration->getProperties()->get('names')->getDefault());
+            $declaration->getProperties()->get('names')->getDefaultValue());
 
         $method = $declaration->method('sample');
         $method->parameter('input')->setType('int');
-        $method->parameter('output')->setType('int')->setDefault(null)->setPBR(true);
+        $method->parameter('output')->setType('int')->setDefaultValue(null)->setPBR(true);
         $method->setAccess(Partials\Method::ACCESS_PUBLIC)->setStatic(true);
 
         $method->setSource([

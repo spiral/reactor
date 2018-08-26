@@ -9,9 +9,9 @@
 namespace Spiral\Tests\Reactor;
 
 use PHPUnit\Framework\TestCase;
+use Spiral\Reactor\ClassDeclaration;
 use Spiral\Reactor\Partials\Method;
 use Spiral\Reactor\Partials\Parameter;
-use Spiral\Reactor\Partials\Source;
 
 class PartialsTest extends TestCase
 {
@@ -23,7 +23,7 @@ class PartialsTest extends TestCase
         $this->assertSame(null, $p->getDefaultValue());
         $this->assertFalse($p->isPBR());
 
-        $p->setDefault("default");
+        $p->setDefaultValue("default");
         $this->assertTrue($p->isOptional());
         $this->assertSame("default", $p->getDefaultValue());
 
@@ -37,7 +37,7 @@ class PartialsTest extends TestCase
         $this->assertSame('int', $p->getType());
         $this->assertSame("int &\$name = 'default'", $p->render());
 
-        $p->removeDefault();
+        $p->removeDefaultValue();
         $this->assertSame("int &\$name", $p->render());
     }
 
@@ -50,7 +50,7 @@ class PartialsTest extends TestCase
         $m->setStatic(true);
         $this->assertTrue($m->isStatic());
 
-        $m->parameter('name')->setDefault('value');
+        $m->parameter('name')->setDefaultValue('value');
         $this->assertCount(1, $m->getParameters());
 
         $m->setSource("return \$name;");
@@ -81,5 +81,28 @@ protected function method()
 {
     return true;
 }"), preg_replace('/\s+/', '', $m3->render()));
+    }
+
+    public function testDefaultsInClass()
+    {
+        $c = new ClassDeclaration("TestClass");
+        $c->constant('SCHEMA')->setValue([
+            'key' => 'value'
+        ]);
+
+        $c->property('schema')->setDefaultValue([
+            'key' => 'value'
+        ]);
+
+        $this->assertSame(preg_replace('/\s+/', '', "class TestClass
+{
+    const SCHEMA = [
+        'key' => 'value'
+    ];
+
+    private \$schema = [
+        'key' => 'value'
+    ];
+}"), preg_replace('/\s+/', '', $c->render()));
     }
 }

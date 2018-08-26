@@ -83,6 +83,30 @@ class Constant extends AbstractDeclaration implements NamedInterface
 
         $result .= $this->addIndent("const {$this->getName()} = ", $indentLevel);
 
-        return $result . $this->getSerializer()->serialize($this->value) . ';';
+        $value = $this->getSerializer()->serialize($this->value);
+        if (is_array($this->value)) {
+            $value = $this->mountIndents($value, $indentLevel);
+        }
+
+        return $result . "{$value};";
+    }
+
+    /**
+     * Mount indentation to value. Attention, to be applied to arrays only!
+     *
+     * @param string $serialized
+     * @param int    $indentLevel
+     *
+     * @return string
+     */
+    private function mountIndents(string $serialized, int $indentLevel): string
+    {
+        $lines = explode("\n", $serialized);
+        foreach ($lines as &$line) {
+            $line = $this->addIndent($line, $indentLevel);
+            unset($line);
+        }
+
+        return ltrim(join("\n", $lines));
     }
 }

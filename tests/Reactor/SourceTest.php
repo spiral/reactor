@@ -62,5 +62,4 @@ class SourceTest extends TestCase
             Source::normalizeIndents(join("\n", $input))
         );
     }
-
 }

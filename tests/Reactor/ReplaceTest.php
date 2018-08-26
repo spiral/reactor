@@ -24,11 +24,11 @@ class ReplaceTest extends TestCase
         $declaration->property('names')
             ->setAccess(Partials\Property::ACCESS_PRIVATE)
             ->setComment(['This is foxes', '', '@var array'])
-            ->setDefault(['name' => 11, 'value' => 'hi', 'test' => []]);
+            ->setDefaultValue(['name' => 11, 'value' => 'hi', 'test' => []]);
 
         $method = $declaration->method('sample');
         $method->parameter('input')->setType('int');
-        $method->parameter('output')->setType('int')->setDefault(null)->setPBR(true);
+        $method->parameter('output')->setType('int')->setDefaultValue(null)->setPBR(true);
         $method->setAccess(Partials\Method::ACCESS_PUBLIC)->setStatic(true);
         $method->setComment('Get some foxes');
 

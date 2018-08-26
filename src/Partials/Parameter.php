@@ -110,7 +110,7 @@ class Parameter extends AbstractDeclaration implements NamedInterface
      *
      * @return self
      */
-    public function setDefault($defaultValue): Parameter
+    public function setDefaultValue($defaultValue): Parameter
     {
         $this->isOptional = true;
         $this->defaultValue = $defaultValue;
@@ -131,7 +131,7 @@ class Parameter extends AbstractDeclaration implements NamedInterface
      *
      * @return self
      */
-    public function removeDefault(): Parameter
+    public function removeDefaultValue(): Parameter
     {
         $this->isOptional = false;
         $this->defaultValue = null;
