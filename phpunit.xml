@@ -10,17 +10,17 @@
          processIsolation="false"
          stopOnFailure="false"
          stopOnError="false"
-        >
+>
 
     <testsuites>
-        <testsuite name="Spiral Framework Core Tests">
+        <testsuite name="Reactor: Code Scaffolding tests">
             <directory>./tests/</directory>
         </testsuite>
     </testsuites>
 
     <filter>
         <whitelist>
-            <directory>source/Spiral</directory>
+            <directory>src</directory>
         </whitelist>
     </filter>
 </phpunit>
