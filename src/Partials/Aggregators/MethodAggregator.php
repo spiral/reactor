@@ -6,16 +6,16 @@
  * @author    Anton Titov (Wolfy-J)
  */
 
-namespace Spiral\Reactor\ClassPartials\Aggregators;
+namespace Spiral\Reactor\Partials\Aggregators;
 
-use Spiral\Reactor\ClassPartials\MethodDeclaration;
+use Spiral\Reactor\Partials\Method;
 use Spiral\Reactor\Aggregator;
 use Spiral\Reactor\DeclarationInterface;
 
 /**
  * Method aggregation. Can automatically create constant on demand.
  *
- * @method MethodDeclaration add(MethodDeclaration $element)
+ * @method Method add(Method $element)
  */
 class MethodAggregator extends Aggregator
 {
@@ -24,7 +24,7 @@ class MethodAggregator extends Aggregator
      */
     public function __construct(array $constants)
     {
-        parent::__construct([MethodDeclaration::class], $constants);
+        parent::__construct([Method::class], $constants);
     }
 
     /**
@@ -32,13 +32,13 @@ class MethodAggregator extends Aggregator
      *
      * @param string $name
      *
-     * @return MethodDeclaration|DeclarationInterface
+     * @return Method|DeclarationInterface
      */
-    public function get(string $name): MethodDeclaration
+    public function get(string $name): Method
     {
         if (!$this->has($name)) {
             //Automatically creating constant
-            $method = new MethodDeclaration($name);
+            $method = new Method($name);
             $this->add($method);
 
             return $method;

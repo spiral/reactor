@@ -6,15 +6,15 @@
  * @author    Anton Titov (Wolfy-J)
  */
 
-namespace Spiral\Reactor\ClassPartials\Aggregators;
+namespace Spiral\Reactor\Partials\Aggregators;
 
-use Spiral\Reactor\ClassPartials\PropertyDeclaration;
+use Spiral\Reactor\Partials\Property;
 use Spiral\Reactor\Aggregator;
 
 /**
  * Property aggregation. Can automatically create constant on demand.
  *
- * @method $this add(PropertyDeclaration $element)
+ * @method $this add(Property $element)
  */
 class PropertyAggregator extends Aggregator
 {
@@ -23,7 +23,7 @@ class PropertyAggregator extends Aggregator
      */
     public function __construct(array $constants)
     {
-        parent::__construct([PropertyDeclaration::class], $constants);
+        parent::__construct([Property::class], $constants);
     }
 
     /**
@@ -31,13 +31,13 @@ class PropertyAggregator extends Aggregator
      *
      * @param string $name
      *
-     * @return PropertyDeclaration
+     * @return Property
      */
-    public function get(string $name): PropertyDeclaration
+    public function get(string $name): Property
     {
         if (!$this->has($name)) {
             //Automatically creating constant
-            $property = new PropertyDeclaration($name);
+            $property = new Property($name);
             $this->add($property);
 
             return $property;

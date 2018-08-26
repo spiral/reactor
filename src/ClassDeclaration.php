@@ -9,12 +9,12 @@
 namespace Spiral\Reactor;
 
 use Doctrine\Common\Inflector\Inflector;
-use Spiral\Reactor\ClassPartials\Aggregators\ConstantAggregator;
-use Spiral\Reactor\ClassPartials\Aggregators\MethodAggregator;
-use Spiral\Reactor\ClassPartials\Aggregators\PropertyAggregator;
-use Spiral\Reactor\ClassPartials\ConstantDeclaration;
-use Spiral\Reactor\ClassPartials\MethodDeclaration;
-use Spiral\Reactor\ClassPartials\PropertyDeclaration;
+use Spiral\Reactor\Partials\Aggregators\ConstantAggregator;
+use Spiral\Reactor\Partials\Aggregators\MethodAggregator;
+use Spiral\Reactor\Partials\Aggregators\PropertyAggregator;
+use Spiral\Reactor\Partials\Constant;
+use Spiral\Reactor\Partials\Method;
+use Spiral\Reactor\Partials\Property;
 use Spiral\Reactor\Exceptions\ReactorException;
 use Spiral\Reactor\Traits\CommentTrait;
 
@@ -224,7 +224,7 @@ class ClassDeclaration extends NamedDeclaration implements ReplaceableInterface
     }
 
     /**
-     * @return ConstantAggregator|ConstantDeclaration[]
+     * @return ConstantAggregator|Constant[]
      */
     public function getConstants(): ConstantAggregator
     {
@@ -234,15 +234,15 @@ class ClassDeclaration extends NamedDeclaration implements ReplaceableInterface
     /**
      * @param string $name
      *
-     * @return ConstantDeclaration
+     * @return Constant
      */
-    public function constant(string $name): ConstantDeclaration
+    public function constant(string $name): Constant
     {
         return $this->constants->get($name);
     }
 
     /**
-     * @return PropertyAggregator|PropertyDeclaration[]
+     * @return PropertyAggregator|Property[]
      */
     public function getProperties(): PropertyAggregator
     {
@@ -252,15 +252,15 @@ class ClassDeclaration extends NamedDeclaration implements ReplaceableInterface
     /**
      * @param string $name
      *
-     * @return PropertyDeclaration
+     * @return Property
      */
-    public function property(string $name): PropertyDeclaration
+    public function property(string $name): Property
     {
         return $this->properties->get($name);
     }
 
     /**
-     * @return MethodAggregator|MethodDeclaration[]
+     * @return MethodAggregator|Method[]
      */
     public function getMethods(): MethodAggregator
     {
@@ -270,9 +270,9 @@ class ClassDeclaration extends NamedDeclaration implements ReplaceableInterface
     /**
      * @param string $name
      *
-     * @return MethodDeclaration
+     * @return Method
      */
-    public function method(string $name): MethodDeclaration
+    public function method(string $name): Method
     {
         return $this->methods->get($name);
     }

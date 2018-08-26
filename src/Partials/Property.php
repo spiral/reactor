@@ -6,7 +6,7 @@
  * @author    Anton Titov (Wolfy-J)
  */
 
-namespace Spiral\Reactor\ClassPartials;
+namespace Spiral\Reactor\Partials;
 
 use Spiral\Reactor\NamedDeclaration;
 use Spiral\Reactor\ReplaceableInterface;
@@ -17,7 +17,7 @@ use Spiral\Reactor\Traits\SerializerTrait;
 /**
  * Declares property element.
  */
-class PropertyDeclaration extends NamedDeclaration implements ReplaceableInterface
+class Property extends NamedDeclaration implements ReplaceableInterface
 {
     use CommentTrait, SerializerTrait, AccessTrait;
 
@@ -60,7 +60,7 @@ class PropertyDeclaration extends NamedDeclaration implements ReplaceableInterfa
      *
      * @return self
      */
-    public function setDefault($value): PropertyDeclaration
+    public function setDefault($value): Property
     {
         $this->hasDefault = true;
         $this->defaultValue = $value;
@@ -73,7 +73,7 @@ class PropertyDeclaration extends NamedDeclaration implements ReplaceableInterfa
      *
      * @return self
      */
-    public function removeDefault(): PropertyDeclaration
+    public function removeDefault(): Property
     {
         $this->hasDefault = false;
         $this->defaultValue = null;

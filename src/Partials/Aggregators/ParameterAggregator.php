@@ -6,15 +6,15 @@
  * @author    Anton Titov (Wolfy-J)
  */
 
-namespace Spiral\Reactor\ClassPartials\Aggregators;
+namespace Spiral\Reactor\Partials\Aggregators;
 
-use Spiral\Reactor\ClassPartials\ParameterDeclaration;
+use Spiral\Reactor\Partials\Parameter;
 use Spiral\Reactor\Aggregator;
 
 /**
  * Constants aggregation. Can automatically create constant on demand.
  *
- * @method $this add(ParameterDeclaration $element)
+ * @method $this add(Parameter $element)
  */
 class ParameterAggregator extends Aggregator
 {
@@ -23,7 +23,7 @@ class ParameterAggregator extends Aggregator
      */
     public function __construct(array $constants)
     {
-        parent::__construct([ParameterDeclaration::class], $constants);
+        parent::__construct([Parameter::class], $constants);
     }
 
     /**
@@ -31,13 +31,13 @@ class ParameterAggregator extends Aggregator
      *
      * @param string $name
      *
-     * @return ParameterDeclaration
+     * @return Parameter
      */
-    public function get(string $name): ParameterDeclaration
+    public function get(string $name): Parameter
     {
         if (!$this->has($name)) {
             //Automatically creating constant
-            $parameter = new ParameterDeclaration($name);
+            $parameter = new Parameter($name);
             $this->add($parameter);
 
             return $parameter;

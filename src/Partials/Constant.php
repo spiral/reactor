@@ -6,7 +6,7 @@
  * @author    Anton Titov (Wolfy-J)
  */
 
-namespace Spiral\Reactor\ClassPartials;
+namespace Spiral\Reactor\Partials;
 
 use Doctrine\Common\Inflector\Inflector;
 use Spiral\Reactor\NamedDeclaration;
@@ -16,7 +16,7 @@ use Spiral\Reactor\Traits\SerializerTrait;
 /**
  * Class constant declaration.
  */
-class ConstantDeclaration extends NamedDeclaration
+class Constant extends NamedDeclaration
 {
     /**
      * Constants and properties.
@@ -43,7 +43,7 @@ class ConstantDeclaration extends NamedDeclaration
     /**
      * {@inheritdoc}
      */
-    public function setName(string $name): ConstantDeclaration
+    public function setName(string $name): Constant
     {
         return parent::setName(
             strtoupper(Inflector::tableize(strtolower($name)))
@@ -57,7 +57,7 @@ class ConstantDeclaration extends NamedDeclaration
      *
      * @return self
      */
-    public function setValue($value): ConstantDeclaration
+    public function setValue($value): Constant
     {
         $this->value = $value;
 

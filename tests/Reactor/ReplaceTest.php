@@ -10,7 +10,7 @@ namespace Spiral\Tests\Reactor;
 
 use PHPUnit\Framework\TestCase;
 use Spiral\Reactor\ClassDeclaration;
-use Spiral\Reactor\ClassPartials;
+use Spiral\Reactor\Partials;
 use Spiral\Reactor\FileDeclaration;
 use Spiral\Reactor\NamespaceDeclaration;
 
@@ -22,14 +22,14 @@ class ReplaceTest extends TestCase
         $declaration->setExtends('Record');
 
         $declaration->property('names')
-            ->setAccess(ClassPartials\PropertyDeclaration::ACCESS_PRIVATE)
+            ->setAccess(Partials\Property::ACCESS_PRIVATE)
             ->setComment(['This is foxes', '', '@var array'])
             ->setDefault(['name' => 11, 'value' => 'hi', 'test' => []]);
 
         $method = $declaration->method('sample');
         $method->parameter('input')->setType('int');
         $method->parameter('output')->setType('int')->setDefault(null)->setPBR(true);
-        $method->setAccess(ClassPartials\MethodDeclaration::ACCESS_PUBLIC)->setStatic(true);
+        $method->setAccess(Partials\Method::ACCESS_PUBLIC)->setStatic(true);
         $method->setComment('Get some foxes');
 
         $method->setSource([

@@ -6,7 +6,7 @@
  * @author    Anton Titov (Wolfy-J)
  */
 
-namespace Spiral\Reactor\ClassPartials;
+namespace Spiral\Reactor\Partials;
 
 use Doctrine\Common\Inflector\Inflector;
 use Spiral\Reactor\NamedDeclaration;
@@ -15,7 +15,7 @@ use Spiral\Reactor\Traits\SerializerTrait;
 /**
  * Single method parameter.
  */
-class ParameterDeclaration extends NamedDeclaration
+class Parameter extends NamedDeclaration
 {
     use SerializerTrait;
 
@@ -44,7 +44,7 @@ class ParameterDeclaration extends NamedDeclaration
     /**
      * {@inheritdoc}
      */
-    public function setName(string $name): ParameterDeclaration
+    public function setName(string $name): Parameter
     {
         return parent::setName(Inflector::camelize($name));
     }
@@ -54,7 +54,7 @@ class ParameterDeclaration extends NamedDeclaration
      *
      * @return self
      */
-    public function setType(string $type): ParameterDeclaration
+    public function setType(string $type): Parameter
     {
         $this->type = $type;
 
@@ -76,7 +76,7 @@ class ParameterDeclaration extends NamedDeclaration
      *
      * @return self
      */
-    public function setPBR(bool $passedByReference = false): ParameterDeclaration
+    public function setPBR(bool $passedByReference = false): Parameter
     {
         $this->pdb = $passedByReference;
 
@@ -108,7 +108,7 @@ class ParameterDeclaration extends NamedDeclaration
      *
      * @return self
      */
-    public function setDefault($defaultValue): ParameterDeclaration
+    public function setDefault($defaultValue): Parameter
     {
         $this->isOptional = true;
         $this->defaultValue = $defaultValue;
@@ -129,7 +129,7 @@ class ParameterDeclaration extends NamedDeclaration
      *
      * @return self
      */
-    public function removeDefault(): ParameterDeclaration
+    public function removeDefault(): Parameter
     {
         $this->isOptional = false;
         $this->defaultValue = null;

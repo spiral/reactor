@@ -6,10 +6,9 @@
  * @author    Anton Titov (Wolfy-J)
  */
 
-namespace Spiral\Reactor\ClassPartials;
+namespace Spiral\Reactor\Partials;
 
-use Spiral\Reactor\Body\Source;
-use Spiral\Reactor\ClassPartials\Aggregators\ParameterAggregator;
+use Spiral\Reactor\Partials\Aggregators\ParameterAggregator;
 use Spiral\Reactor\NamedDeclaration;
 use Spiral\Reactor\ReplaceableInterface;
 use Spiral\Reactor\Traits\AccessTrait;
@@ -18,7 +17,7 @@ use Spiral\Reactor\Traits\CommentTrait;
 /**
  * Represent class method.
  */
-class MethodDeclaration extends NamedDeclaration implements ReplaceableInterface
+class Method extends NamedDeclaration implements ReplaceableInterface
 {
     use CommentTrait, AccessTrait;
 
@@ -57,7 +56,7 @@ class MethodDeclaration extends NamedDeclaration implements ReplaceableInterface
      *
      * @return self
      */
-    public function setStatic(bool $static = true): MethodDeclaration
+    public function setStatic(bool $static = true): Method
     {
         $this->static = (bool)$static;
 
@@ -89,7 +88,7 @@ class MethodDeclaration extends NamedDeclaration implements ReplaceableInterface
      *
      * @return self
      */
-    public function setSource($source): MethodDeclaration
+    public function setSource($source): Method
     {
         if (!empty($source)) {
             if (is_array($source)) {
@@ -103,7 +102,7 @@ class MethodDeclaration extends NamedDeclaration implements ReplaceableInterface
     }
 
     /**
-     * @return ParameterAggregator|ParameterDeclaration[]
+     * @return ParameterAggregator|Parameter[]
      */
     public function getParameters(): ParameterAggregator
     {
@@ -113,9 +112,9 @@ class MethodDeclaration extends NamedDeclaration implements ReplaceableInterface
     /**
      * @param string $name
      *
-     * @return ParameterDeclaration
+     * @return Parameter
      */
-    public function parameter(string $name): ParameterDeclaration
+    public function parameter(string $name): Parameter
     {
         return $this->parameters->get($name);
     }
@@ -125,7 +124,7 @@ class MethodDeclaration extends NamedDeclaration implements ReplaceableInterface
      *
      * @return $this
      */
-    public function replace($search, $replace): MethodDeclaration
+    public function replace($search, $replace): Method
     {
         $this->docComment->replace($search, $replace);
 
