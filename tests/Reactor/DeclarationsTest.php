@@ -14,8 +14,10 @@ use Spiral\Reactor\AbstractDeclaration;
 use Spiral\Reactor\ClassDeclaration;
 use Spiral\Reactor\DeclarationInterface;
 use Spiral\Reactor\FileDeclaration;
+use Spiral\Reactor\NamedInterface;
 use Spiral\Reactor\NamespaceDeclaration;
 use Spiral\Reactor\Partials;
+use Spiral\Reactor\Serializer;
 use Spiral\Reactor\Traits\CommentTrait;
 use Spiral\Reactor\Traits\NamedTrait;
 
@@ -217,5 +219,40 @@ class DeclarationsTest extends TestCase
 
         $c->setComment("hello world");
         $this->assertContains("hello world", $f->render());
+    }
+
+    public function testUses()
+    {
+        $f = new NamespaceDeclaration("Spiral\\Test");
+        $f->addUse(AbstractDeclaration::class);
+        $f->addUse(NamedInterface::class, 'Named');
+
+        $this->assertTrue($f->uses(AbstractDeclaration::class));
+        $this->assertTrue($f->uses(NamedInterface::class));
+
+        $this->assertContains("use Spiral\Reactor\AbstractDeclaration;", $f->render());
+        $this->assertContains("use Spiral\Reactor\NamedInterface as Named;", $f->render());
+
+        $f->removeUse(NamedInterface::class);
+        $this->assertContains("use Spiral\Reactor\AbstractDeclaration;", $f->render());
+        $this->assertNotContains("use Spiral\Reactor\NamedInterface as Named;", $f->render());
+
+        $f->addUses([
+            NamedInterface::class => 'Named',
+            Serializer::class     => null
+        ]);
+
+        $this->assertContains("use Spiral\Reactor\AbstractDeclaration;", $f->render());
+        $this->assertContains("use Spiral\Reactor\Serializer;", $f->render());
+        $this->assertContains("use Spiral\Reactor\NamedInterface as Named;", $f->render());
+
+        $f->setUses([
+            NamedInterface::class => 'Named',
+            Serializer::class     => null
+        ]);
+
+        $this->assertNotContains("use Spiral\Reactor\AbstractDeclaration;", $f->render());
+        $this->assertContains("use Spiral\Reactor\Serializer;", $f->render());
+        $this->assertContains("use Spiral\Reactor\NamedInterface as Named;", $f->render());
     }
 }
