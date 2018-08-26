@@ -14,10 +14,7 @@ use Spiral\Reactor\Exceptions\ReactorException;
  * Provides ability to aggregate specific set of elements (type constrained), render them or
  * apply set of operations.
  */
-class Aggregator extends AbstractDeclaration implements
-    \ArrayAccess,
-    \IteratorAggregate,
-    ReplaceableInterface
+class Aggregator extends AbstractDeclaration implements \ArrayAccess, \IteratorAggregate, ReplaceableInterface
 {
     /**
      * @var array
@@ -57,7 +54,7 @@ class Aggregator extends AbstractDeclaration implements
     public function has(string $name): bool
     {
         foreach ($this->elements as $element) {
-            if ($element instanceof NamedDeclaration && $element->getName() == $name) {
+            if ($element instanceof NamedInterface && $element->getName() == $name) {
                 return true;
             }
         }
@@ -123,7 +120,7 @@ class Aggregator extends AbstractDeclaration implements
     public function remove(string $name): Aggregator
     {
         foreach ($this->elements as $index => $element) {
-            if ($element instanceof NamedDeclaration && $element->getName() == $name) {
+            if ($element instanceof NamedInterface && $element->getName() == $name) {
                 unset($this->elements[$index]);
             }
         }
@@ -227,7 +224,7 @@ class Aggregator extends AbstractDeclaration implements
     protected function find(string $name)
     {
         foreach ($this->elements as $element) {
-            if ($element instanceof NamedDeclaration && $element->getName() == $name) {
+            if ($element instanceof NamedInterface && $element->getName() == $name) {
                 return $element;
             }
         }

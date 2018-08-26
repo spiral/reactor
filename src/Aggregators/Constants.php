@@ -6,17 +6,17 @@
  * @author    Anton Titov (Wolfy-J)
  */
 
-namespace Spiral\Reactor\Partials\Aggregators;
+namespace Spiral\Reactor\Aggregators;
 
-use Spiral\Reactor\Partials\Constant;
 use Spiral\Reactor\Aggregator;
+use Spiral\Reactor\Partials\Constant;
 
 /**
  * Constants aggregation. Can automatically create constant on demand.
  *
  * @method $this add(Constant $element)
  */
-class ConstantAggregator extends Aggregator
+class Constants extends Aggregator
 {
     /**
      * @param array $constants
@@ -36,9 +36,7 @@ class ConstantAggregator extends Aggregator
     public function get(string $name): Constant
     {
         if (!$this->has($name)) {
-            //Automatically creating constant
             $constant = new Constant($name, null);
-
             parent::add($constant);
 
             return $constant;

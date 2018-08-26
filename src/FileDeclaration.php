@@ -8,8 +8,8 @@
 
 namespace Spiral\Reactor;
 
-use Spiral\Reactor\Body\Comment;
-use Spiral\Reactor\Body\Source;
+use Spiral\Reactor\Partials\Comment;
+use Spiral\Reactor\Partials\Source;
 use Spiral\Reactor\Traits\CommentTrait;
 use Spiral\Reactor\Traits\UsesTrait;
 

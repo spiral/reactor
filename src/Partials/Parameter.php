@@ -9,15 +9,17 @@
 namespace Spiral\Reactor\Partials;
 
 use Doctrine\Common\Inflector\Inflector;
-use Spiral\Reactor\NamedDeclaration;
+use Spiral\Reactor\AbstractDeclaration;
+use Spiral\Reactor\NamedInterface;
+use Spiral\Reactor\Traits\NamedTrait;
 use Spiral\Reactor\Traits\SerializerTrait;
 
 /**
  * Single method parameter.
  */
-class Parameter extends NamedDeclaration
+class Parameter extends AbstractDeclaration implements NamedInterface
 {
-    use SerializerTrait;
+    use NamedTrait, SerializerTrait;
 
     /**
      * @var string
@@ -42,11 +44,21 @@ class Parameter extends NamedDeclaration
     private $pdb = false;
 
     /**
+     * @param string $name
+     */
+    public function __construct(string $name)
+    {
+        $this->setName($name);
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function setName(string $name): Parameter
     {
-        return parent::setName(Inflector::camelize($name));
+        $this->name = Inflector::camelize($name);
+
+        return $this;
     }
 
     /**

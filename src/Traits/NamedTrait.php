@@ -6,14 +6,12 @@
  * @author    Anton Titov (Wolfy-J)
  */
 
-namespace Spiral\Reactor;
-
-use Spiral\Reactor\Exceptions\ReactorException;
+namespace Spiral\Reactor\Traits;
 
 /**
- * Declaration with name.
+ * Provides ability to name declarations.
  */
-abstract class NamedDeclaration extends AbstractDeclaration
+trait NamedTrait
 {
     /**
      * @var string
@@ -21,22 +19,13 @@ abstract class NamedDeclaration extends AbstractDeclaration
     private $name = '';
 
     /**
-     * @param string $name
-     */
-    public function __construct(string $name)
-    {
-        $this->setName($name);
-    }
-
-    /**
      * Attention, element name will be automatically classified.
      *
      * @param string $name
      *
      * @return $this|self
-     * @throws ReactorException
      */
-    public function setName(string $name)
+    public function setName(string $name): self
     {
         $this->name = $name;
 

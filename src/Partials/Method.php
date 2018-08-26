@@ -8,32 +8,28 @@
 
 namespace Spiral\Reactor\Partials;
 
-use Spiral\Reactor\Partials\Aggregators\ParameterAggregator;
-use Spiral\Reactor\NamedDeclaration;
+use Spiral\Reactor\AbstractDeclaration;
+use Spiral\Reactor\Aggregators\Parameters;
+use Spiral\Reactor\NamedInterface;
 use Spiral\Reactor\ReplaceableInterface;
 use Spiral\Reactor\Traits\AccessTrait;
 use Spiral\Reactor\Traits\CommentTrait;
+use Spiral\Reactor\Traits\NamedTrait;
 
 /**
  * Represent class method.
  */
-class Method extends NamedDeclaration implements ReplaceableInterface
+class Method extends AbstractDeclaration implements ReplaceableInterface, NamedInterface
 {
-    use CommentTrait, AccessTrait;
+    use NamedTrait, CommentTrait, AccessTrait;
 
-    /**
-     * @var bool
-     */
+    /** @var bool */
     private $static = false;
 
-    /**
-     * @var ParameterAggregator
-     */
+    /** @var Parameters */
     private $parameters = null;
 
-    /**
-     * @var Source
-     */
+    /** @var Source */
     private $source = null;
 
     /**
@@ -43,10 +39,8 @@ class Method extends NamedDeclaration implements ReplaceableInterface
      */
     public function __construct(string $name, $source = '', string $comment = '')
     {
-        parent::__construct($name);
-
-        $this->parameters = new ParameterAggregator([]);
-
+        $this->setName($name);
+        $this->parameters = new Parameters([]);
         $this->initSource($source);
         $this->initComment($comment);
     }
@@ -102,9 +96,9 @@ class Method extends NamedDeclaration implements ReplaceableInterface
     }
 
     /**
-     * @return ParameterAggregator|Parameter[]
+     * @return Parameters|Parameter[]
      */
-    public function getParameters(): ParameterAggregator
+    public function getParameters(): Parameters
     {
         return $this->parameters;
     }

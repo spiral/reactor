@@ -11,9 +11,9 @@ namespace Spiral\Tests\Reactor;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 use Spiral\Reactor\ClassDeclaration;
-use Spiral\Reactor\Partials;
 use Spiral\Reactor\FileDeclaration;
 use Spiral\Reactor\NamespaceDeclaration;
+use Spiral\Reactor\Partials;
 
 class DeclarationsTest extends TestCase
 {
@@ -64,7 +64,7 @@ class DeclarationsTest extends TestCase
                  * Always boot
                  */
                 const BOOT = true;
-            
+
                 /**
                  * This is names
                  *
@@ -74,7 +74,7 @@ class DeclarationsTest extends TestCase
                     \'Anton\',
                     \'John\'
                 ];
-            
+
                 public function sample(int $input, int &$output = null)
                 {
                     $output = $input;
@@ -101,19 +101,19 @@ class DeclarationsTest extends TestCase
             preg_replace('/\s+/', '', '
             <?php
             /**
-             * This is test file 
+             * This is test file
              */
              namespace Spiral\\Custom_Namespace;
-             
+
              use Psr\Container\ContainerInterface as Container;
-             
+
              class MyClass extends Record
              {
                  /**
                   * Always boot
                   */
                  const BOOT = true;
-            
+
                  /**
                   * This is names
                   *
@@ -123,7 +123,7 @@ class DeclarationsTest extends TestCase
                      \'Anton\',
                      \'John\'
                  ];
-            
+
                  public function sample(int $input, int &$output = null)
                  {
                      $output = $input;
@@ -143,16 +143,16 @@ class DeclarationsTest extends TestCase
 
         $this->assertSame(
             preg_replace('/\s+/', '', '
-             namespace Spiral\\Custom_Namespace { 
+             namespace Spiral\\Custom_Namespace {
                  use Psr\Container\ContainerInterface as Container;
-                 
+
                  class MyClass extends Record
                  {
                      /**
                       * Always boot
                       */
                      const BOOT = true;
-                
+
                      /**
                       * This is names
                       *
@@ -162,7 +162,7 @@ class DeclarationsTest extends TestCase
                          \'Anton\',
                          \'John\'
                      ];
-                
+
                      public function sample(int $input, int &$output = null)
                      {
                          $output = $input;

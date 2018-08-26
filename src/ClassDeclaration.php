@@ -9,21 +9,22 @@
 namespace Spiral\Reactor;
 
 use Doctrine\Common\Inflector\Inflector;
-use Spiral\Reactor\Partials\Aggregators\ConstantAggregator;
-use Spiral\Reactor\Partials\Aggregators\MethodAggregator;
-use Spiral\Reactor\Partials\Aggregators\PropertyAggregator;
+use Spiral\Reactor\Aggregators\Constants;
+use Spiral\Reactor\Aggregators\Methods;
+use Spiral\Reactor\Aggregators\Properties;
+use Spiral\Reactor\Exceptions\ReactorException;
 use Spiral\Reactor\Partials\Constant;
 use Spiral\Reactor\Partials\Method;
 use Spiral\Reactor\Partials\Property;
-use Spiral\Reactor\Exceptions\ReactorException;
 use Spiral\Reactor\Traits\CommentTrait;
+use Spiral\Reactor\Traits\NamedTrait;
 
 /**
  * Class declaration.
  */
-class ClassDeclaration extends NamedDeclaration implements ReplaceableInterface
+class ClassDeclaration extends AbstractDeclaration implements ReplaceableInterface, NamedInterface
 {
-    use CommentTrait;
+    use NamedTrait, CommentTrait;
 
     /** @var string */
     private $extends = '';
@@ -34,13 +35,13 @@ class ClassDeclaration extends NamedDeclaration implements ReplaceableInterface
     /** @var array */
     private $traits = [];
 
-    /** @var ConstantAggregator */
+    /** @var Constants */
     private $constants = null;
 
-    /** @var PropertyAggregator */
+    /** @var Properties */
     private $properties = null;
 
-    /** @var MethodAggregator */
+    /** @var Methods */
     private $methods = null;
 
     /**
@@ -57,7 +58,7 @@ class ClassDeclaration extends NamedDeclaration implements ReplaceableInterface
         array $interfaces = [],
         string $comment = ''
     ) {
-        parent::__construct($name);
+        $this->setName($name);
 
         if (!empty($extends)) {
             $this->setExtends($extends);
@@ -66,9 +67,9 @@ class ClassDeclaration extends NamedDeclaration implements ReplaceableInterface
         $this->setInterfaces($interfaces);
         $this->initComment($comment);
 
-        $this->constants = new ConstantAggregator([]);
-        $this->properties = new PropertyAggregator([]);
-        $this->methods = new MethodAggregator([]);
+        $this->constants = new Constants([]);
+        $this->properties = new Properties([]);
+        $this->methods = new Methods([]);
     }
 
     /**
@@ -76,7 +77,9 @@ class ClassDeclaration extends NamedDeclaration implements ReplaceableInterface
      */
     public function setName(string $name): ClassDeclaration
     {
-        return parent::setName(Inflector::classify($name));
+        $this->name = Inflector::classify($name);
+
+        return $this;
     }
 
     /**
@@ -224,9 +227,9 @@ class ClassDeclaration extends NamedDeclaration implements ReplaceableInterface
     }
 
     /**
-     * @return ConstantAggregator|Constant[]
+     * @return Constants|Constant[]
      */
-    public function getConstants(): ConstantAggregator
+    public function getConstants(): Constants
     {
         return $this->constants;
     }
@@ -242,9 +245,9 @@ class ClassDeclaration extends NamedDeclaration implements ReplaceableInterface
     }
 
     /**
-     * @return PropertyAggregator|Property[]
+     * @return Properties|Property[]
      */
-    public function getProperties(): PropertyAggregator
+    public function getProperties(): Properties
     {
         return $this->properties;
     }
@@ -260,9 +263,9 @@ class ClassDeclaration extends NamedDeclaration implements ReplaceableInterface
     }
 
     /**
-     * @return MethodAggregator|Method[]
+     * @return Methods|Method[]
      */
-    public function getMethods(): MethodAggregator
+    public function getMethods(): Methods
     {
         return $this->methods;
     }

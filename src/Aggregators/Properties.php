@@ -6,17 +6,17 @@
  * @author    Anton Titov (Wolfy-J)
  */
 
-namespace Spiral\Reactor\Partials\Aggregators;
+namespace Spiral\Reactor\Aggregators;
 
-use Spiral\Reactor\Partials\Property;
 use Spiral\Reactor\Aggregator;
+use Spiral\Reactor\Partials\Property;
 
 /**
  * Property aggregation. Can automatically create constant on demand.
  *
  * @method $this add(Property $element)
  */
-class PropertyAggregator extends Aggregator
+class Properties extends Aggregator
 {
     /**
      * @param array $constants

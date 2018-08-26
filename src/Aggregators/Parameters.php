@@ -6,7 +6,7 @@
  * @author    Anton Titov (Wolfy-J)
  */
 
-namespace Spiral\Reactor\Partials\Aggregators;
+namespace Spiral\Reactor\Aggregators;
 
 use Spiral\Reactor\Partials\Parameter;
 use Spiral\Reactor\Aggregator;
@@ -16,7 +16,7 @@ use Spiral\Reactor\Aggregator;
  *
  * @method $this add(Parameter $element)
  */
-class ParameterAggregator extends Aggregator
+class Parameters extends Aggregator
 {
     /**
      * @param array $constants

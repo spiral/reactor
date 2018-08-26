@@ -8,17 +8,18 @@
 
 namespace Spiral\Reactor;
 
-use Spiral\Reactor\Body\Comment;
-use Spiral\Reactor\Body\Source;
+use Spiral\Reactor\Partials\Comment;
+use Spiral\Reactor\Partials\Source;
 use Spiral\Reactor\Traits\CommentTrait;
+use Spiral\Reactor\Traits\NamedTrait;
 use Spiral\Reactor\Traits\UsesTrait;
 
 /**
  * Represent namespace declaration. Attention, namespace renders in a form of namespace name { ... }
  */
-class NamespaceDeclaration extends NamedDeclaration implements ReplaceableInterface
+class NamespaceDeclaration extends AbstractDeclaration implements ReplaceableInterface
 {
-    use UsesTrait, CommentTrait;
+    use NamedTrait, UsesTrait, CommentTrait;
 
     /**
      * @var Aggregator
@@ -31,7 +32,7 @@ class NamespaceDeclaration extends NamedDeclaration implements ReplaceableInterf
      */
     public function __construct(string $name = '', string $comment = '')
     {
-        parent::__construct($name);
+        $this->setName($name);
 
         $this->elements = new Aggregator([
             ClassDeclaration::class,

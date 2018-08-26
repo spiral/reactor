@@ -9,19 +9,18 @@
 namespace Spiral\Reactor\Partials;
 
 use Doctrine\Common\Inflector\Inflector;
-use Spiral\Reactor\NamedDeclaration;
+use Spiral\Reactor\AbstractDeclaration;
+use Spiral\Reactor\NamedInterface;
 use Spiral\Reactor\Traits\CommentTrait;
+use Spiral\Reactor\Traits\NamedTrait;
 use Spiral\Reactor\Traits\SerializerTrait;
 
 /**
  * Class constant declaration.
  */
-class Constant extends NamedDeclaration
+class Constant extends AbstractDeclaration implements NamedInterface
 {
-    /**
-     * Constants and properties.
-     */
-    use CommentTrait, SerializerTrait;
+    use NamedTrait, CommentTrait, SerializerTrait;
 
     /**
      * @var mixed
@@ -33,9 +32,9 @@ class Constant extends NamedDeclaration
      * @param string       $value
      * @param string|array $comment
      */
-    public function __construct($name, $value, $comment = '')
+    public function __construct(string $name, $value, $comment = '')
     {
-        parent::__construct($name);
+        $this->setName($name);
         $this->value = $value;
         $this->initComment($comment);
     }
@@ -45,9 +44,9 @@ class Constant extends NamedDeclaration
      */
     public function setName(string $name): Constant
     {
-        return parent::setName(
-            strtoupper(Inflector::tableize(strtolower($name)))
-        );
+        $this->name = strtoupper(Inflector::tableize(strtolower($name)));
+
+        return $this;
     }
 
     /**

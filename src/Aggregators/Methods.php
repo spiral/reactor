@@ -6,7 +6,7 @@
  * @author    Anton Titov (Wolfy-J)
  */
 
-namespace Spiral\Reactor\Partials\Aggregators;
+namespace Spiral\Reactor\Aggregators;
 
 use Spiral\Reactor\Partials\Method;
 use Spiral\Reactor\Aggregator;
@@ -17,7 +17,7 @@ use Spiral\Reactor\DeclarationInterface;
  *
  * @method Method add(Method $element)
  */
-class MethodAggregator extends Aggregator
+class Methods extends Aggregator
 {
     /**
      * @param array $constants

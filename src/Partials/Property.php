@@ -8,18 +8,20 @@
 
 namespace Spiral\Reactor\Partials;
 
-use Spiral\Reactor\NamedDeclaration;
+use Spiral\Reactor\AbstractDeclaration;
+use Spiral\Reactor\NamedInterface;
 use Spiral\Reactor\ReplaceableInterface;
 use Spiral\Reactor\Traits\AccessTrait;
 use Spiral\Reactor\Traits\CommentTrait;
+use Spiral\Reactor\Traits\NamedTrait;
 use Spiral\Reactor\Traits\SerializerTrait;
 
 /**
  * Declares property element.
  */
-class Property extends NamedDeclaration implements ReplaceableInterface
+class Property extends AbstractDeclaration implements ReplaceableInterface, NamedInterface
 {
-    use CommentTrait, SerializerTrait, AccessTrait;
+    use NamedTrait, CommentTrait, SerializerTrait, AccessTrait;
 
     /**
      * @var bool
@@ -38,7 +40,7 @@ class Property extends NamedDeclaration implements ReplaceableInterface
      */
     public function __construct(string $name, $defaultValue = null, string $comment = '')
     {
-        parent::__construct($name);
+        $this->setName($name);
         $this->setDefault($defaultValue);
         $this->initComment($comment);
     }
