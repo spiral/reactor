@@ -177,4 +177,22 @@ class Source extends AbstractDeclaration
     {
         return $line;
     }
+
+    /**
+     * Normalize string endings to avoid EOL problem. Replace \n\r and multiply new lines with
+     * single \n.
+     *
+     * @param string $string       String to be normalized.
+     * @param bool   $joinMultiple Join multiple new lines into one.
+     *
+     * @return string
+     */
+    protected function normalizeEndings(string $string, bool $joinMultiple = true): string
+    {
+        if (!$joinMultiple) {
+            return str_replace("\r\n", "\n", $string);
+        }
+
+        return preg_replace('/[\n\r]+/', "\n", $string);
+    }
 }

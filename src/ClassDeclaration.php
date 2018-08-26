@@ -221,7 +221,7 @@ class ClassDeclaration extends AbstractDeclaration implements ReplaceableInterfa
     /**
      * @return array
      */
-    public function getUses(): array
+    public function getTraits(): array
     {
         return array_keys($this->traits);
     }
@@ -337,21 +337,6 @@ class ClassDeclaration extends AbstractDeclaration implements ReplaceableInterfa
      *
      * @return string
      */
-    private function renderTraits(int $indentLevel = 0): string
-    {
-        $lines = [];
-        foreach ($this->traits as $class => $options) {
-            $lines[] = $this->addIndent("use {$class};", $indentLevel);
-        }
-
-        return join("\n", $lines);
-    }
-
-    /**
-     * @param int $indentLevel
-     *
-     * @return string
-     */
     protected function renderBody(int $indentLevel): string
     {
         $result = '';
@@ -372,5 +357,20 @@ class ClassDeclaration extends AbstractDeclaration implements ReplaceableInterfa
         }
 
         return $result;
+    }
+
+    /**
+     * @param int $indentLevel
+     *
+     * @return string
+     */
+    private function renderTraits(int $indentLevel = 0): string
+    {
+        $lines = [];
+        foreach ($this->traits as $class => $options) {
+            $lines[] = $this->addIndent("use {$class};", $indentLevel);
+        }
+
+        return join("\n", $lines);
     }
 }

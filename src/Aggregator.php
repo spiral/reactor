@@ -14,7 +14,11 @@ use Spiral\Reactor\Exceptions\ReactorException;
  * Provides ability to aggregate specific set of elements (type constrained), render them or
  * apply set of operations.
  */
-class Aggregator extends AbstractDeclaration implements \ArrayAccess, \IteratorAggregate, ReplaceableInterface
+class Aggregator extends AbstractDeclaration implements
+    \ArrayAccess,
+    \IteratorAggregate,
+    \Countable,
+    ReplaceableInterface
 {
     /**
      * @var array
@@ -42,6 +46,14 @@ class Aggregator extends AbstractDeclaration implements \ArrayAccess, \IteratorA
     public function isEmpty(): bool
     {
         return empty($this->elements);
+    }
+
+    /**
+     * @return int
+     */
+    public function count()
+    {
+        return count($this->elements);
     }
 
     /**

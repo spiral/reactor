@@ -26,7 +26,6 @@ trait UsesTrait
     public function uses(string $class): bool
     {
         $class = ltrim($class, '\\');
-
         return array_search($class, $this->uses) !== false;
     }
 

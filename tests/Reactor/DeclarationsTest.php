@@ -10,10 +10,13 @@ namespace Spiral\Tests\Reactor;
 
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
+use Spiral\Reactor\AbstractDeclaration;
 use Spiral\Reactor\ClassDeclaration;
+use Spiral\Reactor\DeclarationInterface;
 use Spiral\Reactor\FileDeclaration;
 use Spiral\Reactor\NamespaceDeclaration;
 use Spiral\Reactor\Partials;
+use Spiral\Reactor\Traits\CommentTrait;
 use Spiral\Reactor\Traits\NamedTrait;
 
 class DeclarationsTest extends TestCase
@@ -193,11 +196,26 @@ class DeclarationsTest extends TestCase
     {
         $f = new NamespaceDeclaration("Spiral\\Test");
 
-        $c = new ClassDeclaration("TestClass");
-        $c->addTrait(NamedTrait::class);
+        $c = new ClassDeclaration("TestClass", AbstractDeclaration::class, [
+            DeclarationInterface::class
+        ]);
 
+        $c->addTrait(NamedTrait::class);
+        $this->assertCount(1, $c->getTraits());
+
+        $c->setTraits([CommentTrait::class]);
+        $this->assertCount(1, $c->getTraits());
+
+        $this->assertCount(0, $c->getMethods());
         $f->addElement($c);
+
         $this->assertTrue($f->getElements()->has("TestClass"));
-        $this->assertContains("use Spiral\\Reactor\\Traits\\NamedTrait;", $f->render());
+        $this->assertContains("use Spiral\\Reactor\\Traits\\CommentTrait;", $f->render());
+
+        $c->removeTrait(CommentTrait::class);
+        $this->assertNotContains("use Spiral\\Reactor\\Traits\\CommentTrait;", $f->render());
+
+        $c->setComment("hello world");
+        $this->assertContains("hello world", $f->render());
     }
 }
