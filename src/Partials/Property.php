@@ -41,7 +41,10 @@ class Property extends AbstractDeclaration implements ReplaceableInterface, Name
     public function __construct(string $name, $defaultValue = null, $comment = '')
     {
         $this->setName($name);
-        $this->setDefaultValue($defaultValue);
+        if ($defaultValue != null) {
+            $this->setDefaultValue($defaultValue);
+        }
+
         $this->initComment($comment);
     }
 

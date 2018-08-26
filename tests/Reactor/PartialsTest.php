@@ -12,6 +12,7 @@ use PHPUnit\Framework\TestCase;
 use Spiral\Reactor\ClassDeclaration;
 use Spiral\Reactor\Partials\Method;
 use Spiral\Reactor\Partials\Parameter;
+use Spiral\Reactor\Partials\Property;
 
 class PartialsTest extends TestCase
 {
@@ -39,6 +40,28 @@ class PartialsTest extends TestCase
 
         $p->removeDefaultValue();
         $this->assertSame("int &\$name", $p->render());
+    }
+
+    public function testProperty()
+    {
+        $p = new Property("name");
+        $this->assertSame("name", $p->getName());
+        $this->assertFalse($p->hasDefaultValue());
+        $this->assertSame(null, $p->getDefaultValue());
+
+        $this->assertSame("private \$name;", $p->render());
+
+        $p = new Property("name", 10);
+        $this->assertSame("name", $p->getName());
+        $this->assertTrue($p->hasDefaultValue());
+        $this->assertSame(10, $p->getDefaultValue());
+        $this->assertSame("private \$name = 10;", $p->render());
+
+        $p->removeDefaultValue();
+
+        $this->assertFalse($p->hasDefaultValue());
+        $this->assertSame(null, $p->getDefaultValue());
+
     }
 
     public function testMethod()
