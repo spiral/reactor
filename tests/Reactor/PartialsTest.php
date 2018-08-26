@@ -11,6 +11,7 @@ namespace Spiral\Tests\Reactor;
 use PHPUnit\Framework\TestCase;
 use Spiral\Reactor\Partials\Method;
 use Spiral\Reactor\Partials\Parameter;
+use Spiral\Reactor\Partials\Source;
 
 class PartialsTest extends TestCase
 {
@@ -58,7 +59,6 @@ class PartialsTest extends TestCase
 {
     return \$name;
 }"), preg_replace('/\s+/', '', $m->render()));
-
 
         $m2 = new Method("method", ["return true;"], "some method");
         $m2->setPublic();

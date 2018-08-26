@@ -50,18 +50,6 @@ class Source extends AbstractDeclaration
     }
 
     /**
-     * @param array $lines
-     *
-     * @return self
-     */
-    public function addLines(array $lines): Source
-    {
-        $this->lines = array_merge($this->lines, $lines);
-
-        return $this;
-    }
-
-    /**
      * @param string $line
      *
      * @return self
@@ -89,17 +77,6 @@ class Source extends AbstractDeclaration
     public function setString(string $string, bool $cutIndents = false): Source
     {
         return $this->setLines($this->fetchLines($string, $cutIndents));
-    }
-
-    /**
-     * @param string $string
-     * @param bool   $cutIndents Function Strings::normalizeIndents will be applied.
-     *
-     * @return self
-     */
-    public function addString(string $string, bool $cutIndents = false): Source
-    {
-        return $this->addLines($this->fetchLines($string, $cutIndents));
     }
 
     /**
@@ -132,26 +109,6 @@ class Source extends AbstractDeclaration
     }
 
     /**
-     * Converts input string into set of lines.
-     *
-     * @param string $string
-     * @param bool   $cutIndents
-     *
-     * @return array
-     */
-    public function fetchLines(string $string, bool $cutIndents): array
-    {
-        if ($cutIndents) {
-            $string = $this->normalizeEndings($string, false);
-        }
-
-        $lines = explode("\n", $this->normalizeEndings($string, false));
-
-        //Pre-processing
-        return array_map([$this, 'prepareLine'], $lines);
-    }
-
-    /**
      * Create version of source cut from specific string location.
      *
      * @param string $string
@@ -164,6 +121,26 @@ class Source extends AbstractDeclaration
         $source = new self();
 
         return $source->setString($string, $cutIndents);
+    }
+
+    /**
+     * Converts input string into set of lines.
+     *
+     * @param string $string
+     * @param bool   $cutIndents
+     *
+     * @return array
+     */
+    protected function fetchLines(string $string, bool $cutIndents): array
+    {
+        if ($cutIndents) {
+            $string = self::normalizeIndents($string, false);
+        }
+
+        $lines = explode("\n", self::normalizeEndings($string, false));
+
+        //Pre-processing
+        return array_map([$this, 'prepareLine'], $lines);
     }
 
     /**
@@ -187,12 +164,77 @@ class Source extends AbstractDeclaration
      *
      * @return string
      */
-    protected function normalizeEndings(string $string, bool $joinMultiple = true): string
+    public static function normalizeEndings(string $string, bool $joinMultiple = true): string
     {
         if (!$joinMultiple) {
             return str_replace("\r\n", "\n", $string);
         }
 
         return preg_replace('/[\n\r]+/', "\n", $string);
+    }
+
+    /**
+     * Shift all string lines to have minimum indent size set to 0.
+     *
+     * Example:
+     * |-a
+     * |--b
+     * |--c
+     * |---d
+     *
+     * Output:
+     * |a
+     * |-b
+     * |-c
+     * |--d
+     *
+     * @param string $string         Input string with multiple lines.
+     * @param string $tabulationCost How to treat \t symbols relatively to spaces. By default, this
+     *                               is set to 4 spaces.
+     *
+     * @return string
+     */
+    public static function normalizeIndents(string $string, string $tabulationCost = "   "): string
+    {
+        $string = self::normalizeEndings($string, false);
+        $lines = explode("\n", $string);
+        $minIndent = null;
+        foreach ($lines as $line) {
+            if (!trim($line)) {
+                continue;
+            }
+            $line = str_replace("\t", $tabulationCost, $line);
+            //Getting indent size
+            if (!preg_match("/^( +)/", $line, $matches)) {
+                //Some line has no indent
+                return $string;
+            }
+            if ($minIndent === null) {
+                $minIndent = strlen($matches[1]);
+            }
+            $minIndent = min($minIndent, strlen($matches[1]));
+        }
+        //Fixing indent
+        foreach ($lines as &$line) {
+            if (empty($line)) {
+                continue;
+            }
+            //Getting line indent
+            preg_match("/^([ \t]+)/", $line, $matches);
+            $indent = $matches[1];
+            if (!trim($line)) {
+                $line = '';
+                continue;
+            }
+            //Getting new indent
+            $useIndent = str_repeat(
+                " ",
+                strlen(str_replace("\t", $tabulationCost, $indent)) - $minIndent
+            );
+            $line = $useIndent . substr($line, strlen($indent));
+            unset($line);
+        }
+
+        return join("\n", $lines);
     }
 }
