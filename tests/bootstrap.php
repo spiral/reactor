@@ -10,3 +10,9 @@ ini_set('display_errors', true);
 
 //Composer
 require dirname(__DIR__) . '/vendor/autoload.php';
+
+function dump($v)
+{
+    $d = new \Spiral\Debug\Dumper();
+    $d->dump($v);
+}

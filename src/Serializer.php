@@ -24,17 +24,17 @@ class Serializer
     /**
      * Serialize array.
      *
-     * @param mixed $array
+     * @param mixed $value
      *
      * @return string
      */
-    public function serialize($array): string
+    public function serialize($value): string
     {
-        if (is_array($array)) {
-            return $this->packArray($array);
+        if (is_array($value)) {
+            return $this->packArray($value);
         }
 
-        return $this->packValue($array);
+        return $this->packValue($value);
     }
 
     /**
@@ -117,7 +117,6 @@ class Serializer
         }
 
         if (!is_string($value) && !is_numeric($value)) {
-            print_r($value);
             throw new SerializeException("Unable to pack non scalar value");
         }
 
