@@ -35,9 +35,9 @@ class Method extends AbstractDeclaration implements ReplaceableInterface, NamedI
     /**
      * @param string       $name
      * @param string|array $source
-     * @param string       $comment
+     * @param string|array $comment
      */
-    public function __construct(string $name, $source = '', string $comment = '')
+    public function __construct(string $name, $source = '', $comment = '')
     {
         $this->setName($name);
         $this->parameters = new Parameters([]);

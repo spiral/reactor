@@ -21,26 +21,16 @@ class Parameter extends AbstractDeclaration implements NamedInterface
 {
     use NamedTrait, SerializerTrait;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $type = '';
 
-    /**
-     * @var bool
-     */
+    /** @var bool */
     private $isOptional = false;
 
-    /**
-     * @var mixed
-     */
+    /** @var mixed */
     private $defaultValue = null;
 
-    /**
-     * Passed by reference flag.
-     *
-     * @var bool
-     */
+    /** @var bool */
     private $pdb = false;
 
     /**
@@ -131,7 +121,7 @@ class Parameter extends AbstractDeclaration implements NamedInterface
     /**
      * @return mixed
      */
-    public function getDefault()
+    public function getDefaultValue()
     {
         return $this->defaultValue;
     }
