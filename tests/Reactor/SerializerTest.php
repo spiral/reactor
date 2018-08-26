@@ -23,6 +23,12 @@ class SerializerTest extends TestCase
         $this->setSerializer(new Serializer());
     }
 
+    public function testSetGet()
+    {
+        $this->setSerializer($s = new Serializer());
+        $this->assertSame($s, $this->getSerializer());
+    }
+
     public function testEmptyArray()
     {
         $this->assertSame('[]', $this->getSerializer()->serialize([]));
