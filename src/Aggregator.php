@@ -103,10 +103,6 @@ class Aggregator extends AbstractDeclaration implements \ArrayAccess, \IteratorA
      */
     public function get(string $name)
     {
-        if (!$this->has($name)) {
-            throw new ReactorException("Undefined element '{$name}'");
-        }
-
         return $this->find($name);
     }
 
