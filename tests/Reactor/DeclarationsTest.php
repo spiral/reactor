@@ -14,6 +14,7 @@ use Spiral\Reactor\ClassDeclaration;
 use Spiral\Reactor\FileDeclaration;
 use Spiral\Reactor\NamespaceDeclaration;
 use Spiral\Reactor\Partials;
+use Spiral\Reactor\Traits\NamedTrait;
 
 class DeclarationsTest extends TestCase
 {
@@ -172,5 +173,20 @@ class DeclarationsTest extends TestCase
              }'),
             preg_replace('/\s+/', '', $declaration->render())
         );
+    }
+
+    public function testFileDeclaration2()
+    {
+        $f = new FileDeclaration();
+        $f->setNamespace("Spiral\\Test");
+        $this->assertContains("namespace Spiral\\Test;", $f->render());
+
+        $c = new ClassDeclaration("TestClass");
+        $c->addTrait(NamedTrait::class);
+
+        $f->addElement($c);
+        $this->assertTrue($f->getElements()->has("TestClass"));
+        $this->assertContains("use Spiral\\Reactor\\Traits\\NamedTrait;", $f->render());
+
     }
 }
