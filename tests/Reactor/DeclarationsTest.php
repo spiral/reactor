@@ -187,6 +187,17 @@ class DeclarationsTest extends TestCase
         $f->addElement($c);
         $this->assertTrue($f->getElements()->has("TestClass"));
         $this->assertContains("use Spiral\\Reactor\\Traits\\NamedTrait;", $f->render());
+    }
 
+    public function testNamespaceDeclaration2()
+    {
+        $f = new NamespaceDeclaration("Spiral\\Test");
+
+        $c = new ClassDeclaration("TestClass");
+        $c->addTrait(NamedTrait::class);
+
+        $f->addElement($c);
+        $this->assertTrue($f->getElements()->has("TestClass"));
+        $this->assertContains("use Spiral\\Reactor\\Traits\\NamedTrait;", $f->render());
     }
 }
