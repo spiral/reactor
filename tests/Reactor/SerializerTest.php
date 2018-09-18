@@ -9,7 +9,7 @@
 namespace Spiral\Tests\Reactor;
 
 use PHPUnit\Framework\TestCase;
-use Spiral\Reactor\Partials\Source;
+use Spiral\Reactor\Partial\Source;
 use Spiral\Reactor\Serializer;
 use Spiral\Reactor\Traits\SerializerTrait;
 
@@ -73,7 +73,7 @@ class SerializerTest extends TestCase
     }
 
     /**
-     * @expectedException \Spiral\Reactor\Exceptions\SerializeException
+     * @expectedException \Spiral\Reactor\Exception\SerializeException
      */
     public function testSerializeResource()
     {

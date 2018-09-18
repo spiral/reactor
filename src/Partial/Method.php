@@ -6,10 +6,10 @@
  * @author    Anton Titov (Wolfy-J)
  */
 
-namespace Spiral\Reactor\Partials;
+namespace Spiral\Reactor\Partial;
 
 use Spiral\Reactor\AbstractDeclaration;
-use Spiral\Reactor\Aggregators\Parameters;
+use Spiral\Reactor\Aggregator\Parameters;
 use Spiral\Reactor\NamedInterface;
 use Spiral\Reactor\ReplaceableInterface;
 use Spiral\Reactor\Traits\AccessTrait;

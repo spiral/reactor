@@ -9,13 +9,13 @@
 namespace Spiral\Reactor;
 
 use Doctrine\Common\Inflector\Inflector;
-use Spiral\Reactor\Aggregators\Constants;
-use Spiral\Reactor\Aggregators\Methods;
-use Spiral\Reactor\Aggregators\Properties;
-use Spiral\Reactor\Exceptions\ReactorException;
-use Spiral\Reactor\Partials\Constant;
-use Spiral\Reactor\Partials\Method;
-use Spiral\Reactor\Partials\Property;
+use Spiral\Reactor\Aggregator\Constants;
+use Spiral\Reactor\Aggregator\Methods;
+use Spiral\Reactor\Aggregator\Properties;
+use Spiral\Reactor\Exception\ReactorException;
+use Spiral\Reactor\Partial\Constant;
+use Spiral\Reactor\Partial\Method;
+use Spiral\Reactor\Partial\Property;
 use Spiral\Reactor\Traits\CommentTrait;
 use Spiral\Reactor\Traits\NamedTrait;
 

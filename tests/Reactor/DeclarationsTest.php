@@ -16,7 +16,7 @@ use Spiral\Reactor\DeclarationInterface;
 use Spiral\Reactor\FileDeclaration;
 use Spiral\Reactor\NamedInterface;
 use Spiral\Reactor\NamespaceDeclaration;
-use Spiral\Reactor\Partials;
+use Spiral\Reactor\Partial;
 use Spiral\Reactor\Serializer;
 use Spiral\Reactor\Traits\CommentTrait;
 use Spiral\Reactor\Traits\NamedTrait;
@@ -45,7 +45,7 @@ class DeclarationsTest extends TestCase
         $this->assertSame(true, $declaration->getConstants()->get('BOOT')->getValue());
 
         $declaration->property('names')
-            ->setAccess(Partials\Property::ACCESS_PRIVATE)
+            ->setAccess(Partial\Property::ACCESS_PRIVATE)
             ->setComment(['This is names', '', '@var array'])
             ->setDefaultValue(['Anton', 'John']);
 
@@ -56,7 +56,7 @@ class DeclarationsTest extends TestCase
         $method = $declaration->method('sample');
         $method->parameter('input')->setType('int');
         $method->parameter('output')->setType('int')->setDefaultValue(null)->setPBR(true);
-        $method->setAccess(Partials\Method::ACCESS_PUBLIC)->setStatic(true);
+        $method->setAccess(Partial\Method::ACCESS_PUBLIC)->setStatic(true);
 
         $method->setSource([
             '$output = $input;',

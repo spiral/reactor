@@ -6,10 +6,10 @@
  * @author    Anton Titov (Wolfy-J)
  */
 
-namespace Spiral\Reactor\Aggregators;
+namespace Spiral\Reactor\Aggregator;
 
 use Spiral\Reactor\Aggregator;
-use Spiral\Reactor\Partials\Constant;
+use Spiral\Reactor\Partial\Constant;
 
 /**
  * Constants aggregation. Can automatically create constant on demand.

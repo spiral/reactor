@@ -6,9 +6,9 @@
  * @author    Anton Titov (Wolfy-J)
  */
 
-namespace Spiral\Reactor\Aggregators;
+namespace Spiral\Reactor\Aggregator;
 
-use Spiral\Reactor\Partials\Parameter;
+use Spiral\Reactor\Partial\Parameter;
 use Spiral\Reactor\Aggregator;
 
 /**

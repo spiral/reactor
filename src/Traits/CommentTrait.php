@@ -8,7 +8,7 @@
 
 namespace Spiral\Reactor\Traits;
 
-use Spiral\Reactor\Partials\Comment;
+use Spiral\Reactor\Partial\Comment;
 
 /**
  * Element can have doc comment.

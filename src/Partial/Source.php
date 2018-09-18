@@ -6,10 +6,10 @@
  * @author    Anton Titov (Wolfy-J)
  */
 
-namespace Spiral\Reactor\Partials;
+namespace Spiral\Reactor\Partial;
 
 use Spiral\Reactor\AbstractDeclaration;
-use Spiral\Reactor\Exceptions\MultilineException;
+use Spiral\Reactor\Exception\MultilineException;
 
 /**
  * Represents set of lines (function source, docComment).

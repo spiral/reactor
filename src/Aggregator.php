@@ -8,7 +8,7 @@
 
 namespace Spiral\Reactor;
 
-use Spiral\Reactor\Exceptions\ReactorException;
+use Spiral\Reactor\Exception\ReactorException;
 
 /**
  * Provides ability to aggregate specific set of elements (type constrained), render them or

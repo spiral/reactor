@@ -6,10 +6,10 @@
  * @author    Anton Titov (Wolfy-J)
  */
 
-namespace Spiral\Reactor\Aggregators;
+namespace Spiral\Reactor\Aggregator;
 
 use Spiral\Reactor\Aggregator;
-use Spiral\Reactor\Partials\Property;
+use Spiral\Reactor\Partial\Property;
 
 /**
  * Property aggregation. Can automatically create constant on demand.

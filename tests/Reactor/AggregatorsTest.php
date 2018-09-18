@@ -10,10 +10,10 @@ namespace Spiral\Tests\Reactor;
 
 use PHPUnit\Framework\TestCase;
 use Spiral\Reactor\Aggregator;
-use Spiral\Reactor\Aggregators\Methods;
-use Spiral\Reactor\Aggregators\Parameters;
-use Spiral\Reactor\Partials\Method;
-use Spiral\Reactor\Partials\Property;
+use Spiral\Reactor\Aggregator\Methods;
+use Spiral\Reactor\Aggregator\Parameters;
+use Spiral\Reactor\Partial\Method;
+use Spiral\Reactor\Partial\Property;
 
 class AggregatorsTest extends TestCase
 {
@@ -36,7 +36,7 @@ class AggregatorsTest extends TestCase
     }
 
     /**
-     * @expectedException \Spiral\Reactor\Exceptions\ReactorException
+     * @expectedException \Spiral\Reactor\Exception\ReactorException
      */
     public function testAggregator()
     {
@@ -48,7 +48,7 @@ class AggregatorsTest extends TestCase
     }
 
     /**
-     * @expectedException \Spiral\Reactor\Exceptions\ReactorException
+     * @expectedException \Spiral\Reactor\Exception\ReactorException
      */
     public function testAggregatorNoElement()
     {

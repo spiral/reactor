@@ -10,9 +10,9 @@ namespace Spiral\Tests\Reactor;
 
 use PHPUnit\Framework\TestCase;
 use Spiral\Reactor\ClassDeclaration;
-use Spiral\Reactor\Partials\Method;
-use Spiral\Reactor\Partials\Parameter;
-use Spiral\Reactor\Partials\Property;
+use Spiral\Reactor\Partial\Method;
+use Spiral\Reactor\Partial\Parameter;
+use Spiral\Reactor\Partial\Property;
 
 class PartialsTest extends TestCase
 {

@@ -6,7 +6,7 @@
  * @author    Anton Titov (Wolfy-J)
  */
 
-namespace Spiral\Reactor\Partials;
+namespace Spiral\Reactor\Partial;
 
 use Doctrine\Common\Inflector\Inflector;
 use Spiral\Reactor\AbstractDeclaration;

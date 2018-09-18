@@ -6,7 +6,7 @@
  * @author    Anton Titov (Wolfy-J)
  */
 
-namespace Spiral\Reactor\Exceptions;
+namespace Spiral\Reactor\Exception;
 
 /**
  * When one line is not one line.

@@ -37,7 +37,7 @@ class AccessTraitTest extends TestCase
     }
 
     /**
-     * @expectedException \Spiral\Reactor\Exceptions\ReactorException
+     * @expectedException \Spiral\Reactor\Exception\ReactorException
      */
     public function testBad()
     {

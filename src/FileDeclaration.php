@@ -8,8 +8,8 @@
 
 namespace Spiral\Reactor;
 
-use Spiral\Reactor\Partials\Comment;
-use Spiral\Reactor\Partials\Source;
+use Spiral\Reactor\Partial\Comment;
+use Spiral\Reactor\Partial\Source;
 use Spiral\Reactor\Traits\CommentTrait;
 use Spiral\Reactor\Traits\UsesTrait;
 
@@ -76,7 +76,7 @@ class FileDeclaration extends AbstractDeclaration implements ReplaceableInterfac
      * @param DeclarationInterface $element
      *
      * @return self
-     * @throws Exceptions\ReactorException
+     * @throws Exception\ReactorException
      */
     public function addElement(DeclarationInterface $element): FileDeclaration
     {

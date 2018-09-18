@@ -9,7 +9,7 @@
 namespace Spiral\Tests\Reactor;
 
 use PHPUnit\Framework\TestCase;
-use Spiral\Reactor\Partials\Source;
+use Spiral\Reactor\Partial\Source;
 
 class SourceTest extends TestCase
 {

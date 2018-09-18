@@ -8,7 +8,7 @@
 
 namespace Spiral\Reactor;
 
-use Spiral\Reactor\Exceptions\SerializeException;
+use Spiral\Reactor\Exception\SerializeException;
 
 /**
  * Provides very simple api for serializing values. Attention, this is helper class, it's not

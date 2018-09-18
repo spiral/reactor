@@ -9,7 +9,7 @@
 namespace Spiral\Reactor\Traits;
 
 use Spiral\Reactor\AbstractDeclaration;
-use Spiral\Reactor\Exceptions\ReactorException;
+use Spiral\Reactor\Exception\ReactorException;
 
 /**
  * Provides ability to set access level for element.

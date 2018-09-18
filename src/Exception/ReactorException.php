@@ -6,8 +6,8 @@
  * @author    Anton Titov (Wolfy-J)
  */
 
-namespace Spiral\Reactor\Exceptions;
+namespace Spiral\Reactor\Exception;
 
-class SerializeException extends \RuntimeException
+class ReactorException extends \RuntimeException
 {
 }
