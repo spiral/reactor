@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * Spiral Framework.
  *
@@ -8,9 +9,9 @@
 
 namespace Spiral\Reactor\Aggregator;
 
-use Spiral\Reactor\Partial\Method;
 use Spiral\Reactor\Aggregator;
 use Spiral\Reactor\DeclarationInterface;
+use Spiral\Reactor\Partial\Method;
 
 /**
  * Method aggregation. Can automatically create constant on demand.
