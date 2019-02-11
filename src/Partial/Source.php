@@ -135,7 +135,7 @@ class Source extends AbstractDeclaration
     protected function fetchLines(string $string, bool $cutIndents): array
     {
         if ($cutIndents) {
-            $string = self::normalizeIndents($string, false);
+            $string = self::normalizeIndents($string, "");
         }
 
         $lines = explode("\n", self::normalizeEndings($string, false));
