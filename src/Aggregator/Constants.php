@@ -1,11 +1,11 @@
 <?php
-declare(strict_types=1);
 /**
  * Spiral Framework.
  *
  * @license   MIT
  * @author    Anton Titov (Wolfy-J)
  */
+declare(strict_types=1);
 
 namespace Spiral\Reactor\Aggregator;
 
@@ -17,7 +17,7 @@ use Spiral\Reactor\Partial\Constant;
  *
  * @method $this add(Constant $element)
  */
-class Constants extends Aggregator
+final class Constants extends Aggregator
 {
     /**
      * @param array $constants
