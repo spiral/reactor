@@ -122,8 +122,9 @@ class Serializer
 
         if (is_string($value) && class_exists($value)) {
             $reflection = new \ReflectionClass($value);
-
-            return '\\' . $reflection->getName() . '::class';
+            if ($value === $reflection->getName()) {
+                return '\\' . $reflection->getName() . '::class';
+            }
         }
 
         return var_export($value, true);
