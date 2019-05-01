@@ -1,10 +1,11 @@
-<?php declare(strict_types=1);
+<?php
 /**
  * Spiral Framework.
  *
  * @license   MIT
  * @author    Anton Titov (Wolfy-J)
  */
+declare(strict_types=1);
 
 namespace Spiral\Reactor\Aggregator;
 
@@ -16,7 +17,7 @@ use Spiral\Reactor\Partial\Property;
  *
  * @method $this add(Property $element)
  */
-class Properties extends Aggregator
+final class Properties extends Aggregator
 {
     /**
      * @param array $constants
