@@ -14,13 +14,12 @@ namespace Spiral\Reactor;
  */
 interface DeclarationInterface
 {
-    const INDENT = "    ";
+    public const INDENT = '    ';
 
     /**
      * Must render it's own content into string using given indent level.
      *
      * @param int $indentLevel
-     *
      * @return string
      */
     public function render(int $indentLevel = 0): string;

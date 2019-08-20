@@ -32,7 +32,6 @@ final class Methods extends Aggregator
      * Get named element by it's name.
      *
      * @param string $name
-     *
      * @return Method|DeclarationInterface
      */
     public function get(string $name): Method

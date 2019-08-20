@@ -19,14 +19,14 @@ trait SerializerTrait
     /**
      * @var Serializer|null
      */
-    private $serializer = null;
+    private $serializer;
 
     /**
      * Set custom serializer.
      *
      * @param Serializer $serializer
      */
-    public function setSerializer(Serializer $serializer)
+    public function setSerializer(Serializer $serializer): void
     {
         $this->serializer = $serializer;
     }

@@ -26,12 +26,12 @@ class FileDeclaration extends AbstractDeclaration implements ReplaceableInterfac
      *
      * @var string
      */
-    private $namespace = '';
+    private $namespace;
 
     /**
      * @var Aggregator
      */
-    private $elements = null;
+    private $elements;
 
     /**
      * @param string $namespace
@@ -53,7 +53,6 @@ class FileDeclaration extends AbstractDeclaration implements ReplaceableInterfac
 
     /**
      * @param string $namespace
-     *
      * @return self
      */
     public function setNamespace(string $namespace): FileDeclaration
@@ -75,7 +74,6 @@ class FileDeclaration extends AbstractDeclaration implements ReplaceableInterfac
      * Method will automatically mount requested uses is any.
      *
      * @param DeclarationInterface $element
-     *
      * @return self
      * @throws Exception\ReactorException
      */
@@ -91,7 +89,6 @@ class FileDeclaration extends AbstractDeclaration implements ReplaceableInterfac
 
     /**
      * {@inheritdoc}
-     *
      * @return self
      */
     public function replace($search, $replace): FileDeclaration

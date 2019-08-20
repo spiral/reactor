@@ -6,6 +6,7 @@
  * @author    Anton Titov (Wolfy-J)
  */
 declare(strict_types=1);
+
 namespace Spiral\Reactor\Partial;
 
 use Spiral\Reactor\AbstractDeclaration;
@@ -26,11 +27,14 @@ class Method extends AbstractDeclaration implements ReplaceableInterface, NamedI
     /** @var bool */
     private $static = false;
 
+    /** @var string */
+    private $return;
+
     /** @var Parameters */
-    private $parameters = null;
+    private $parameters;
 
     /** @var Source */
-    private $source = null;
+    private $source;
 
     /**
      * @param string       $name
@@ -47,12 +51,22 @@ class Method extends AbstractDeclaration implements ReplaceableInterface, NamedI
 
     /**
      * @param bool $static
-     *
      * @return self
      */
     public function setStatic(bool $static = true): Method
     {
-        $this->static = (bool)$static;
+        $this->static = $static;
+
+        return $this;
+    }
+
+    /**
+     * @param string $return
+     * @return self
+     */
+    public function setReturn(string $return): Method
+    {
+        $this->return = $return;
 
         return $this;
     }
@@ -79,7 +93,6 @@ class Method extends AbstractDeclaration implements ReplaceableInterface, NamedI
      * Set method source.
      *
      * @param string|array $source
-     *
      * @return self
      */
     public function setSource($source): Method
@@ -105,7 +118,6 @@ class Method extends AbstractDeclaration implements ReplaceableInterface, NamedI
 
     /**
      * @param string $name
-     *
      * @return Parameter
      */
     public function parameter(string $name): Parameter
@@ -115,7 +127,6 @@ class Method extends AbstractDeclaration implements ReplaceableInterface, NamedI
 
     /**
      * {@inheritdoc}
-     *
      * @return $this
      */
     public function replace($search, $replace): Method
@@ -127,7 +138,6 @@ class Method extends AbstractDeclaration implements ReplaceableInterface, NamedI
 
     /**
      * @param int $indentLevel
-     *
      * @return string
      */
     public function render(int $indentLevel = 0): string
@@ -137,11 +147,15 @@ class Method extends AbstractDeclaration implements ReplaceableInterface, NamedI
             $result .= $this->docComment->render($indentLevel) . "\n";
         }
 
-        $method = "{$this->getAccess()} function {$this->getName()}";
+        $method = $this->renderModifiers();
         if (!$this->parameters->isEmpty()) {
             $method .= "({$this->parameters->render()})";
         } else {
-            $method .= "()";
+            $method .= '()';
+        }
+
+        if ($this->return) {
+            $method .= ": {$this->return}";
         }
 
         $result .= $this->addIndent($method, $indentLevel) . "\n";
@@ -151,9 +165,25 @@ class Method extends AbstractDeclaration implements ReplaceableInterface, NamedI
             $result .= $this->source->render($indentLevel + 1) . "\n";
         }
 
-        $result .= $this->addIndent("}", $indentLevel);
+        $result .= $this->addIndent('}', $indentLevel);
 
         return $result;
+    }
+
+    /**
+     * @return string
+     */
+    private function renderModifiers(): string
+    {
+        $chunks = [$this->getAccess()];
+
+        if ($this->isStatic()) {
+            $chunks[] = 'static';
+        }
+
+        $chunks[] = "function {$this->getName()}";
+
+        return join(' ', $chunks);
     }
 
     /**

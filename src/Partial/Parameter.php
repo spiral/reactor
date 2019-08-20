@@ -6,6 +6,7 @@
  * @author    Anton Titov (Wolfy-J)
  */
 declare(strict_types=1);
+
 namespace Spiral\Reactor\Partial;
 
 use Doctrine\Common\Inflector\Inflector;
@@ -28,7 +29,7 @@ class Parameter extends AbstractDeclaration implements NamedInterface
     private $isOptional = false;
 
     /** @var mixed */
-    private $defaultValue = null;
+    private $defaultValue;
 
     /** @var bool */
     private $pdb = false;
@@ -53,7 +54,6 @@ class Parameter extends AbstractDeclaration implements NamedInterface
 
     /**
      * @param string $type
-     *
      * @return self
      */
     public function setType(string $type): Parameter
@@ -75,7 +75,6 @@ class Parameter extends AbstractDeclaration implements NamedInterface
      * Flag that parameter should pass by reference.
      *
      * @param bool $passedByReference
-     *
      * @return self
      */
     public function setPBR(bool $passedByReference = false): Parameter
@@ -107,7 +106,6 @@ class Parameter extends AbstractDeclaration implements NamedInterface
      * Set parameter default value.
      *
      * @param mixed $defaultValue
-     *
      * @return self
      */
     public function setDefaultValue($defaultValue): Parameter
@@ -146,10 +144,10 @@ class Parameter extends AbstractDeclaration implements NamedInterface
     {
         $type = '';
         if (!empty($this->type)) {
-            $type = $this->type . " ";
+            $type = $this->type . ' ';
         }
 
-        $result = $type . ($this->pdb ? '&' : '') . "$" . $this->getName();
+        $result = $type . ($this->pdb ? '&' : '') . '$' . $this->getName();
 
         if (!$this->isOptional) {
             return $result;

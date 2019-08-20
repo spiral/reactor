@@ -6,6 +6,7 @@
  * @author    Anton Titov (Wolfy-J)
  */
 declare(strict_types=1);
+
 namespace Spiral\Reactor\Partial;
 
 use Spiral\Reactor\AbstractDeclaration;
@@ -31,7 +32,7 @@ class Property extends AbstractDeclaration implements ReplaceableInterface, Name
     /**
      * @var mixed
      */
-    private $defaultValue = null;
+    private $defaultValue;
 
     /**
      * @param string       $name
@@ -41,7 +42,7 @@ class Property extends AbstractDeclaration implements ReplaceableInterface, Name
     public function __construct(string $name, $defaultValue = null, $comment = '')
     {
         $this->setName($name);
-        if ($defaultValue != null) {
+        if ($defaultValue !== null) {
             $this->setDefaultValue($defaultValue);
         }
 
@@ -62,7 +63,6 @@ class Property extends AbstractDeclaration implements ReplaceableInterface, Name
      * Set default value.
      *
      * @param mixed $value
-     *
      * @return self
      */
     public function setDefaultValue($value): Property
@@ -126,7 +126,7 @@ class Property extends AbstractDeclaration implements ReplaceableInterface, Name
 
             $result .= " = {$value};";
         } else {
-            $result .= ";";
+            $result .= ';';
         }
 
         return $result;
@@ -137,7 +137,6 @@ class Property extends AbstractDeclaration implements ReplaceableInterface, Name
      *
      * @param string $serialized
      * @param int    $indentLevel
-     *
      * @return string
      */
     private function mountIndents(string $serialized, int $indentLevel): string

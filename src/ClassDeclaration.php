@@ -37,13 +37,13 @@ class ClassDeclaration extends AbstractDeclaration implements ReplaceableInterfa
     private $traits = [];
 
     /** @var Constants */
-    private $constants = null;
+    private $constants;
 
     /** @var Properties */
-    private $properties = null;
+    private $properties;
 
     /** @var Methods */
-    private $methods = null;
+    private $methods;
 
     /**
      * @param string $name
@@ -85,7 +85,6 @@ class ClassDeclaration extends AbstractDeclaration implements ReplaceableInterfa
 
     /**
      * @param string $class Class name.
-     *
      * @return self
      */
     public function setExtends($class): ClassDeclaration
@@ -105,7 +104,6 @@ class ClassDeclaration extends AbstractDeclaration implements ReplaceableInterfa
 
     /**
      * @param string $interface
-     *
      * @return bool
      */
     public function hasInterface(string $interface): bool
@@ -119,7 +117,6 @@ class ClassDeclaration extends AbstractDeclaration implements ReplaceableInterfa
      * Declare class interfaces.
      *
      * @param array $interfaces
-     *
      * @return self
      */
     public function setInterfaces(array $interfaces): ClassDeclaration
@@ -134,7 +131,6 @@ class ClassDeclaration extends AbstractDeclaration implements ReplaceableInterfa
 
     /**
      * @param string $interface
-     *
      * @return self
      */
     public function addInterface(string $interface): ClassDeclaration
@@ -146,7 +142,6 @@ class ClassDeclaration extends AbstractDeclaration implements ReplaceableInterfa
 
     /**
      * @param string $interface
-     *
      * @return self
      */
     public function removeInterface(string $interface): ClassDeclaration
@@ -168,7 +163,6 @@ class ClassDeclaration extends AbstractDeclaration implements ReplaceableInterfa
 
     /**
      * @param string $class
-     *
      * @return bool
      */
     public function hasTrait(string $class): bool
@@ -182,7 +176,6 @@ class ClassDeclaration extends AbstractDeclaration implements ReplaceableInterfa
      * Declare class traits.
      *
      * @param array $traits
-     *
      * @return self
      */
     public function setTraits(array $traits): ClassDeclaration
@@ -197,7 +190,6 @@ class ClassDeclaration extends AbstractDeclaration implements ReplaceableInterfa
 
     /**
      * @param string $class
-     *
      * @return self
      */
     public function addTrait(string $class): ClassDeclaration
@@ -209,7 +201,6 @@ class ClassDeclaration extends AbstractDeclaration implements ReplaceableInterfa
 
     /**
      * @param string $class
-     *
      * @return self
      */
     public function removeTrait(string $class): ClassDeclaration
@@ -237,7 +228,6 @@ class ClassDeclaration extends AbstractDeclaration implements ReplaceableInterfa
 
     /**
      * @param string $name
-     *
      * @return Constant
      */
     public function constant(string $name): Constant
@@ -255,7 +245,6 @@ class ClassDeclaration extends AbstractDeclaration implements ReplaceableInterfa
 
     /**
      * @param string $name
-     *
      * @return Property
      */
     public function property(string $name): Property
@@ -273,7 +262,6 @@ class ClassDeclaration extends AbstractDeclaration implements ReplaceableInterfa
 
     /**
      * @param string $name
-     *
      * @return Method
      */
     public function method(string $name): Method
@@ -283,7 +271,6 @@ class ClassDeclaration extends AbstractDeclaration implements ReplaceableInterfa
 
     /**
      * {@inheritdoc}
-     *
      * @return self
      */
     public function replace($search, $replace): ClassDeclaration
@@ -297,7 +284,6 @@ class ClassDeclaration extends AbstractDeclaration implements ReplaceableInterfa
 
     /**
      * @param int $indentLevel
-     *
      * @return string
      */
     public function render(int $indentLevel = 0): string
@@ -317,25 +303,24 @@ class ClassDeclaration extends AbstractDeclaration implements ReplaceableInterfa
         }
 
         if (!empty($this->interfaces)) {
-            $interfaces = join(", ", array_keys($this->interfaces));
+            $interfaces = join(', ', array_keys($this->interfaces));
             $header .= " implements {$interfaces}";
         }
 
         $result .= $this->addIndent($header, $indentLevel) . "\n";
-        $result .= $this->addIndent("{", $indentLevel) . "\n";
+        $result .= $this->addIndent('{', $indentLevel) . "\n";
 
         //Rendering class body
         $result .= $this->renderBody($indentLevel);
 
         $result = rtrim($result, "\n") . "\n";
-        $result .= $this->addIndent("}", $indentLevel);
+        $result .= $this->addIndent('}', $indentLevel);
 
         return $result;
     }
 
     /**
      * @param int $indentLevel
-     *
      * @return string
      */
     protected function renderBody(int $indentLevel): string
@@ -362,7 +347,6 @@ class ClassDeclaration extends AbstractDeclaration implements ReplaceableInterfa
 
     /**
      * @param int $indentLevel
-     *
      * @return string
      */
     private function renderTraits(int $indentLevel = 0): string
