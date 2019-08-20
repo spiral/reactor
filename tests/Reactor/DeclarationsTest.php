@@ -24,7 +24,7 @@ use Spiral\Reactor\Traits\NamedTrait;
 class DeclarationsTest extends TestCase
 {
     //Simple test which touches a lot of methods
-    public function testClassDeclaration()
+    public function testClassDeclaration(): ClassDeclaration
     {
         $declaration = new ClassDeclaration('MyClass');
         $declaration->setExtends('Record');
@@ -42,7 +42,7 @@ class DeclarationsTest extends TestCase
             ->setComment('Always boot');
 
         $this->assertTrue($declaration->getConstants()->has('BOOT'));
-        $this->assertSame(true, $declaration->getConstants()->get('BOOT')->getValue());
+        $this->assertTrue($declaration->getConstants()->get('BOOT')->getValue());
 
         $declaration->property('names')
             ->setAccess(Partial\Property::ACCESS_PRIVATE)
@@ -81,7 +81,7 @@ class DeclarationsTest extends TestCase
                     \'John\'
                 ];
 
-                public function sample(int $input, int &$output = null)
+                public static function sample(int $input, int &$output = null)
                 {
                     $output = $input;
                     return true;
@@ -93,7 +93,7 @@ class DeclarationsTest extends TestCase
         return $declaration;
     }
 
-    public function testFileDeclaration()
+    public function testFileDeclaration(): void
     {
         $declaration = new FileDeclaration('Spiral\\Custom_Namespace', 'This is test file');
         $declaration->addUse(ContainerInterface::class, 'Container');
@@ -130,7 +130,7 @@ class DeclarationsTest extends TestCase
                      \'John\'
                  ];
 
-                 public function sample(int $input, int &$output = null)
+                 public static function sample(int $input, int &$output = null)
                  {
                      $output = $input;
                      return true;
@@ -140,7 +140,7 @@ class DeclarationsTest extends TestCase
         );
     }
 
-    public function testNamespaceDeclaration()
+    public function testNamespaceDeclaration(): void
     {
         $declaration = new NamespaceDeclaration('Spiral\\Custom_Namespace');
         $declaration->addUse(ContainerInterface::class, 'Container');
@@ -169,7 +169,7 @@ class DeclarationsTest extends TestCase
                          \'John\'
                      ];
 
-                     public function sample(int $input, int &$output = null)
+                     public static function sample(int $input, int &$output = null)
                      {
                          $output = $input;
                          return true;
@@ -180,25 +180,25 @@ class DeclarationsTest extends TestCase
         );
     }
 
-    public function testFileDeclaration2()
+    public function testFileDeclaration2(): void
     {
         $f = new FileDeclaration();
         $f->setNamespace("Spiral\\Test");
         $this->assertContains("namespace Spiral\\Test;", $f->render());
 
-        $c = new ClassDeclaration("TestClass");
+        $c = new ClassDeclaration('TestClass');
         $c->addTrait(NamedTrait::class);
 
         $f->addElement($c);
-        $this->assertTrue($f->getElements()->has("TestClass"));
+        $this->assertTrue($f->getElements()->has('TestClass'));
         $this->assertContains("use Spiral\\Reactor\\Traits\\NamedTrait;", $f->render());
     }
 
-    public function testNamespaceDeclaration2()
+    public function testNamespaceDeclaration2(): void
     {
         $f = new NamespaceDeclaration("Spiral\\Test");
 
-        $c = new ClassDeclaration("TestClass", AbstractDeclaration::class, [
+        $c = new ClassDeclaration('TestClass', AbstractDeclaration::class, [
             DeclarationInterface::class
         ]);
 
@@ -211,17 +211,17 @@ class DeclarationsTest extends TestCase
         $this->assertCount(0, $c->getMethods());
         $f->addElement($c);
 
-        $this->assertTrue($f->getElements()->has("TestClass"));
+        $this->assertTrue($f->getElements()->has('TestClass'));
         $this->assertContains("use Spiral\\Reactor\\Traits\\CommentTrait;", $f->render());
 
         $c->removeTrait(CommentTrait::class);
         $this->assertNotContains("use Spiral\\Reactor\\Traits\\CommentTrait;", $f->render());
 
-        $c->setComment("hello world");
-        $this->assertContains("hello world", $f->render());
+        $c->setComment('hello world');
+        $this->assertContains('hello world', $f->render());
     }
 
-    public function testUses()
+    public function testUses(): void
     {
         $f = new NamespaceDeclaration("Spiral\\Test");
         $f->addUse(AbstractDeclaration::class);

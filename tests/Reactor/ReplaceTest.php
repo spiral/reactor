@@ -10,13 +10,13 @@ namespace Spiral\Tests\Reactor;
 
 use PHPUnit\Framework\TestCase;
 use Spiral\Reactor\ClassDeclaration;
-use Spiral\Reactor\Partial;
 use Spiral\Reactor\FileDeclaration;
 use Spiral\Reactor\NamespaceDeclaration;
+use Spiral\Reactor\Partial;
 
 class ReplaceTest extends TestCase
 {
-    public function testReplace()
+    public function testReplace(): void
     {
         $declaration = new ClassDeclaration('MyClass');
         $declaration->setExtends('Record');
@@ -73,7 +73,7 @@ class ReplaceTest extends TestCase
                     /**
                      * Get some foxes
                      */
-                    public function sample(int $input, int &$output = null)
+                    public static function sample(int $input, int &$output = null)
                     {
                         $output = $input;
                         return true;
@@ -109,7 +109,7 @@ class ReplaceTest extends TestCase
                         /**
                          * Get some dogs
                          */
-                        public function sample(int $input, int &$output = null)
+                        public static function sample(int $input, int &$output = null)
                         {
                             $output = $input;
                             return true;
