@@ -12,6 +12,7 @@ namespace Spiral\Reactor\Partial;
 use Doctrine\Common\Inflector\Inflector;
 use Spiral\Reactor\AbstractDeclaration;
 use Spiral\Reactor\NamedInterface;
+use Spiral\Reactor\Traits\AccessTrait;
 use Spiral\Reactor\Traits\CommentTrait;
 use Spiral\Reactor\Traits\NamedTrait;
 use Spiral\Reactor\Traits\SerializerTrait;
@@ -21,12 +22,12 @@ use Spiral\Reactor\Traits\SerializerTrait;
  */
 class Constant extends AbstractDeclaration implements NamedInterface
 {
-    use NamedTrait, CommentTrait, SerializerTrait;
+    use NamedTrait, CommentTrait, SerializerTrait, AccessTrait;
 
     /**
      * @var mixed
      */
-    private $value = null;
+    private $value;
 
     /**
      * @param string       $name
@@ -54,7 +55,6 @@ class Constant extends AbstractDeclaration implements NamedInterface
      * Array values allowed (but works in PHP7 only).
      *
      * @param mixed $value
-     *
      * @return self
      */
     public function setValue($value): Constant
@@ -74,6 +74,7 @@ class Constant extends AbstractDeclaration implements NamedInterface
 
     /**
      * {@inheritdoc}
+     * @throws \ReflectionException
      */
     public function render(int $indentLevel = 0): string
     {
@@ -82,7 +83,7 @@ class Constant extends AbstractDeclaration implements NamedInterface
             $result .= $this->docComment->render($indentLevel) . "\n";
         }
 
-        $result .= $this->addIndent("const {$this->getName()} = ", $indentLevel);
+        $result .= $this->addIndent("{$this->access} const {$this->getName()} = ", $indentLevel);
 
         $value = $this->getSerializer()->serialize($this->value);
         if (is_array($this->value)) {
@@ -97,7 +98,6 @@ class Constant extends AbstractDeclaration implements NamedInterface
      *
      * @param string $serialized
      * @param int    $indentLevel
-     *
      * @return string
      */
     private function mountIndents(string $serialized, int $indentLevel): string

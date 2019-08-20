@@ -6,6 +6,7 @@
  * @author    Anton Titov (Wolfy-J)
  */
 declare(strict_types=1);
+
 namespace Spiral\Reactor;
 
 use Spiral\Reactor\Partial\Comment;
@@ -24,7 +25,7 @@ class NamespaceDeclaration extends AbstractDeclaration implements ReplaceableInt
     /**
      * @var Aggregator
      */
-    private $elements = null;
+    private $elements;
 
     /**
      * @param string $name
@@ -47,7 +48,6 @@ class NamespaceDeclaration extends AbstractDeclaration implements ReplaceableInt
      * Method will automatically mount requested uses is any.
      *
      * @param DeclarationInterface $element
-     *
      * @return self
      * @throws Exception\ReactorException
      */
@@ -63,7 +63,6 @@ class NamespaceDeclaration extends AbstractDeclaration implements ReplaceableInt
 
     /**
      * {@inheritdoc}
-     *
      * @return self
      */
     public function replace($search, $replace): NamespaceDeclaration
@@ -98,7 +97,7 @@ class NamespaceDeclaration extends AbstractDeclaration implements ReplaceableInt
         $result .= $this->elements->render($indentLevel + $indentShift);
 
         if (!empty($this->getName())) {
-            $result .= "\n" . $this->addIndent("}", $indentLevel);
+            $result .= "\n" . $this->addIndent('}', $indentLevel);
         }
 
         return $result;

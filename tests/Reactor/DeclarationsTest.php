@@ -69,7 +69,7 @@ class DeclarationsTest extends TestCase
                 /**
                  * Always boot
                  */
-                const BOOT = true;
+                private const BOOT = true;
 
                 /**
                  * This is names
@@ -118,7 +118,7 @@ class DeclarationsTest extends TestCase
                  /**
                   * Always boot
                   */
-                 const BOOT = true;
+                 private const BOOT = true;
 
                  /**
                   * This is names
@@ -157,7 +157,7 @@ class DeclarationsTest extends TestCase
                      /**
                       * Always boot
                       */
-                     const BOOT = true;
+                     private const BOOT = true;
 
                      /**
                       * This is names

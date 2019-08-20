@@ -20,7 +20,7 @@ class Source extends AbstractDeclaration
     /**
      * @var array
      */
-    private $lines = [];
+    private $lines;
 
     /**
      * @param array $lines
@@ -40,7 +40,6 @@ class Source extends AbstractDeclaration
 
     /**
      * @param array $lines
-     *
      * @return self|$this
      */
     public function setLines(array $lines): Source
@@ -52,7 +51,6 @@ class Source extends AbstractDeclaration
 
     /**
      * @param string $line
-     *
      * @return self
      * @throws MultilineException
      */
@@ -60,7 +58,7 @@ class Source extends AbstractDeclaration
     {
         if (strpos($line, "\n") !== false) {
             throw new MultilineException(
-                "New line character is forbidden in addLine method argument"
+                'New line character is forbidden in addLine method argument'
             );
         }
 
@@ -72,7 +70,6 @@ class Source extends AbstractDeclaration
     /**
      * @param string $string
      * @param bool   $cutIndents Function Strings::normalizeIndents will be applied.
-     *
      * @return self
      */
     public function setString(string $string, bool $cutIndents = false): Source
@@ -114,7 +111,6 @@ class Source extends AbstractDeclaration
      *
      * @param string $string
      * @param bool   $cutIndents Function Strings::normalizeIndents will be applied.
-     *
      * @return Source
      */
     public static function fromString(string $string, bool $cutIndents = false): Source
@@ -129,13 +125,12 @@ class Source extends AbstractDeclaration
      *
      * @param string $string
      * @param bool   $cutIndents
-     *
      * @return array
      */
     protected function fetchLines(string $string, bool $cutIndents): array
     {
         if ($cutIndents) {
-            $string = self::normalizeIndents($string, "");
+            $string = self::normalizeIndents($string, '');
         }
 
         $lines = explode("\n", self::normalizeEndings($string, false));
@@ -148,7 +143,6 @@ class Source extends AbstractDeclaration
      * Applied to every string before adding it to lines.
      *
      * @param string $line
-     *
      * @return string
      */
     protected function prepareLine(string $line): string
@@ -162,7 +156,6 @@ class Source extends AbstractDeclaration
      *
      * @param string $string       String to be normalized.
      * @param bool   $joinMultiple Join multiple new lines into one.
-     *
      * @return string
      */
     public static function normalizeEndings(string $string, bool $joinMultiple = true): string
@@ -192,10 +185,9 @@ class Source extends AbstractDeclaration
      * @param string $string         Input string with multiple lines.
      * @param string $tabulationCost How to treat \t symbols relatively to spaces. By default, this
      *                               is set to 4 spaces.
-     *
      * @return string
      */
-    public static function normalizeIndents(string $string, string $tabulationCost = "   "): string
+    public static function normalizeIndents(string $string, string $tabulationCost = '   '): string
     {
         $string = self::normalizeEndings($string, false);
         $lines = explode("\n", $string);
@@ -206,7 +198,7 @@ class Source extends AbstractDeclaration
             }
             $line = str_replace("\t", $tabulationCost, $line);
             //Getting indent size
-            if (!preg_match("/^( +)/", $line, $matches)) {
+            if (!preg_match('/^( +)/', $line, $matches)) {
                 //Some line has no indent
                 return $string;
             }
@@ -229,7 +221,7 @@ class Source extends AbstractDeclaration
             }
             //Getting new indent
             $useIndent = str_repeat(
-                " ",
+                ' ',
                 strlen(str_replace("\t", $tabulationCost, $indent)) - $minIndent
             );
             $line = $useIndent . substr($line, strlen($indent));

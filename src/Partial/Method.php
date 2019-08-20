@@ -51,19 +51,17 @@ class Method extends AbstractDeclaration implements ReplaceableInterface, NamedI
 
     /**
      * @param bool $static
-     *
      * @return self
      */
     public function setStatic(bool $static = true): Method
     {
-        $this->static = (bool)$static;
+        $this->static = $static;
 
         return $this;
     }
 
     /**
      * @param string $return
-     *
      * @return self
      */
     public function setReturn(string $return): Method
@@ -95,7 +93,6 @@ class Method extends AbstractDeclaration implements ReplaceableInterface, NamedI
      * Set method source.
      *
      * @param string|array $source
-     *
      * @return self
      */
     public function setSource($source): Method
@@ -121,7 +118,6 @@ class Method extends AbstractDeclaration implements ReplaceableInterface, NamedI
 
     /**
      * @param string $name
-     *
      * @return Parameter
      */
     public function parameter(string $name): Parameter
@@ -131,7 +127,6 @@ class Method extends AbstractDeclaration implements ReplaceableInterface, NamedI
 
     /**
      * {@inheritdoc}
-     *
      * @return $this
      */
     public function replace($search, $replace): Method
@@ -143,7 +138,6 @@ class Method extends AbstractDeclaration implements ReplaceableInterface, NamedI
 
     /**
      * @param int $indentLevel
-     *
      * @return string
      */
     public function render(int $indentLevel = 0): string
@@ -176,6 +170,9 @@ class Method extends AbstractDeclaration implements ReplaceableInterface, NamedI
         return $result;
     }
 
+    /**
+     * @return string
+     */
     private function renderModifiers(): string
     {
         $chunks = [$this->getAccess()];

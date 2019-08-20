@@ -110,7 +110,7 @@ protected function method()
         $c = new ClassDeclaration('TestClass');
         $c->constant('SCHEMA')->setValue([
             'key' => 'value'
-        ]);
+        ])->setProtected();
 
         $c->property('schema')->setDefaultValue([
             'key' => 'value'
@@ -118,7 +118,7 @@ protected function method()
 
         $this->assertSame(preg_replace('/\s+/', '', "class TestClass
 {
-    const SCHEMA = [
+    protected const SCHEMA = [
         'key' => 'value'
     ];
 

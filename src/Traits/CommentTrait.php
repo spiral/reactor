@@ -19,7 +19,7 @@ trait CommentTrait
     /**
      * @var Comment
      */
-    private $docComment = null;
+    private $docComment;
 
     /**
      * Get associated file comment.
@@ -56,7 +56,7 @@ trait CommentTrait
      *
      * @param string|array $comment
      */
-    private function initComment($comment)
+    private function initComment($comment): void
     {
         if (empty($this->docComment)) {
             $this->docComment = new Comment();

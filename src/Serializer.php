@@ -20,14 +20,14 @@ class Serializer
     /**
      * Fixed 4 spaces indent.
      */
-    const INDENT = DeclarationInterface::INDENT;
+    public const INDENT = DeclarationInterface::INDENT;
 
     /**
      * Serialize array.
      *
      * @param mixed $value
-     *
      * @return string
+     * @throws \ReflectionException
      */
     public function serialize($value): string
     {
@@ -41,8 +41,8 @@ class Serializer
     /**
      * @param array $array
      * @param int   $level
-     *
      * @return string
+     * @throws \ReflectionException
      */
     protected function packArray(array $array, int $level = 0): string
     {
@@ -70,21 +70,21 @@ class Serializer
                         var_export($key, true),
                         $innerIndent, ' ',
                         STR_PAD_RIGHT
-                    ) . " => ";
+                    ) . ' => ';
             }
             if (!is_array($value)) {
                 $result[] = $prefix . $this->packValue($value);
                 continue;
             }
             if ($value === []) {
-                $result[] = $prefix . "[]";
+                $result[] = $prefix . '[]';
                 continue;
             }
             $subArray = $this->packArray($value, $level + 1);
             $result[] = $prefix . "[{$subIndent}" . $subArray . "{$keyIndent}]";
         }
         if ($level !== 0) {
-            return $result ? join(",{$keyIndent}", $result) : "";
+            return $result ? join(",{$keyIndent}", $result) : '';
         }
 
         return "[{$keyIndent}" . join(",{$keyIndent}", $result) . "\n]";
@@ -94,9 +94,9 @@ class Serializer
      * Pack array key value into string.
      *
      * @param mixed $value
-     *
      * @return string
      * @throws SerializeException
+     * @throws \ReflectionException
      */
     protected function packValue($value): string
     {
@@ -105,12 +105,12 @@ class Serializer
             return $value->render();
         }
 
-        if (is_null($value)) {
-            return "null";
+        if ($value === null) {
+            return 'null';
         }
 
         if (is_bool($value)) {
-            return ($value ? "true" : "false");
+            return ($value ? 'true' : 'false');
         }
 
         if (is_object($value) && method_exists($value, '__set_state')) {
@@ -118,7 +118,7 @@ class Serializer
         }
 
         if (!is_string($value) && !is_numeric($value)) {
-            throw new SerializeException("Unable to pack non scalar value");
+            throw new SerializeException('Unable to pack non scalar value');
         }
 
         if (is_string($value) && class_exists($value)) {

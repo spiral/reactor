@@ -24,12 +24,12 @@ class Aggregator extends AbstractDeclaration implements
     /**
      * @var array
      */
-    private $allowed = [];
+    private $allowed;
 
     /**
      * @var DeclarationInterface[]
      */
-    private $elements = [];
+    private $elements;
 
     /**
      * @param array $allowed
@@ -52,7 +52,7 @@ class Aggregator extends AbstractDeclaration implements
     /**
      * @return int
      */
-    public function count()
+    public function count(): int
     {
         return count($this->elements);
     }
@@ -61,13 +61,12 @@ class Aggregator extends AbstractDeclaration implements
      * Check if aggregation has named element with given name.
      *
      * @param string $name
-     *
      * @return bool
      */
     public function has(string $name): bool
     {
         foreach ($this->elements as $element) {
-            if ($element instanceof NamedInterface && $element->getName() == $name) {
+            if ($element instanceof NamedInterface && $element->getName() === $name) {
                 return true;
             }
         }
@@ -79,7 +78,6 @@ class Aggregator extends AbstractDeclaration implements
      * Add new element.
      *
      * @param DeclarationInterface $element
-     *
      * @return self
      * @throws ReactorException
      */
@@ -89,7 +87,7 @@ class Aggregator extends AbstractDeclaration implements
 
         $allowed = false;
         foreach ($this->allowed as $class) {
-            if ($reflector->isSubclassOf($class) || get_class($element) == $class) {
+            if ($reflector->isSubclassOf($class) || get_class($element) === $class) {
                 $allowed = true;
                 break;
             }
@@ -109,9 +107,7 @@ class Aggregator extends AbstractDeclaration implements
      * Get named element by it's name.
      *
      * @param string $name
-     *
      * @return DeclarationInterface
-     *
      * @throws ReactorException
      */
     public function get(string $name)
@@ -123,13 +119,12 @@ class Aggregator extends AbstractDeclaration implements
      * Remove element by it's name.
      *
      * @param string $name
-     *
      * @return self
      */
     public function remove(string $name): Aggregator
     {
         foreach ($this->elements as $index => $element) {
-            if ($element instanceof NamedInterface && $element->getName() == $name) {
+            if ($element instanceof NamedInterface && $element->getName() === $name) {
                 unset($this->elements[$index]);
             }
         }
@@ -141,9 +136,7 @@ class Aggregator extends AbstractDeclaration implements
      * Get element by it's name.
      *
      * @param string $name
-     *
      * @return DeclarationInterface
-     *
      * @throws ReactorException
      */
     public function __get($name)
@@ -154,7 +147,7 @@ class Aggregator extends AbstractDeclaration implements
     /**
      * @return \ArrayIterator
      */
-    public function getIterator()
+    public function getIterator(): \ArrayIterator
     {
         return new \ArrayIterator($this->elements);
     }
@@ -193,7 +186,6 @@ class Aggregator extends AbstractDeclaration implements
 
     /**
      * {@inheritdoc}
-     *
      * @return self
      */
     public function replace($search, $replace): Aggregator
@@ -225,15 +217,13 @@ class Aggregator extends AbstractDeclaration implements
      * Find element by it's name (NamedDeclarations only).
      *
      * @param string $name
-     *
      * @return DeclarationInterface
-     *
      * @throws ReactorException When unable to find.
      */
-    protected function find(string $name)
+    protected function find(string $name): DeclarationInterface
     {
         foreach ($this->elements as $element) {
-            if ($element instanceof NamedInterface && $element->getName() == $name) {
+            if ($element instanceof NamedInterface && $element->getName() === $name) {
                 return $element;
             }
         }

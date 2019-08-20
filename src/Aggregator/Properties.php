@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Spiral\Reactor\Aggregator;
 
 use Spiral\Reactor\Aggregator;
+use Spiral\Reactor\DeclarationInterface;
 use Spiral\Reactor\Partial\Property;
 
 /**
@@ -31,8 +32,7 @@ final class Properties extends Aggregator
      * Get named element by it's name.
      *
      * @param string $name
-     *
-     * @return Property
+     * @return Property|DeclarationInterface
      */
     public function get(string $name): Property
     {

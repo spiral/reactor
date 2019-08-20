@@ -17,14 +17,13 @@ abstract class AbstractDeclaration implements DeclarationInterface
     /**
      * Access level constants.
      */
-    const ACCESS_PUBLIC    = 'public';
-    const ACCESS_PROTECTED = 'protected';
-    const ACCESS_PRIVATE   = 'private';
+    public const ACCESS_PUBLIC    = 'public';
+    public const ACCESS_PROTECTED = 'protected';
+    public const ACCESS_PRIVATE   = 'private';
 
     /**
      * @param string $string
      * @param int    $indent
-     *
      * @return string
      */
     protected function addIndent(string $string, int $indent = 0): string

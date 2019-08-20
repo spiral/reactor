@@ -108,7 +108,7 @@ trait UsesTrait
             if (!empty($alias)) {
                 $line .= " as {$alias};";
             } else {
-                $line .= ";";
+                $line .= ';';
             }
 
             $lines[] = $this->addIndent($line, $indentLevel);

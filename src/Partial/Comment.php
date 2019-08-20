@@ -18,14 +18,13 @@ class Comment extends Source implements ReplaceableInterface
 {
     /**
      * {@inheritdoc}
-     *
      * @return self
      */
     public function replace($search, $replace): Comment
     {
         $lines = $this->getLines();
 
-        array_walk($lines, function (&$line) use ($search, $replace) {
+        array_walk($lines, static function (&$line) use ($search, $replace) {
             $line = str_replace($search, $replace, $line);
         });
 
@@ -46,7 +45,7 @@ class Comment extends Source implements ReplaceableInterface
             $result .= $this->addIndent(" * {$line}\n", $indentLevel);
         }
 
-        $result .= $this->addIndent(" */", $indentLevel);
+        $result .= $this->addIndent(' */', $indentLevel);
 
         return $result;
     }
