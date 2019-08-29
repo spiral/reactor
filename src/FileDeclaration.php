@@ -111,6 +111,9 @@ class FileDeclaration extends AbstractDeclaration implements ReplaceableInterfac
         }
 
         if (!empty($this->namespace)) {
+            if($this->docComment->isEmpty()) {
+                $result .= "\n";
+            }
             $result .= "namespace {$this->namespace};\n\n";
         }
 
@@ -119,6 +122,7 @@ class FileDeclaration extends AbstractDeclaration implements ReplaceableInterfac
         }
 
         $result .= $this->elements->render($indentLevel);
+        $result .= "\n";
 
         return $result;
     }
