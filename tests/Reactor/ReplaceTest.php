@@ -116,7 +116,10 @@ class ReplaceTest extends TestCase
                         }
                     }
                 }'),
-            preg_replace('/\s+/', '', $file->render()
+            preg_replace(
+                '/\s+/',
+                '',
+                $file->render()
             )
         );
     }

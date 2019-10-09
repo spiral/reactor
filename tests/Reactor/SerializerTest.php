@@ -36,38 +36,47 @@ class SerializerTest extends TestCase
 
     public function testArrayOfArray()
     {
-        $this->assertEquals(preg_replace('/\s+/', '',
+        $this->assertEquals(preg_replace(
+            '/\s+/',
+            '',
             '[
     \'hello\' => [
         \'name\' => 123
     ]
-]'), preg_replace('/\s+/', '', $this->getSerializer()->serialize([
+]'
+        ), preg_replace('/\s+/', '', $this->getSerializer()->serialize([
             'hello' => ['name' => 123]
         ])));
     }
 
     public function testArrayOfArray2()
     {
-        $this->assertEquals(preg_replace('/\s+/', '',
+        $this->assertEquals(preg_replace(
+            '/\s+/',
+            '',
             '[
     \'hello\' => [
         \'name\' => 123,
         \'sub\'  => magic
     ]
-]'), preg_replace('/\s+/', '', $this->getSerializer()->serialize([
+]'
+        ), preg_replace('/\s+/', '', $this->getSerializer()->serialize([
             'hello' => ['name' => 123, 'sub' => new Source(['magic'])]
         ])));
     }
 
     public function testClassNames()
     {
-        $this->assertEquals(preg_replace('/\s+/', '',
+        $this->assertEquals(preg_replace(
+            '/\s+/',
+            '',
             '[
     \'hello\' => [
         \'name\' => 123,
         \'sub\'  => \Spiral\Reactor\Serializer::class
     ]
-]'), preg_replace('/\s+/', '', $this->getSerializer()->serialize([
+]'
+        ), preg_replace('/\s+/', '', $this->getSerializer()->serialize([
             'hello' => ['name' => 123, 'sub' => Serializer::class]
         ])));
     }

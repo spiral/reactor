@@ -50,8 +50,10 @@ class DeclarationsTest extends TestCase
             ->setDefaultValue(['Anton', 'John']);
 
         $this->assertTrue($declaration->getProperties()->has('names'));
-        $this->assertSame(['Anton', 'John'],
-            $declaration->getProperties()->get('names')->getDefaultValue());
+        $this->assertSame(
+            ['Anton', 'John'],
+            $declaration->getProperties()->get('names')->getDefaultValue()
+        );
 
         $method = $declaration->method('sample');
         $method->parameter('input')->setType('int');
@@ -192,6 +194,18 @@ class DeclarationsTest extends TestCase
         $f->addElement($c);
         $this->assertTrue($f->getElements()->has('TestClass'));
         $this->assertContains("use Spiral\\Reactor\\Traits\\NamedTrait;", $f->render());
+    }
+
+    public function testFileDeclarationDirectives(): void
+    {
+        $f = new FileDeclaration();
+        $this->assertStringNotContainsString('declare', $f->render());
+
+        $f = new FileDeclaration();
+        $f->setDirectives('strict_types=1', 'ticks=1');
+        $this->assertStringContainsString('declare', $f->render());
+        $this->assertStringContainsString('strict_types=1', $f->render());
+        $this->assertStringContainsString('ticks=1', $f->render());
     }
 
     public function testNamespaceDeclaration2(): void
