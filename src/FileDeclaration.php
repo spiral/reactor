@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Spiral\Reactor;
 
 use Spiral\Reactor\Partial\Comment;
+use Spiral\Reactor\Partial\Directives;
 use Spiral\Reactor\Partial\Source;
 use Spiral\Reactor\Traits\CommentTrait;
 use Spiral\Reactor\Traits\UsesTrait;
@@ -27,6 +28,9 @@ class FileDeclaration extends AbstractDeclaration implements ReplaceableInterfac
      * @var string
      */
     private $namespace;
+
+    /** @var Directives|null */
+    private $directives;
 
     /**
      * @var Aggregator
@@ -71,6 +75,17 @@ class FileDeclaration extends AbstractDeclaration implements ReplaceableInterfac
     }
 
     /**
+     * @param string ...$directives
+     * @return FileDeclaration
+     */
+    public function setDirectives(string ...$directives): FileDeclaration
+    {
+        $this->directives = new Directives(...$directives);
+
+        return $this;
+    }
+
+    /**
      * Method will automatically mount requested uses is any.
      *
      * @param DeclarationInterface $element
@@ -110,8 +125,12 @@ class FileDeclaration extends AbstractDeclaration implements ReplaceableInterfac
             $result .= $this->docComment->render($indentLevel) . "\n";
         }
 
+        if ($this->directives !== null && !empty($this->directives->render())) {
+            $result .= $this->directives->render() . "\n";
+        }
+
         if (!empty($this->namespace)) {
-            if($this->docComment->isEmpty()) {
+            if ($this->docComment->isEmpty()) {
                 $result .= "\n";
             }
             $result .= "namespace {$this->namespace};\n\n";

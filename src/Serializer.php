@@ -67,10 +67,11 @@ class Serializer
             if (!empty($associated)) {
                 //Key prefix
                 $prefix = str_pad(
-                        var_export($key, true),
-                        $innerIndent, ' ',
-                        STR_PAD_RIGHT
-                    ) . ' => ';
+                    var_export($key, true),
+                    $innerIndent,
+                    ' ',
+                    STR_PAD_RIGHT
+                ) . ' => ';
             }
             if (!is_array($value)) {
                 $result[] = $prefix . $this->packValue($value);
