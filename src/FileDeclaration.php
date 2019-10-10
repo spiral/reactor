@@ -126,7 +126,7 @@ class FileDeclaration extends AbstractDeclaration implements ReplaceableInterfac
         }
 
         if ($this->directives !== null && !empty($this->directives->render())) {
-            $result .= $this->directives->render() . "\n";
+            $result .= $this->directives->render() . "\n\n";
         }
 
         if (!empty($this->namespace)) {
