@@ -23,6 +23,7 @@ use Spiral\Reactor\Partial;
 use Spiral\Reactor\Serializer;
 use Spiral\Reactor\Traits\CommentTrait;
 use Spiral\Reactor\Traits\NamedTrait;
+use Spiral\Tests\Reactor\Fixture\DependedElement;
 
 class DeclarationsTest extends TestCase
 {
@@ -103,7 +104,6 @@ class DeclarationsTest extends TestCase
         $declaration = new FileDeclaration('Spiral\\Custom_Namespace', 'This is test file');
         $declaration->addUse(ContainerInterface::class, 'Container');
 
-
         $this->assertSame('Spiral\\Custom_Namespace', $declaration->getNamespace());
 
         $declaration->addElement($this->testClassDeclaration());
@@ -141,6 +141,18 @@ class DeclarationsTest extends TestCase
                      return true;
                  }
              }'),
+            preg_replace('/\s+/', '', (string)$declaration)
+        );
+    }
+
+    public function testDependedImport(): void
+    {
+        $declaration = new FileDeclaration('Spiral\\Custom_Namespace', 'This is test file');
+        $declaration->addUse(ContainerInterface::class, 'Container');
+        $declaration->addElement(new DependedElement('depended'));
+
+        $this->assertStringContainsString(
+            preg_replace('/\s+/', '', 'use Spiral\Reactor\DependedInterface as DependencyAlias;'),
             preg_replace('/\s+/', '', (string)$declaration)
         );
     }
