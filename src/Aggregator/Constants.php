@@ -40,7 +40,7 @@ final class Constants extends Aggregator
     {
         if (!$this->has($name)) {
             $constant = new Constant($name, null);
-            parent::add($constant);
+            $this->add($constant);
 
             return $constant;
         }
