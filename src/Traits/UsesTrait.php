@@ -1,16 +1,18 @@
 <?php
+
 /**
  * Spiral Framework.
  *
  * @license   MIT
  * @author    Anton Titov (Wolfy-J)
  */
+
 declare(strict_types=1);
 
 namespace Spiral\Reactor\Traits;
 
 /**
- * Provide ability to declared namespase uses.
+ * Provide ability to declared namespace uses.
  */
 trait UsesTrait
 {
@@ -95,6 +97,14 @@ trait UsesTrait
     }
 
     /**
+     * @param string $string
+     * @param int    $indent
+     *
+     * @return string
+     */
+    abstract protected function addIndent(string $string, int $indent = 0): string;
+
+    /**
      * @param int $indentLevel
      *
      * @return string
@@ -114,14 +124,6 @@ trait UsesTrait
             $lines[] = $this->addIndent($line, $indentLevel);
         }
 
-        return join("\n", $lines);
+        return implode("\n", $lines);
     }
-
-    /**
-     * @param string $string
-     * @param int    $indent
-     *
-     * @return string
-     */
-    abstract protected function addIndent(string $string, int $indent = 0): string;
 }

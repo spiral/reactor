@@ -1,15 +1,18 @@
 <?php
+
 /**
  * Spiral Framework.
  *
  * @license   MIT
  * @author    Anton Titov (Wolfy-J)
  */
+
 declare(strict_types=1);
 
 namespace Spiral\Reactor\Partial;
 
 use Doctrine\Common\Inflector\Inflector;
+use ReflectionException;
 use Spiral\Reactor\AbstractDeclaration;
 use Spiral\Reactor\NamedInterface;
 use Spiral\Reactor\Traits\AccessTrait;
@@ -22,7 +25,10 @@ use Spiral\Reactor\Traits\SerializerTrait;
  */
 class Constant extends AbstractDeclaration implements NamedInterface
 {
-    use NamedTrait, CommentTrait, SerializerTrait, AccessTrait;
+    use NamedTrait;
+    use CommentTrait;
+    use SerializerTrait;
+    use AccessTrait;
 
     /**
      * @var mixed
@@ -74,7 +80,7 @@ class Constant extends AbstractDeclaration implements NamedInterface
 
     /**
      * {@inheritdoc}
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function render(int $indentLevel = 0): string
     {
@@ -108,6 +114,6 @@ class Constant extends AbstractDeclaration implements NamedInterface
             unset($line);
         }
 
-        return ltrim(join("\n", $lines));
+        return ltrim(implode("\n", $lines));
     }
 }

@@ -1,10 +1,13 @@
 <?php
+
 /**
  * Spiral Framework.
  *
  * @license   MIT
  * @author    Anton Titov (Wolfy-J)
  */
+
+declare(strict_types=1);
 
 namespace Spiral\Tests\Reactor;
 
@@ -17,7 +20,7 @@ use Spiral\Reactor\Partial\Property;
 
 class AggregatorsTest extends TestCase
 {
-    public function testMethods()
+    public function testMethods(): void
     {
         $aggr = new Methods([]);
         $m = $aggr->get('method');
@@ -26,7 +29,7 @@ class AggregatorsTest extends TestCase
         $this->assertSame($m, $aggr->get('method'));
     }
 
-    public function testParameters()
+    public function testParameters(): void
     {
         $aggr = new Parameters([]);
         $m = $aggr->get('param');
@@ -38,46 +41,46 @@ class AggregatorsTest extends TestCase
     /**
      * @expectedException \Spiral\Reactor\Exception\ReactorException
      */
-    public function testAggregator()
+    public function testAggregator(): void
     {
         $a = new Aggregator([
             Method::class
         ]);
 
-        $a->add(new Property("method"));
+        $a->add(new Property('method'));
     }
 
     /**
      * @expectedException \Spiral\Reactor\Exception\ReactorException
      */
-    public function testAggregatorNoElement()
+    public function testAggregatorNoElement(): void
     {
         $a = new Aggregator([
             Method::class
         ]);
 
-        $a->get("method");
+        $a->get('method');
     }
 
 
-    public function testAggregatorRemove()
+    public function testAggregatorRemove(): void
     {
         $a = new Aggregator([
             Method::class
         ]);
 
-        $a->add(new Method("method"));
+        $a->add(new Method('method'));
         $this->assertInstanceOf(Method::class, $a->method);
         $this->assertTrue(isset($a['method']));
         $this->assertInstanceOf(Method::class, $a['method']);
 
-        $this->assertTrue($a->has("method"));
+        $this->assertTrue($a->has('method'));
         $a->remove('method');
-        $this->assertFalse($a->has("method"));
+        $this->assertFalse($a->has('method'));
 
         $a['method'] = new Method('method');
-        $this->assertTrue($a->has("method"));
+        $this->assertTrue($a->has('method'));
         unset($a['method']);
-        $this->assertFalse($a->has("method"));
+        $this->assertFalse($a->has('method'));
     }
 }

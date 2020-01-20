@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Spiral Framework.
  *
  * @license   MIT
  * @author    Anton Titov (Wolfy-J)
  */
+
 declare(strict_types=1);
 
 namespace Spiral\Reactor\Partial;
@@ -28,6 +30,14 @@ class Source extends AbstractDeclaration
     public function __construct(array $lines = [])
     {
         $this->lines = $lines;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->render(0);
     }
 
     /**
@@ -91,19 +101,11 @@ class Source extends AbstractDeclaration
     public function render(int $indentLevel = 0): string
     {
         $lines = $this->lines;
-        array_walk($lines, function (&$line) use ($indentLevel) {
+        array_walk($lines, function (&$line) use ($indentLevel): void {
             $line = $this->addIndent($line, $indentLevel);
         });
 
-        return join("\n", $lines);
-    }
-
-    /**
-     * @return string
-     */
-    public function __toString(): string
-    {
-        return $this->render(0);
+        return implode("\n", $lines);
     }
 
     /**
@@ -121,40 +123,10 @@ class Source extends AbstractDeclaration
     }
 
     /**
-     * Converts input string into set of lines.
-     *
-     * @param string $string
-     * @param bool   $cutIndents
-     * @return array
-     */
-    protected function fetchLines(string $string, bool $cutIndents): array
-    {
-        if ($cutIndents) {
-            $string = self::normalizeIndents($string, '');
-        }
-
-        $lines = explode("\n", self::normalizeEndings($string, false));
-
-        //Pre-processing
-        return array_map([$this, 'prepareLine'], $lines);
-    }
-
-    /**
-     * Applied to every string before adding it to lines.
-     *
-     * @param string $line
-     * @return string
-     */
-    protected function prepareLine(string $line): string
-    {
-        return $line;
-    }
-
-    /**
      * Normalize string endings to avoid EOL problem. Replace \n\r and multiply new lines with
      * single \n.
      *
-     * @param string $string       String to be normalized.
+     * @param string $string String to be normalized.
      * @param bool   $joinMultiple Join multiple new lines into one.
      * @return string
      */
@@ -182,7 +154,7 @@ class Source extends AbstractDeclaration
      * |-c
      * |--d
      *
-     * @param string $string         Input string with multiple lines.
+     * @param string $string Input string with multiple lines.
      * @param string $tabulationCost How to treat \t symbols relatively to spaces. By default, this
      *                               is set to 4 spaces.
      * @return string
@@ -228,6 +200,36 @@ class Source extends AbstractDeclaration
             unset($line);
         }
 
-        return join("\n", $lines);
+        return implode("\n", $lines);
+    }
+
+    /**
+     * Converts input string into set of lines.
+     *
+     * @param string $string
+     * @param bool   $cutIndents
+     * @return array
+     */
+    protected function fetchLines(string $string, bool $cutIndents): array
+    {
+        if ($cutIndents) {
+            $string = self::normalizeIndents($string, '');
+        }
+
+        $lines = explode("\n", self::normalizeEndings($string, false));
+
+        //Pre-processing
+        return array_map([$this, 'prepareLine'], $lines);
+    }
+
+    /**
+     * Applied to every string before adding it to lines.
+     *
+     * @param string $line
+     * @return string
+     */
+    protected function prepareLine(string $line): string
+    {
+        return $line;
     }
 }

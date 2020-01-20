@@ -1,14 +1,17 @@
 <?php
+
 /**
  * Spiral Framework.
  *
  * @license   MIT
  * @author    Anton Titov (Wolfy-J)
  */
+
 declare(strict_types=1);
 
 namespace Spiral\Reactor\Partial;
 
+use ReflectionException;
 use Spiral\Reactor\AbstractDeclaration;
 use Spiral\Reactor\NamedInterface;
 use Spiral\Reactor\ReplaceableInterface;
@@ -22,7 +25,10 @@ use Spiral\Reactor\Traits\SerializerTrait;
  */
 class Property extends AbstractDeclaration implements ReplaceableInterface, NamedInterface
 {
-    use NamedTrait, CommentTrait, SerializerTrait, AccessTrait;
+    use NamedTrait;
+    use CommentTrait;
+    use SerializerTrait;
+    use AccessTrait;
 
     /**
      * @var bool
@@ -100,13 +106,14 @@ class Property extends AbstractDeclaration implements ReplaceableInterface, Name
      * @param array|string $search
      * @param array|string $replace
      */
-    public function replace($search, $replace)
+    public function replace($search, $replace): void
     {
         $this->docComment->replace($search, $replace);
     }
 
     /**
      * {@inheritdoc}
+     * @throws ReflectionException
      */
     public function render(int $indentLevel = 0): string
     {
@@ -147,6 +154,6 @@ class Property extends AbstractDeclaration implements ReplaceableInterface, Name
             unset($line);
         }
 
-        return ltrim(join("\n", $lines));
+        return ltrim(implode("\n", $lines));
     }
 }

@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Spiral Framework.
  *
  * @license   MIT
  * @author    Anton Titov (Wolfy-J)
  */
+
 declare(strict_types=1);
 
 namespace Spiral\Reactor\Partial;
@@ -22,7 +24,9 @@ use Spiral\Reactor\Traits\NamedTrait;
  */
 class Method extends AbstractDeclaration implements ReplaceableInterface, NamedInterface
 {
-    use NamedTrait, CommentTrait, AccessTrait;
+    use NamedTrait;
+    use CommentTrait;
+    use AccessTrait;
 
     /** @var bool */
     private $static = false;
@@ -183,7 +187,7 @@ class Method extends AbstractDeclaration implements ReplaceableInterface, NamedI
 
         $chunks[] = "function {$this->getName()}";
 
-        return join(' ', $chunks);
+        return implode(' ', $chunks);
     }
 
     /**
@@ -191,7 +195,7 @@ class Method extends AbstractDeclaration implements ReplaceableInterface, NamedI
      *
      * @param string|array $source
      */
-    private function initSource($source)
+    private function initSource($source): void
     {
         if (empty($this->source)) {
             $this->source = new Source();

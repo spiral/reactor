@@ -1,14 +1,18 @@
 <?php
+
 /**
  * Spiral Framework.
  *
  * @license   MIT
  * @author    Anton Titov (Wolfy-J)
  */
+
 declare(strict_types=1);
 
 namespace Spiral\Reactor;
 
+use ReflectionClass;
+use ReflectionException;
 use Spiral\Reactor\Exception\SerializeException;
 
 /**
@@ -27,7 +31,7 @@ class Serializer
      *
      * @param mixed $value
      * @return string
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function serialize($value): string
     {
@@ -42,7 +46,7 @@ class Serializer
      * @param array $array
      * @param int   $level
      * @return string
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     protected function packArray(array $array, int $level = 0): string
     {
@@ -85,10 +89,10 @@ class Serializer
             $result[] = $prefix . "[{$subIndent}" . $subArray . "{$keyIndent}]";
         }
         if ($level !== 0) {
-            return $result ? join(",{$keyIndent}", $result) : '';
+            return $result ? implode(",{$keyIndent}", $result) : '';
         }
 
-        return "[{$keyIndent}" . join(",{$keyIndent}", $result) . "\n]";
+        return "[{$keyIndent}" . implode(",{$keyIndent}", $result) . "\n]";
     }
 
     /**
@@ -97,7 +101,7 @@ class Serializer
      * @param mixed $value
      * @return string
      * @throws SerializeException
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     protected function packValue($value): string
     {
@@ -115,7 +119,7 @@ class Serializer
         }
 
         if (is_object($value) && method_exists($value, '__set_state')) {
-            return var_export($value, true);
+            return '\\' . var_export($value, true);
         }
 
         if (!is_string($value) && !is_numeric($value)) {
@@ -123,7 +127,7 @@ class Serializer
         }
 
         if (is_string($value) && class_exists($value)) {
-            $reflection = new \ReflectionClass($value);
+            $reflection = new ReflectionClass($value);
             if ($value === $reflection->getName()) {
                 return '\\' . $reflection->getName() . '::class';
             }

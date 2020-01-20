@@ -1,10 +1,13 @@
 <?php
+
 /**
  * Spiral Framework.
  *
  * @license   MIT
  * @author    Anton Titov (Wolfy-J)
  */
+
+declare(strict_types=1);
 
 namespace Spiral\Tests\Reactor;
 
@@ -58,7 +61,7 @@ class ReplaceTest extends TestCase
                 class MyClass extends Record
                 {
                     use Spiral\Debug\Traits\LoggerTrait;
-            
+
                     /**
                      * This is foxes
                      *
@@ -69,7 +72,7 @@ class ReplaceTest extends TestCase
                         \'value\' => \'hi\',
                         \'test\'  => []
                     ];
-            
+
                     /**
                      * Get some foxes
                      */
@@ -94,7 +97,7 @@ class ReplaceTest extends TestCase
                     class MyClass extends Record
                     {
                         use Spiral\Debug\Traits\LoggerTrait;
-                
+
                         /**
                          * This is dogs
                          *
@@ -105,7 +108,7 @@ class ReplaceTest extends TestCase
                             \'value\' => \'hi\',
                             \'test\'  => []
                         ];
-                
+
                         /**
                          * Get some dogs
                          */

@@ -1,10 +1,13 @@
 <?php
+
 /**
  * Spiral Framework.
  *
  * @license   MIT
  * @author    Anton Titov (Wolfy-J)
  */
+
+declare(strict_types=1);
 
 namespace Spiral\Tests\Reactor;
 
@@ -13,18 +16,18 @@ use Spiral\Reactor\Partial\Source;
 
 class SourceTest extends TestCase
 {
-    public function testSource()
+    public function testSource(): void
     {
         $s = Source::fromString("   \$name='antony';\r\n       return \$name;");
         $this->assertSame("   \$name='antony';", $s->getLines()[0]);
-        $this->assertSame("       return \$name;", $s->getLines()[1]);
+        $this->assertSame('       return $name;', $s->getLines()[1]);
 
         $s = Source::fromString("   \$name='antony';\r\n       return \$name;", true);
         $this->assertSame("\$name='antony';", $s->getLines()[0]);
-        $this->assertSame("    return \$name;", $s->getLines()[1]);
+        $this->assertSame('    return $name;', $s->getLines()[1]);
     }
 
-    public function normalizeEndings()
+    public function normalizeEndings(): void
     {
         $string = "line\n\rline2";
         $this->assertSame("line\nline2", Source::normalizeEndings($string));
@@ -33,33 +36,33 @@ class SourceTest extends TestCase
         $this->assertSame("line\nline2", Source::normalizeEndings($string, true));
     }
 
-    public function testNormalizeEndingsEmptyReference()
+    public function testNormalizeEndingsEmptyReference(): void
     {
         $input = ['', '    b', '    c'];
         $output = ['', 'b', 'c'];
         $this->assertSame(
-            join("\n", $output),
-            Source::normalizeIndents(join("\n", $input))
+            implode("\n", $output),
+            Source::normalizeIndents(implode("\n", $input))
         );
     }
 
-    public function testNormalizeEndingsEmptySpaceReference()
+    public function testNormalizeEndingsEmptySpaceReference(): void
     {
         $input = [' ', '    b', '    c'];
         $output = ['', 'b', 'c'];
         $this->assertSame(
-            join("\n", $output),
-            Source::normalizeIndents(join("\n", $input))
+            implode("\n", $output),
+            Source::normalizeIndents(implode("\n", $input))
         );
     }
 
-    public function testNormalizeEndingsNonEmptyReference()
+    public function testNormalizeEndingsNonEmptyReference(): void
     {
         $input = ['a', '    b', '    c'];
         $output = ['a', '    b', '    c'];
         $this->assertSame(
-            join("\n", $output),
-            Source::normalizeIndents(join("\n", $input))
+            implode("\n", $output),
+            Source::normalizeIndents(implode("\n", $input))
         );
     }
 }

@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Spiral Framework.
  *
  * @license   MIT
  * @author    Anton Titov (Wolfy-J)
  */
+
 declare(strict_types=1);
 
 namespace Spiral\Reactor\Aggregator;
@@ -55,12 +57,11 @@ final class Parameters extends Aggregator
         /**
          * Overwriting parent call.
          */
-
         $parameters = [];
         foreach ($this->getIterator() as $element) {
             $parameters[] = $element->render(0);
         }
 
-        return join(', ', $parameters);
+        return implode(', ', $parameters);
     }
 }

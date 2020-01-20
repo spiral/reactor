@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Spiral Framework.
  *
  * @license   MIT
  * @author    Anton Titov (Wolfy-J)
  */
+
 declare(strict_types=1);
 
 namespace Spiral\Reactor;
@@ -20,7 +22,9 @@ use Spiral\Reactor\Traits\UsesTrait;
  */
 class NamespaceDeclaration extends AbstractDeclaration implements ReplaceableInterface
 {
-    use NamedTrait, UsesTrait, CommentTrait;
+    use NamedTrait;
+    use UsesTrait;
+    use CommentTrait;
 
     /**
      * @var Aggregator

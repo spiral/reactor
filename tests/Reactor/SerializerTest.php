@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Spiral Framework.
  *
@@ -6,86 +7,130 @@
  * @author    Anton Titov (Wolfy-J)
  */
 
+declare(strict_types=1);
+
 namespace Spiral\Tests\Reactor;
 
 use PHPUnit\Framework\TestCase;
+use ReflectionException;
 use Spiral\Reactor\Partial\Source;
 use Spiral\Reactor\Serializer;
 use Spiral\Reactor\Traits\SerializerTrait;
+use Spiral\Tests\Reactor\Fixture;
 
 class SerializerTest extends TestCase
 {
     //To cover this weird trait as well
     use SerializerTrait;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->setSerializer(new Serializer());
     }
 
-    public function testSetGet()
+    public function testSetGet(): void
     {
         $this->setSerializer($s = new Serializer());
         $this->assertSame($s, $this->getSerializer());
     }
 
-    public function testEmptyArray()
+    /**
+     * @throws ReflectionException
+     */
+    public function testEmptyArray(): void
     {
         $this->assertSame('[]', $this->getSerializer()->serialize([]));
     }
 
-    public function testArrayOfArray()
+    /**
+     * @throws ReflectionException
+     */
+    public function testArrayOfArray(): void
     {
-        $this->assertEquals(preg_replace(
-            '/\s+/',
-            '',
-            '[
+        $this->assertEquals($this->replace('[
     \'hello\' => [
         \'name\' => 123
     ]
-]'
-        ), preg_replace('/\s+/', '', $this->getSerializer()->serialize([
+]'), $this->serialized([
             'hello' => ['name' => 123]
-        ])));
+        ]));
     }
 
-    public function testArrayOfArray2()
+    /**
+     * @throws ReflectionException
+     */
+    public function testArrayOfArray2(): void
     {
-        $this->assertEquals(preg_replace(
-            '/\s+/',
-            '',
-            '[
+        $this->assertEquals($this->replace('[
     \'hello\' => [
         \'name\' => 123,
         \'sub\'  => magic
     ]
-]'
-        ), preg_replace('/\s+/', '', $this->getSerializer()->serialize([
+]'), $this->serialized([
             'hello' => ['name' => 123, 'sub' => new Source(['magic'])]
-        ])));
+        ]));
     }
 
-    public function testClassNames()
+    /**
+     * @throws ReflectionException
+     */
+    public function testClassNames(): void
     {
-        $this->assertEquals(preg_replace(
-            '/\s+/',
-            '',
-            '[
+        $this->assertEquals($this->replace('[
     \'hello\' => [
         \'name\' => 123,
         \'sub\'  => \Spiral\Reactor\Serializer::class
     ]
-]'
-        ), preg_replace('/\s+/', '', $this->getSerializer()->serialize([
+]'), $this->serialized([
             'hello' => ['name' => 123, 'sub' => Serializer::class]
-        ])));
+        ]));
     }
 
     /**
+     * @throws ReflectionException
      * @expectedException \Spiral\Reactor\Exception\SerializeException
      */
-    public function testSerializeResource()
+    public function testSerializeResource(): void
     {
         $this->getSerializer()->serialize(STDOUT);
+    }
+
+    /**
+     * @throws ReflectionException
+     * @expectedException \Spiral\Reactor\Exception\SerializeException
+     */
+    public function testSerializeObject(): void
+    {
+        $this->getSerializer()->serialize(new Fixture\SerializedObject());
+    }
+
+    /**
+     * @throws ReflectionException
+     */
+    public function testSerializeStateObject(): void
+    {
+        $this->assertEquals(
+            $this->replace('\\Spiral\Tests\Reactor\Fixture\SerializedStateObject::__set_state(array())'),
+            $this->serialized(new Fixture\SerializedStateObject())
+        );
+    }
+
+    /**
+     * @param $value
+     * @return string
+     * @throws ReflectionException
+     */
+    private function serialized($value): string
+    {
+        return $this->replace($this->getSerializer()->serialize($value));
+    }
+
+    /**
+     * @param string $value
+     * @return string
+     */
+    private function replace(string $value): string
+    {
+        return preg_replace('/\s+/', '', $value);
     }
 }

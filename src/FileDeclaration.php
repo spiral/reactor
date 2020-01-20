@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Spiral Framework.
  *
  * @license   MIT
  * @author    Anton Titov (Wolfy-J)
  */
+
 declare(strict_types=1);
 
 namespace Spiral\Reactor;
@@ -20,7 +22,8 @@ use Spiral\Reactor\Traits\UsesTrait;
  */
 class FileDeclaration extends AbstractDeclaration implements ReplaceableInterface
 {
-    use UsesTrait, CommentTrait;
+    use UsesTrait;
+    use CommentTrait;
 
     /**
      * File namespace.
@@ -53,6 +56,14 @@ class FileDeclaration extends AbstractDeclaration implements ReplaceableInterfac
         ]);
 
         $this->initComment($comment);
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->render(0);
     }
 
     /**
@@ -144,14 +155,6 @@ class FileDeclaration extends AbstractDeclaration implements ReplaceableInterfac
         $result .= "\n";
 
         return $result;
-    }
-
-    /**
-     * @return string
-     */
-    public function __toString(): string
-    {
-        return $this->render(0);
     }
 
     /**

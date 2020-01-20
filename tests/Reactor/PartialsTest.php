@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Spiral Framework.
  *
@@ -6,9 +7,12 @@
  * @author    Anton Titov (Wolfy-J)
  */
 
+declare(strict_types=1);
+
 namespace Spiral\Tests\Reactor;
 
 use PHPUnit\Framework\TestCase;
+use ReflectionException;
 use Spiral\Reactor\ClassDeclaration;
 use Spiral\Reactor\Partial\Method;
 use Spiral\Reactor\Partial\Parameter;
@@ -16,6 +20,9 @@ use Spiral\Reactor\Partial\Property;
 
 class PartialsTest extends TestCase
 {
+    /**
+     * @throws ReflectionException
+     */
     public function testParameter(): void
     {
         $p = new Parameter('name');
@@ -42,6 +49,9 @@ class PartialsTest extends TestCase
         $this->assertSame('int &$name', $p->render());
     }
 
+    /**
+     * @throws ReflectionException
+     */
     public function testProperty(): void
     {
         $p = new Property('name');

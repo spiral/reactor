@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Spiral Framework.
  *
  * @license   MIT
  * @author    Anton Titov (Wolfy-J)
  */
+
 declare(strict_types=1);
 
 namespace Spiral\Reactor\Traits;
@@ -30,11 +32,12 @@ trait AccessTrait
      */
     public function setAccess(string $access): self
     {
-        if (!in_array($access, [
+        if (
+            !in_array($access, [
             AbstractDeclaration::ACCESS_PRIVATE,
             AbstractDeclaration::ACCESS_PROTECTED,
             AbstractDeclaration::ACCESS_PUBLIC
-        ], true)
+            ], true)
         ) {
             throw new ReactorException("Invalid declaration level '{$access}'");
         }

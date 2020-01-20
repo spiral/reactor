@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Spiral Framework.
  *
  * @license   MIT
  * @author    Anton Titov (Wolfy-J)
  */
+
 declare(strict_types=1);
 
 namespace Spiral\Reactor\Partial;
@@ -24,7 +26,7 @@ class Comment extends Source implements ReplaceableInterface
     {
         $lines = $this->getLines();
 
-        array_walk($lines, static function (&$line) use ($search, $replace) {
+        array_walk($lines, static function (&$line) use ($search, $replace): void {
             $line = str_replace($search, $replace, $line);
         });
 
@@ -61,6 +63,6 @@ class Comment extends Source implements ReplaceableInterface
             return '';
         }
 
-        return parent::prepareLine(preg_replace('/^(\s)*(\*)+/si', ' ', $line));
+        return parent::prepareLine(preg_replace('/^(\s)*(\*)+/', ' ', $line));
     }
 }

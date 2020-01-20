@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Spiral Framework.
  *
  * @license   MIT
  * @author    Anton Titov (Wolfy-J)
  */
+
 declare(strict_types=1);
 
 namespace Spiral\Reactor;
@@ -25,7 +27,8 @@ use Spiral\Reactor\Traits\NamedTrait;
  */
 class ClassDeclaration extends AbstractDeclaration implements ReplaceableInterface, NamedInterface
 {
-    use NamedTrait, CommentTrait;
+    use NamedTrait;
+    use CommentTrait;
 
     /** @var string */
     private $extends = '';
@@ -303,7 +306,7 @@ class ClassDeclaration extends AbstractDeclaration implements ReplaceableInterfa
         }
 
         if (!empty($this->interfaces)) {
-            $interfaces = join(', ', array_keys($this->interfaces));
+            $interfaces = implode(', ', array_keys($this->interfaces));
             $header .= " implements {$interfaces}";
         }
 
@@ -356,6 +359,6 @@ class ClassDeclaration extends AbstractDeclaration implements ReplaceableInterfa
             $lines[] = $this->addIndent("use {$class};", $indentLevel);
         }
 
-        return join("\n", $lines);
+        return implode("\n", $lines);
     }
 }

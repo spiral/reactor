@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Spiral Framework.
  *
@@ -6,21 +7,13 @@
  * @author    Anton Titov (Wolfy-J)
  */
 
+declare(strict_types=1);
+
 namespace Spiral\Tests\Reactor;
 
 use PHPUnit\Framework\TestCase;
-use Psr\Container\ContainerInterface;
-use Spiral\Reactor\AbstractDeclaration;
 use Spiral\Reactor\Aggregator\Methods;
-use Spiral\Reactor\ClassDeclaration;
-use Spiral\Reactor\DeclarationInterface;
-use Spiral\Reactor\FileDeclaration;
-use Spiral\Reactor\NamedInterface;
-use Spiral\Reactor\NamespaceDeclaration;
 use Spiral\Reactor\Partial;
-use Spiral\Reactor\Serializer;
-use Spiral\Reactor\Traits\CommentTrait;
-use Spiral\Reactor\Traits\NamedTrait;
 
 class MethodsTest extends TestCase
 {

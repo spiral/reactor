@@ -1,15 +1,18 @@
 <?php
+
 /**
  * Spiral Framework.
  *
  * @license   MIT
  * @author    Anton Titov (Wolfy-J)
  */
+
 declare(strict_types=1);
 
 namespace Spiral\Reactor\Partial;
 
 use Doctrine\Common\Inflector\Inflector;
+use ReflectionException;
 use Spiral\Reactor\AbstractDeclaration;
 use Spiral\Reactor\NamedInterface;
 use Spiral\Reactor\Traits\NamedTrait;
@@ -20,7 +23,8 @@ use Spiral\Reactor\Traits\SerializerTrait;
  */
 class Parameter extends AbstractDeclaration implements NamedInterface
 {
-    use NamedTrait, SerializerTrait;
+    use NamedTrait;
+    use SerializerTrait;
 
     /** @var string */
     private $type = '';
@@ -139,6 +143,7 @@ class Parameter extends AbstractDeclaration implements NamedInterface
 
     /**
      * {@inheritdoc}
+     * @throws ReflectionException
      */
     public function render(int $indentLevel = 0): string
     {

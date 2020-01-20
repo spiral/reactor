@@ -1,10 +1,13 @@
 <?php
+
 /**
  * Spiral Framework.
  *
  * @license   MIT
  * @author    Anton Titov (Wolfy-J)
  */
+
+declare(strict_types=1);
 
 namespace Spiral\Tests\Reactor;
 
@@ -185,15 +188,15 @@ class DeclarationsTest extends TestCase
     public function testFileDeclaration2(): void
     {
         $f = new FileDeclaration();
-        $f->setNamespace("Spiral\\Test");
-        $this->assertContains("namespace Spiral\\Test;", $f->render());
+        $f->setNamespace('Spiral\\Test');
+        $this->assertContains('namespace Spiral\\Test;', $f->render());
 
         $c = new ClassDeclaration('TestClass');
         $c->addTrait(NamedTrait::class);
 
         $f->addElement($c);
         $this->assertTrue($f->getElements()->has('TestClass'));
-        $this->assertContains("use Spiral\\Reactor\\Traits\\NamedTrait;", $f->render());
+        $this->assertContains('use Spiral\\Reactor\\Traits\\NamedTrait;', $f->render());
     }
 
     public function testFileDeclarationDirectives(): void
@@ -210,7 +213,7 @@ class DeclarationsTest extends TestCase
 
     public function testNamespaceDeclaration2(): void
     {
-        $f = new NamespaceDeclaration("Spiral\\Test");
+        $f = new NamespaceDeclaration('Spiral\\Test');
 
         $c = new ClassDeclaration('TestClass', AbstractDeclaration::class, [
             DeclarationInterface::class
@@ -226,10 +229,10 @@ class DeclarationsTest extends TestCase
         $f->addElement($c);
 
         $this->assertTrue($f->getElements()->has('TestClass'));
-        $this->assertContains("use Spiral\\Reactor\\Traits\\CommentTrait;", $f->render());
+        $this->assertContains('use Spiral\\Reactor\\Traits\\CommentTrait;', $f->render());
 
         $c->removeTrait(CommentTrait::class);
-        $this->assertNotContains("use Spiral\\Reactor\\Traits\\CommentTrait;", $f->render());
+        $this->assertNotContains('use Spiral\\Reactor\\Traits\\CommentTrait;', $f->render());
 
         $c->setComment('hello world');
         $this->assertContains('hello world', $f->render());
@@ -237,7 +240,7 @@ class DeclarationsTest extends TestCase
 
     public function testUses(): void
     {
-        $f = new NamespaceDeclaration("Spiral\\Test");
+        $f = new NamespaceDeclaration('Spiral\\Test');
         $f->addUse(AbstractDeclaration::class);
         $f->addUse(NamedInterface::class, 'Named');
 

@@ -1,12 +1,13 @@
 <?php
-/**
- * PHP Data Grid Source
- *
- * @license MIT
- * @author  Valentin V (vvval)
- */
-declare(strict_types=1, ticks=1);
 
+/**
+ * Spiral Framework.
+ *
+ * @license   MIT
+ * @author    Anton Titov (Wolfy-J)
+ */
+
+declare(strict_types=1);
 
 namespace Spiral\Reactor\Partial;
 
@@ -34,6 +35,6 @@ class Directives implements DeclarationInterface
             return '';
         }
 
-        return 'declare(' . join(', ', $this->directives) . ');';
+        return 'declare(' . implode(', ', $this->directives) . ');';
     }
 }

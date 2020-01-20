@@ -1,14 +1,21 @@
 <?php
+
 /**
  * Spiral Framework.
  *
  * @license   MIT
  * @author    Anton Titov (Wolfy-J)
  */
+
 declare(strict_types=1);
 
 namespace Spiral\Reactor;
 
+use ArrayAccess;
+use ArrayIterator;
+use Countable;
+use IteratorAggregate;
+use ReflectionObject;
 use Spiral\Reactor\Exception\ReactorException;
 
 /**
@@ -16,9 +23,9 @@ use Spiral\Reactor\Exception\ReactorException;
  * apply set of operations.
  */
 class Aggregator extends AbstractDeclaration implements
-    \ArrayAccess,
-    \IteratorAggregate,
-    \Countable,
+    ArrayAccess,
+    IteratorAggregate,
+    Countable,
     ReplaceableInterface
 {
     /**
@@ -39,6 +46,18 @@ class Aggregator extends AbstractDeclaration implements
     {
         $this->allowed = $allowed;
         $this->elements = $elements;
+    }
+
+    /**
+     * Get element by it's name.
+     *
+     * @param string $name
+     * @return DeclarationInterface
+     * @throws ReactorException
+     */
+    public function __get($name)
+    {
+        return $this->get($name);
     }
 
     /**
@@ -83,7 +102,7 @@ class Aggregator extends AbstractDeclaration implements
      */
     public function add(DeclarationInterface $element): Aggregator
     {
-        $reflector = new \ReflectionObject($element);
+        $reflector = new ReflectionObject($element);
 
         $allowed = false;
         foreach ($this->allowed as $class) {
@@ -133,23 +152,11 @@ class Aggregator extends AbstractDeclaration implements
     }
 
     /**
-     * Get element by it's name.
-     *
-     * @param string $name
-     * @return DeclarationInterface
-     * @throws ReactorException
+     * @return ArrayIterator
      */
-    public function __get($name)
+    public function getIterator(): ArrayIterator
     {
-        return $this->get($name);
-    }
-
-    /**
-     * @return \ArrayIterator
-     */
-    public function getIterator(): \ArrayIterator
-    {
-        return new \ArrayIterator($this->elements);
+        return new ArrayIterator($this->elements);
     }
 
     /**
@@ -171,7 +178,7 @@ class Aggregator extends AbstractDeclaration implements
     /**
      * {@inheritdoc}
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         $this->remove($offset)->add($value);
     }
@@ -179,7 +186,7 @@ class Aggregator extends AbstractDeclaration implements
     /**
      * {@inheritdoc}
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         $this->remove($offset);
     }
