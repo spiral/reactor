@@ -27,7 +27,7 @@ class SourceTest extends TestCase
         $this->assertSame('    return $name;', $s->getLines()[1]);
     }
 
-    public function normalizeEndings(): void
+    public function testNormalizeEndings(): void
     {
         $string = "line\n\rline2";
         $this->assertSame("line\nline2", Source::normalizeEndings($string));
@@ -64,5 +64,26 @@ class SourceTest extends TestCase
             implode("\n", $output),
             Source::normalizeIndents(implode("\n", $input))
         );
+    }
+
+    /**
+     * @expectedException \Spiral\Reactor\Exception\MultilineException
+     */
+    public function testAddLine(): void
+    {
+        $s = new Source(['line a', 'line b']);
+        $s->addLine('line c');
+
+        $this->assertSame(['line a', 'line b', 'line c'], $s->getLines());
+
+        $s->addLine("line d\nline e");
+    }
+
+    public function testStringify(): void
+    {
+        $s = new Source(['line a', 'line b']);
+        $s->addLine('line c');
+
+        $this->assertSame("line a\nline b\nline c", (string)$s);
     }
 }
