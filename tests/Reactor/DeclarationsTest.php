@@ -145,15 +145,25 @@ class DeclarationsTest extends TestCase
         );
     }
 
-    public function testDependedImport(): void
+    public function testDependedFileImport(): void
     {
         $declaration = new FileDeclaration('Spiral\\Custom_Namespace', 'This is test file');
-        $declaration->addUse(ContainerInterface::class, 'Container');
         $declaration->addElement(new DependedElement('depended'));
 
         $this->assertStringContainsString(
             preg_replace('/\s+/', '', 'use Spiral\Reactor\DependedInterface as DependencyAlias;'),
             preg_replace('/\s+/', '', (string)$declaration)
+        );
+    }
+
+    public function testDependedNamespaceImport(): void
+    {
+        $declaration = new NamespaceDeclaration('Custom_Namespace');
+        $declaration->addElement(new DependedElement('depended'));
+
+        $this->assertStringContainsString(
+            preg_replace('/\s+/', '', 'use Spiral\Reactor\DependedInterface as DependencyAlias;'),
+            preg_replace('/\s+/', '', $declaration->render())
         );
     }
 
