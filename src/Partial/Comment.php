@@ -55,14 +55,13 @@ class Comment extends Source implements ReplaceableInterface
     /**
      * {@inheritdoc}
      */
-    protected function prepareLine(string $line): string
+    protected function prepareLine(string $line): ?string
     {
         $line = trim($line);
-
-        if ($line === '/*' || $line === '/**' || $line === '*/') {
-            return '';
+        if (in_array($line, ['/*', '/**', '*/'], true)) {
+            return null;
         }
 
-        return parent::prepareLine(preg_replace('/^(\s)*(\*)+/', ' ', $line));
+        return parent::prepareLine(preg_replace('/^(\s)*(\*)+\s?/', '', $line));
     }
 }

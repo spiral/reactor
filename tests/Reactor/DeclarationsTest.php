@@ -274,4 +274,27 @@ class DeclarationsTest extends TestCase
         $this->assertContains("use Spiral\Reactor\Serializer;", $f->render());
         $this->assertContains("use Spiral\Reactor\NamedInterface as Named;", $f->render());
     }
+
+    public function testComment(): void
+    {
+        $c = new ClassDeclaration('TestClass', AbstractDeclaration::class, [
+            DeclarationInterface::class
+        ]);
+
+        $c->setComment('');
+        $this->assertNotContains('/**', $c->render());
+
+        $c->setComment("/**\nhello world\n*/");
+        $this->assertContains('hello world', $c->render());
+    }
+
+    public function testCommentLines(): void
+    {
+        $comment = new Partial\Comment();
+        $comment->setString("/**\n * hello world\n/*\n *add space\n*/\n *    indent 3 spaces\n */");
+        $this->assertContains(
+            "/**\n * hello world\n * add space\n *    indent 3 spaces\n */",
+            $comment->render()
+        );
+    }
 }

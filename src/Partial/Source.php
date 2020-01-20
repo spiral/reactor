@@ -219,7 +219,9 @@ class Source extends AbstractDeclaration
         $lines = explode("\n", self::normalizeEndings($string, false));
 
         //Pre-processing
-        return array_map([$this, 'prepareLine'], $lines);
+        return array_filter(array_map([$this, 'prepareLine'], $lines), static function ($line): bool {
+            return $line !== null;
+        });
     }
 
     /**
@@ -228,7 +230,7 @@ class Source extends AbstractDeclaration
      * @param string $line
      * @return string
      */
-    protected function prepareLine(string $line): string
+    protected function prepareLine(string $line): ?string
     {
         return $line;
     }
