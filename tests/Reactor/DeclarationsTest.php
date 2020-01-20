@@ -204,7 +204,9 @@ class DeclarationsTest extends TestCase
         $f = new FileDeclaration();
         $this->assertStringNotContainsString('declare', $f->render());
 
-        $f = new FileDeclaration();
+        $f->setDirectives();
+        $this->assertStringNotContainsString('declare', $f->render());
+
         $f->setDirectives('strict_types=1', 'ticks=1');
         $this->assertStringContainsString('declare', $f->render());
         $this->assertStringContainsString('strict_types=1', $f->render());
