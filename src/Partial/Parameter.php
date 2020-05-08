@@ -11,7 +11,6 @@ declare(strict_types=1);
 
 namespace Spiral\Reactor\Partial;
 
-use Doctrine\Common\Inflector\Inflector;
 use ReflectionException;
 use Spiral\Reactor\AbstractDeclaration;
 use Spiral\Reactor\NamedInterface;
@@ -51,7 +50,7 @@ class Parameter extends AbstractDeclaration implements NamedInterface
      */
     public function setName(string $name): Parameter
     {
-        $this->name = Inflector::camelize($name);
+        $this->name = (new \Doctrine\Inflector\Rules\English\InflectorFactory())->build()->camelize($name);
 
         return $this;
     }

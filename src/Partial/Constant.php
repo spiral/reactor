@@ -11,7 +11,6 @@ declare(strict_types=1);
 
 namespace Spiral\Reactor\Partial;
 
-use Doctrine\Common\Inflector\Inflector;
 use ReflectionException;
 use Spiral\Reactor\AbstractDeclaration;
 use Spiral\Reactor\NamedInterface;
@@ -52,7 +51,11 @@ class Constant extends AbstractDeclaration implements NamedInterface
      */
     public function setName(string $name): Constant
     {
-        $this->name = strtoupper(Inflector::tableize(strtolower($name)));
+        $this->name = strtoupper(
+            (new \Doctrine\Inflector\Rules\English\InflectorFactory())
+                ->build()
+                ->tableize(strtolower($name))
+        );
 
         return $this;
     }

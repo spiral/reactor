@@ -11,7 +11,6 @@ declare(strict_types=1);
 
 namespace Spiral\Reactor;
 
-use Doctrine\Common\Inflector\Inflector;
 use Spiral\Reactor\Aggregator\Constants;
 use Spiral\Reactor\Aggregator\Methods;
 use Spiral\Reactor\Aggregator\Properties;
@@ -81,7 +80,7 @@ class ClassDeclaration extends AbstractDeclaration implements ReplaceableInterfa
      */
     public function setName(string $name): ClassDeclaration
     {
-        $this->name = Inflector::classify($name);
+        $this->name = (new \Doctrine\Inflector\Rules\English\InflectorFactory())->build()->classify($name);
 
         return $this;
     }
