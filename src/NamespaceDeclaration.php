@@ -90,7 +90,7 @@ class NamespaceDeclaration extends AbstractDeclaration implements ReplaceableInt
         }
 
         if (!empty($this->getName())) {
-            $result = $this->addIndent("namespace {$this->getName()} {", $indentLevel) . "\n";
+            $result .= $this->addIndent("namespace {$this->getName()} {", $indentLevel) . "\n";
             $indentShift = 1;
         }
 

@@ -57,6 +57,9 @@ class ReplaceTest extends TestCase
             /**
              * Full file of foxes
              */
+            /**
+             * All about foxes
+             */
             namespace Namespace {
                 class MyClass extends Record
                 {
@@ -92,6 +95,9 @@ class ReplaceTest extends TestCase
             preg_replace('/\s+/', '', '<?php
                 /**
                  * Full file of dogs
+                 */
+                /**
+                 * All about dogs
                  */
                 namespace Namespace {
                     class MyClass extends Record

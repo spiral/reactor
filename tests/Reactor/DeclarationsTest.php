@@ -169,13 +169,16 @@ class DeclarationsTest extends TestCase
 
     public function testNamespaceDeclaration(): void
     {
-        $declaration = new NamespaceDeclaration('Spiral\\Custom_Namespace');
+        $declaration = new NamespaceDeclaration('Spiral\\Custom_Namespace', 'This is test namespace');
         $declaration->addUse(ContainerInterface::class, 'Container');
 
         $declaration->addElement($this->testClassDeclaration());
 
         $this->assertSame(
             preg_replace('/\s+/', '', '
+            /**
+             * This is test namespace
+             */
              namespace Spiral\\Custom_Namespace {
                  use Psr\Container\ContainerInterface as Container;
 
