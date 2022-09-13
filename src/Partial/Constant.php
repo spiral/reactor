@@ -1,117 +1,73 @@
 <?php
 
-/**
- * Spiral Framework.
- *
- * @license   MIT
- * @author    Anton Titov (Wolfy-J)
- */
-
 declare(strict_types=1);
 
 namespace Spiral\Reactor\Partial;
 
 use Doctrine\Inflector\Rules\English\InflectorFactory;
-use ReflectionException;
-use Spiral\Reactor\AbstractDeclaration;
+use Nette\PhpGenerator\Constant as NetteConstant;
+use Spiral\Reactor\AggregableInterface;
 use Spiral\Reactor\NamedInterface;
-use Spiral\Reactor\Traits\AccessTrait;
-use Spiral\Reactor\Traits\CommentTrait;
-use Spiral\Reactor\Traits\NamedTrait;
-use Spiral\Reactor\Traits\SerializerTrait;
+use Spiral\Reactor\Traits;
 
-/**
- * Class constant declaration.
- */
-class Constant extends AbstractDeclaration implements NamedInterface
+final class Constant implements NamedInterface, AggregableInterface
 {
-    use NamedTrait;
-    use CommentTrait;
-    use SerializerTrait;
-    use AccessTrait;
+    use Traits\AttributeAware;
+    use Traits\CommentAware;
+    use Traits\NameAware;
+    use Traits\VisibilityAware;
 
-    /**
-     * @var mixed
-     */
-    private $value;
+    private NetteConstant $element;
 
-    /**
-     * @param string       $value
-     * @param string|array $comment
-     */
-    public function __construct(string $name, $value, $comment = '')
+    public function __construct(string $name, mixed $value = null)
     {
-        $this->setName($name);
-        $this->value = $value;
-        $this->initComment($comment);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setName(string $name): Constant
-    {
-        $this->name = strtoupper(
-            (new InflectorFactory())
-                ->build()
-                ->tableize(strtolower($name))
+        $this->element = new NetteConstant(
+            \strtoupper((new InflectorFactory())->build()->tableize(\strtolower($name)))
         );
+        $this->element->setValue($value);
+    }
+
+    public function setValue(mixed $value): self
+    {
+        $this->element->setValue($value);
 
         return $this;
     }
 
-    /**
-     * Array values allowed (but works in PHP7 only).
-     *
-     * @param mixed $value
-     */
-    public function setValue($value): self
+    public function getValue(): mixed
     {
-        $this->value = $value;
+        return $this->element->getValue();
+    }
+
+    public function setFinal(bool $state = true): self
+    {
+        $this->element->setFinal($state);
 
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getValue()
+    public function isFinal(): bool
     {
-        return $this->value;
+        return $this->element->isFinal();
     }
 
     /**
-     * {@inheritdoc}
-     * @throws ReflectionException
+     * @internal
      */
-    public function render(int $indentLevel = 0): string
+    public static function fromElement(NetteConstant $element): self
     {
-        $result = '';
-        if (!$this->docComment->isEmpty()) {
-            $result .= $this->docComment->render($indentLevel) . "\n";
-        }
+        $constant = new self($element->getName());
 
-        $result .= $this->addIndent("{$this->access} const {$this->getName()} = ", $indentLevel);
+        $constant->element = $element;
 
-        $value = $this->getSerializer()->serialize($this->value);
-        if (is_array($this->value)) {
-            $value = $this->mountIndents($value, $indentLevel);
-        }
-
-        return $result . "{$value};";
+        return $constant;
     }
 
     /**
-     * Mount indentation to value. Attention, to be applied to arrays only!
+     * @internal
      */
-    private function mountIndents(string $serialized, int $indentLevel): string
+    public function getElement(): NetteConstant
     {
-        $lines = explode("\n", $serialized);
-        foreach ($lines as &$line) {
-            $line = $this->addIndent($line, $indentLevel);
-            unset($line);
-        }
-
-        return ltrim(implode("\n", $lines));
+        return $this->element;
     }
 }

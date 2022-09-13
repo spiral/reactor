@@ -1,183 +1,95 @@
 <?php
 
-/**
- * Spiral Framework.
- *
- * @license   MIT
- * @author    Anton Titov (Wolfy-J)
- */
-
 declare(strict_types=1);
 
 namespace Spiral\Reactor\Partial;
 
-use Spiral\Reactor\AbstractDeclaration;
-use Spiral\Reactor\Aggregator\Parameters;
+use Nette\PhpGenerator\Method as NetteMethod;
+use Spiral\Reactor\AggregableInterface;
 use Spiral\Reactor\NamedInterface;
-use Spiral\Reactor\ReplaceableInterface;
-use Spiral\Reactor\Traits\AccessTrait;
-use Spiral\Reactor\Traits\CommentTrait;
-use Spiral\Reactor\Traits\NamedTrait;
+use Spiral\Reactor\Traits;
 
-/**
- * Represent class method.
- */
-class Method extends AbstractDeclaration implements ReplaceableInterface, NamedInterface
+final class Method implements NamedInterface, AggregableInterface, \Stringable
 {
-    use NamedTrait;
-    use CommentTrait;
-    use AccessTrait;
+    use Traits\AttributeAware;
+    use Traits\CommentAware;
+    use Traits\FunctionLike;
+    use Traits\NameAware;
+    use Traits\VisibilityAware;
 
-    /** @var bool */
-    private $static = false;
+    private NetteMethod $element;
 
-    /** @var string */
-    private $return;
-
-    /** @var Parameters */
-    private $parameters;
-
-    /** @var Source */
-    private $source;
-
-    /**
-     * @param string|array $source
-     * @param string|array $comment
-     */
-    public function __construct(string $name, $source = '', $comment = '')
+    public function __construct(string $name)
     {
-        $this->setName($name);
-        $this->parameters = new Parameters([]);
-        $this->initSource($source);
-        $this->initComment($comment);
+        $this->element = new NetteMethod($name);
     }
 
-    public function setStatic(bool $static = true): Method
+    public function __toString(): string
     {
-        $this->static = $static;
-
-        return $this;
+        return $this->element->__toString();
     }
 
-    public function setReturn(string $return): Method
+    public function setStatic(bool $state = true): self
     {
-        $this->return = $return;
+        $this->element->setStatic($state);
 
         return $this;
     }
 
     public function isStatic(): bool
     {
-        return $this->static;
+        return $this->element->isStatic();
     }
 
-    /**
-     * Rename to getSource()?
-     */
-    public function getSource(): Source
+    public function setFinal(bool $state = true): self
     {
-        return $this->source;
-    }
-
-    /**
-     * Set method source.
-     *
-     * @param string|array $source
-     */
-    public function setSource($source): Method
-    {
-        if (!empty($source)) {
-            if (is_array($source)) {
-                $this->source->setLines($source);
-            } elseif (is_string($source)) {
-                $this->source->setString($source);
-            }
-        }
+        $this->element->setFinal($state);
 
         return $this;
     }
 
-    /**
-     * @return Parameters|Parameter[]
-     */
-    public function getParameters(): Parameters
+    public function isFinal(): bool
     {
-        return $this->parameters;
+        return $this->element->isFinal();
     }
 
-    public function parameter(string $name): Parameter
+    public function setAbstract(bool $state = true): self
     {
-        return $this->parameters->get($name);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function replace($search, $replace): Method
-    {
-        $this->docComment->replace($search, $replace);
+        $this->element->setAbstract($state);
 
         return $this;
     }
 
-    public function render(int $indentLevel = 0): string
+    public function isAbstract(): bool
     {
-        $result = '';
-        if (!$this->docComment->isEmpty()) {
-            $result .= $this->docComment->render($indentLevel) . "\n";
-        }
-
-        $method = $this->renderModifiers();
-        if (!$this->parameters->isEmpty()) {
-            $method .= "({$this->parameters->render()})";
-        } else {
-            $method .= '()';
-        }
-
-        if ($this->return) {
-            $method .= ": {$this->return}";
-        }
-
-        $result .= $this->addIndent($method, $indentLevel) . "\n";
-        $result .= $this->addIndent('{', $indentLevel) . "\n";
-
-        if (!$this->source->isEmpty()) {
-            $result .= $this->source->render($indentLevel + 1) . "\n";
-        }
-
-        return $result . $this->addIndent('}', $indentLevel);
-    }
-
-    private function renderModifiers(): string
-    {
-        $chunks = [$this->getAccess()];
-
-        if ($this->isStatic()) {
-            $chunks[] = 'static';
-        }
-
-        $chunks[] = "function {$this->getName()}";
-
-        return implode(' ', $chunks);
+        return $this->element->isAbstract();
     }
 
     /**
-     * Init source value.
-     *
-     * @param string|array $source
+     * @param string $name without $
      */
-    private function initSource($source): void
+    public function addPromotedParameter(string $name, mixed $defaultValue = null): PromotedParameter
     {
-        if (empty($this->source)) {
-            $this->source = new Source();
-        }
+        return PromotedParameter::fromElement($this->element->addPromotedParameter($name, $defaultValue));
+    }
 
-        if (!empty($source)) {
-            if (is_array($source)) {
-                $this->source->setLines($source);
-            } elseif (is_string($source)) {
-                $this->source->setString($source);
-            }
-        }
+    /**
+     * @internal
+     */
+    public static function fromElement(NetteMethod $element): self
+    {
+        $method = new self($element->getName());
+
+        $method->element = $element;
+
+        return $method;
+    }
+
+    /**
+     * @internal
+     */
+    public function getElement(): NetteMethod
+    {
+        return $this->element;
     }
 }

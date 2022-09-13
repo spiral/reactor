@@ -1,149 +1,119 @@
 <?php
 
-/**
- * Spiral Framework.
- *
- * @license   MIT
- * @author    Anton Titov (Wolfy-J)
- */
-
 declare(strict_types=1);
 
 namespace Spiral\Reactor\Partial;
 
-use ReflectionException;
-use Spiral\Reactor\AbstractDeclaration;
+use Nette\PhpGenerator\Property as NetteProperty;
+use Spiral\Reactor\AggregableInterface;
 use Spiral\Reactor\NamedInterface;
-use Spiral\Reactor\ReplaceableInterface;
-use Spiral\Reactor\Traits\AccessTrait;
-use Spiral\Reactor\Traits\CommentTrait;
-use Spiral\Reactor\Traits\NamedTrait;
-use Spiral\Reactor\Traits\SerializerTrait;
+use Spiral\Reactor\Traits;
 
-/**
- * Declares property element.
- */
-class Property extends AbstractDeclaration implements ReplaceableInterface, NamedInterface
+final class Property implements NamedInterface, AggregableInterface
 {
-    use NamedTrait;
-    use CommentTrait;
-    use SerializerTrait;
-    use AccessTrait;
+    use Traits\AttributeAware;
+    use Traits\CommentAware;
+    use Traits\NameAware;
+    use Traits\VisibilityAware;
 
-    /**
-     * @var bool
-     */
-    private $hasDefault = false;
+    private NetteProperty $element;
 
-    /**
-     * @var mixed
-     */
-    private $defaultValue;
-
-    /**
-     * @param mixed        $defaultValue
-     * @param string|array $comment
-     */
-    public function __construct(string $name, $defaultValue = null, $comment = '')
+    public function __construct(string $name)
     {
-        $this->setName($name);
-        if ($defaultValue !== null) {
-            $this->setDefaultValue($defaultValue);
-        }
-
-        $this->initComment($comment);
+        $this->element = new NetteProperty($name);
     }
 
-    /**
-     * Has default value.
-     */
-    public function hasDefaultValue(): bool
+    public function setValue(mixed $value): self
     {
-        return $this->hasDefault;
-    }
-
-    /**
-     * Set default value.
-     *
-     * @param mixed $value
-     */
-    public function setDefaultValue($value): Property
-    {
-        $this->hasDefault = true;
-        $this->defaultValue = $value;
+        $this->element->setValue($value);
 
         return $this;
     }
 
-    /**
-     * Remove default value.
-     */
-    public function removeDefaultValue(): Property
+    public function getValue(): mixed
     {
-        $this->hasDefault = false;
-        $this->defaultValue = null;
+        return $this->element->getValue();
+    }
+
+    public function setStatic(bool $state = true): self
+    {
+        $this->element->setStatic($state);
 
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getDefaultValue()
+    public function isStatic(): bool
     {
-        return $this->defaultValue;
+        return $this->element->isStatic();
+    }
+
+    public function setType(?string $type): self
+    {
+        $this->element->setType($type);
+
+        return $this;
+    }
+
+    public function getType(): ?string
+    {
+        $type = $this->element->getType();
+
+        return $type === null ? null : (string) $type;
+    }
+
+    public function setNullable(bool $state = true): self
+    {
+        $this->element->setNullable($state);
+
+        return $this;
+    }
+
+    public function isNullable(): bool
+    {
+        return $this->element->isNullable();
+    }
+
+    public function setInitialized(bool $state = true): self
+    {
+        $this->element->setInitialized($state);
+
+        return $this;
+    }
+
+    public function isInitialized(): bool
+    {
+        return $this->element->isInitialized();
+    }
+
+    public function setReadOnly(bool $state = true): self
+    {
+        $this->element->setReadOnly($state);
+
+        return $this;
+    }
+
+    public function isReadOnly(): bool
+    {
+        return $this->element->isReadOnly();
     }
 
     /**
-     * Replace comments.
-     *
-     * @param array|string $search
-     * @param array|string $replace
+     * @internal
      */
-    public function replace($search, $replace): void
+    public static function fromElement(NetteProperty $element): self
     {
-        $this->docComment->replace($search, $replace);
+        $property = new self($element->getName());
+
+        $property->element = $element;
+
+        return $property;
     }
 
     /**
-     * {@inheritdoc}
-     * @throws ReflectionException
+     * @internal
      */
-    public function render(int $indentLevel = 0): string
+    public function getElement(): NetteProperty
     {
-        $result = '';
-        if (!$this->docComment->isEmpty()) {
-            $result .= $this->docComment->render($indentLevel) . "\n";
-        }
-
-        $result .= $this->addIndent("{$this->access} \${$this->getName()}", $indentLevel);
-
-        if ($this->hasDefault) {
-            $value = $this->getSerializer()->serialize($this->defaultValue);
-
-            if (is_array($this->defaultValue)) {
-                $value = $this->mountIndents($value, $indentLevel);
-            }
-
-            $result .= " = {$value};";
-        } else {
-            $result .= ';';
-        }
-
-        return $result;
-    }
-
-    /**
-     * Mount indentation to value. Attention, to be applied to arrays only!
-     */
-    private function mountIndents(string $serialized, int $indentLevel): string
-    {
-        $lines = explode("\n", $serialized);
-        foreach ($lines as &$line) {
-            $line = $this->addIndent($line, $indentLevel);
-            unset($line);
-        }
-
-        return ltrim(implode("\n", $lines));
+        return $this->element;
     }
 }
