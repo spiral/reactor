@@ -25,7 +25,7 @@ final class EnumDeclarationTest extends TestCase
             ->setReturnType('string')
             ->addBody('return self::First->value;');
 
-        self::assertSame(preg_replace('/\s+/', '', '
+        $this->assertSame(preg_replace('/\s+/', '', '
             /**
              * Description of enum
              */
@@ -42,98 +42,100 @@ final class EnumDeclarationTest extends TestCase
                     return self::First->value;
                 }
              }
-        '), preg_replace('/\s+/', '', (string) $enum));
+        '),
+            preg_replace('/\s+/', '', (string) $enum)
+        );
     }
 
     public function testName(): void
     {
         $enum = new EnumDeclaration('test');
 
-        self::assertSame('test', $enum->getName());
+        $this->assertSame('test', $enum->getName());
     }
 
     public function testType(): void
     {
         $enum = new EnumDeclaration('test');
 
-        self::assertNull($enum->getType());
+        $this->assertNull($enum->getType());
 
         $enum->setType('string');
-        self::assertSame('string', $enum->getType());
+        $this->assertSame('string', $enum->getType());
     }
 
     public function testCase(): void
     {
         $enum = new EnumDeclaration('Test');
 
-        self::assertEmpty($enum->getCases());
+        $this->assertEmpty($enum->getCases());
 
         $enum->addCase('test');
-        self::assertCount(1, $enum->getCases());
-        self::assertInstanceOf(Partial\EnumCase::class, $enum->getCase('test'));
+        $this->assertCount(1, $enum->getCases());
+        $this->assertInstanceOf(Partial\EnumCase::class, $enum->getCase('test'));
 
         $enum->removeCase('test');
-        self::assertEmpty($enum->getCases());
+        $this->assertEmpty($enum->getCases());
 
         $enum->setCases(new EnumCases([new Partial\EnumCase('foo'), new Partial\EnumCase('bar')]));
-        self::assertCount(2, $enum->getCases());
-        self::assertInstanceOf(Partial\EnumCase::class, $enum->getCase('foo'));
-        self::assertInstanceOf(Partial\EnumCase::class, $enum->getCase('bar'));
+        $this->assertCount(2, $enum->getCases());
+        $this->assertInstanceOf(Partial\EnumCase::class, $enum->getCase('foo'));
+        $this->assertInstanceOf(Partial\EnumCase::class, $enum->getCase('bar'));
     }
 
     public function testImplements(): void
     {
         $enum = new EnumDeclaration('Test');
 
-        self::assertEmpty($enum->getImplements());
+        $this->assertEmpty($enum->getImplements());
 
         $enum->addImplement('Test');
-        self::assertSame(['Test'], $enum->getImplements());
+        $this->assertSame(['Test'], $enum->getImplements());
 
         $enum->setImplements(['Foo', 'Bar']);
-        self::assertSame(['Foo', 'Bar'], $enum->getImplements());
+        $this->assertSame(['Foo', 'Bar'], $enum->getImplements());
 
         $enum->removeImplement('Bar');
-        self::assertSame(['Foo'], $enum->getImplements());
+        $this->assertSame(['Foo'], $enum->getImplements());
 
         $enum->removeImplement('Foo');
-        self::assertEmpty($enum->getImplements());
+        $this->assertEmpty($enum->getImplements());
     }
 
     public function testAddMember(): void
     {
         $enum = new EnumDeclaration('Test');
 
-        self::assertEmpty($enum->getCases());
+        $this->assertEmpty($enum->getCases());
         $enum->addMember(new Partial\EnumCase('test'));
-        self::assertCount(1, $enum->getCases());
-        self::assertInstanceOf(Partial\EnumCase::class, $enum->getCase('test'));
+        $this->assertCount(1, $enum->getCases());
+        $this->assertInstanceOf(Partial\EnumCase::class, $enum->getCase('test'));
 
-        self::assertEmpty($enum->getConstants());
+        $this->assertEmpty($enum->getConstants());
         $enum->addMember(new Partial\Constant('TEST'));
-        self::assertCount(1, $enum->getConstants());
-        self::assertInstanceOf(Partial\Constant::class, $enum->getConstant('TEST'));
+        $this->assertCount(1, $enum->getConstants());
+        $this->assertInstanceOf(Partial\Constant::class, $enum->getConstant('TEST'));
 
-        self::assertEmpty($enum->getMethods());
+        $this->assertEmpty($enum->getMethods());
         $enum->addMember(new Partial\Method('test'));
-        self::assertCount(1, $enum->getMethods());
-        self::assertInstanceOf(Partial\Method::class, $enum->getMethod('test'));
+        $this->assertCount(1, $enum->getMethods());
+        $this->assertInstanceOf(Partial\Method::class, $enum->getMethod('test'));
 
-        self::assertEmpty($enum->getTraits());
+        $this->assertEmpty($enum->getTraits());
         $enum->addMember(new Partial\TraitUse('test'));
-        self::assertCount(1, $enum->getTraits());
-        self::assertInstanceOf(Partial\TraitUse::class, $enum->getTrait('test'));
+        $this->assertCount(1, $enum->getTraits());
+        $this->assertInstanceOf(Partial\TraitUse::class, $enum->getTrait('test'));
     }
 
     public function testIsEnum(): void
     {
         $enum = new EnumDeclaration('Test');
 
-        self::assertTrue($enum->isEnum());
+        $this->assertTrue($enum->isEnum());
 
-        self::assertFalse($enum->isInterface());
-        self::assertFalse($enum->isClass());
-        self::assertFalse($enum->isTrait());
+        $this->assertFalse($enum->isInterface());
+        $this->assertFalse($enum->isClass());
+        $this->assertFalse($enum->isTrait());
     }
 
     public function testRender(): void
@@ -155,23 +157,23 @@ final class EnumDeclarationTest extends TestCase
         $enum->addCase('First', 'first');
         $enum->addCase('Second', 'second');;
 
-        self::assertSame($expect, preg_replace('/\s+/', '', $enum->render()));
-        self::assertSame($expect, preg_replace('/\s+/', '', $enum->__toString()));
+        $this->assertSame($expect, preg_replace('/\s+/', '', $enum->render()));
+        $this->assertSame($expect, preg_replace('/\s+/', '', $enum->__toString()));
     }
 
     public function testFromElement(): void
     {
         $enum = EnumDeclaration::fromElement(new EnumType('Test'));
 
-        self::assertInstanceOf(EnumDeclaration::class, $enum);
-        self::assertSame('Test', $enum->getName());
+        $this->assertInstanceOf(EnumDeclaration::class, $enum);
+        $this->assertSame('Test', $enum->getName());
     }
 
     public function testGetElement(): void
     {
         $element = (new EnumDeclaration('Test'))->getElement();
 
-        self::assertInstanceOf(EnumType::class, $element);
-        self::assertSame('Test', $element->getName());
+        $this->assertInstanceOf(EnumType::class, $element);
+        $this->assertSame('Test', $element->getName());
     }
 }
