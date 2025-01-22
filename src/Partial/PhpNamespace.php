@@ -10,7 +10,6 @@ use Nette\PhpGenerator\EnumType;
 use Nette\PhpGenerator\InterfaceType;
 use Nette\PhpGenerator\PhpNamespace as NettePhpNamespace;
 use Nette\PhpGenerator\TraitType;
-use Spiral\Reactor\AbstractDeclaration;
 use Spiral\Reactor\AggregableInterface;
 use Spiral\Reactor\Aggregator\Elements;
 use Spiral\Reactor\ClassDeclaration;
@@ -95,7 +94,7 @@ final class PhpNamespace implements NamedInterface, AggregableInterface, \String
     public function getElements(): Elements
     {
         return new Elements(\array_map(
-            static fn (ClassLike $element): AbstractDeclaration => match (true) {
+            static fn (ClassLike $element) => match (true) {
                 $element instanceof ClassType => ClassDeclaration::fromElement($element),
                 $element instanceof InterfaceType => InterfaceDeclaration::fromElement($element),
                 $element instanceof TraitType => TraitDeclaration::fromElement($element),
