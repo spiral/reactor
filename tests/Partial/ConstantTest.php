@@ -81,6 +81,16 @@ final class ConstantTest extends TestCase
         self::assertTrue($constant->isFinal());
     }
 
+    public function testType(): void
+    {
+        $constant = new Constant('TEST');
+
+        self::assertNull($constant->getType());
+
+        $constant->setType('null');
+        self::assertSame('null', $constant->getType());
+    }
+
     public function testFromElement(): void
     {
         $constant = Constant::fromElement(new NetteConstant('TEST'));
