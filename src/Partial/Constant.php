@@ -63,18 +63,6 @@ final class Constant implements NamedInterface, AggregableInterface
         return $this->element->isFinal();
     }
 
-    public function setType(?string $type): self
-    {
-        $this->element->setType($type);
-
-        return $this;
-    }
-
-    public function getType(): ?string
-    {
-        return $this->element->getType();
-    }
-
     /**
      * @internal
      */
