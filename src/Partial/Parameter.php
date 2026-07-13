@@ -26,18 +26,6 @@ class Parameter implements NamedInterface, AggregableInterface
         $this->element = new NetteParameter((new InflectorFactory())->build()->camelize($name));
     }
 
-    /**
-     * @internal
-     */
-    public static function fromElement(NetteParameter|NettePromotedParameter $element): static
-    {
-        $parameter = new static($element->getName());
-
-        $parameter->element = $element;
-
-        return $parameter;
-    }
-
     public function setReference(bool $state = true): static
     {
         $this->element->setReference($state);
@@ -91,6 +79,18 @@ class Parameter implements NamedInterface, AggregableInterface
     public function hasDefaultValue(): bool
     {
         return $this->element->hasDefaultValue();
+    }
+
+    /**
+     * @internal
+     */
+    public static function fromElement(NetteParameter|NettePromotedParameter $element): static
+    {
+        $parameter = new static($element->getName());
+
+        $parameter->element = $element;
+
+        return $parameter;
     }
 
     /**

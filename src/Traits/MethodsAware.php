@@ -16,8 +16,8 @@ trait MethodsAware
     public function setMethods(Methods $methods): static
     {
         $this->element->setMethods(\array_map(
-            static fn(Method $method): NetteMethod => $method->getElement(),
-            \iterator_to_array($methods),
+            static fn (Method $method) => $method->getElement(),
+            \iterator_to_array($methods)
         ));
 
         return $this;
@@ -26,8 +26,8 @@ trait MethodsAware
     public function getMethods(): Methods
     {
         return new Methods(\array_map(
-            Method::fromElement(...),
-            $this->element->getMethods(),
+            static fn (NetteMethod $method) => Method::fromElement($method),
+            $this->element->getMethods()
         ));
     }
 

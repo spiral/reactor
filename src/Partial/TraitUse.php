@@ -21,18 +21,6 @@ final class TraitUse implements NamedInterface, AggregableInterface
         $this->element = new NetteTraitUse($name);
     }
 
-    /**
-     * @internal
-     */
-    public static function fromElement(NetteTraitUse $element): self
-    {
-        $traitUse = new self($element->getName());
-
-        $traitUse->element = $element;
-
-        return $traitUse;
-    }
-
     public function getResolutions(): array
     {
         return $this->element->getResolutions();
@@ -43,6 +31,18 @@ final class TraitUse implements NamedInterface, AggregableInterface
         $this->element->addResolution($resolution);
 
         return $this;
+    }
+
+    /**
+     * @internal
+     */
+    public static function fromElement(NetteTraitUse $element): self
+    {
+        $traitUse = new self($element->getName());
+
+        $traitUse->element = $element;
+
+        return $traitUse;
     }
 
     /**

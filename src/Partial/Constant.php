@@ -22,21 +22,9 @@ final class Constant implements NamedInterface, AggregableInterface
     public function __construct(string $name, mixed $value = null)
     {
         $this->element = new NetteConstant(
-            \strtoupper((new InflectorFactory())->build()->tableize(\strtolower($name))),
+            \strtoupper((new InflectorFactory())->build()->tableize(\strtolower($name)))
         );
         $this->element->setValue($value);
-    }
-
-    /**
-     * @internal
-     */
-    public static function fromElement(NetteConstant $element): self
-    {
-        $constant = new self($element->getName());
-
-        $constant->element = $element;
-
-        return $constant;
     }
 
     public function setValue(mixed $value): self
@@ -63,16 +51,16 @@ final class Constant implements NamedInterface, AggregableInterface
         return $this->element->isFinal();
     }
 
-    public function setType(?string $type): self
+    /**
+     * @internal
+     */
+    public static function fromElement(NetteConstant $element): self
     {
-        $this->element->setType($type);
+        $constant = new self($element->getName());
 
-        return $this;
-    }
+        $constant->element = $element;
 
-    public function getType(): ?string
-    {
-        return $this->element->getType();
+        return $constant;
     }
 
     /**

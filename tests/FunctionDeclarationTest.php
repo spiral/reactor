@@ -14,18 +14,15 @@ final class FunctionDeclarationTest extends TestCase
     {
         $fn = FunctionDeclaration::from('var_dump');
 
-        self::assertInstanceOf(FunctionDeclaration::class, $fn);
-        self::assertSame('var_dump', $fn->getName());
-        self::assertSame('void', $fn->getReturnType());
-        self::assertCount(2, $fn->getParameters());
+        $this->assertInstanceOf(FunctionDeclaration::class, $fn);
+        $this->assertSame('var_dump', $fn->getName());
+        $this->assertSame('void', $fn->getReturnType());
+        $this->assertCount(2, $fn->getParameters());
     }
 
     public function testRender(): void
     {
-        $expect = \preg_replace(
-            '/\s+/',
-            '',
-            '
+        $expect = preg_replace('/\s+/', '', '
            /**
             * Some function
             */
@@ -33,7 +30,7 @@ final class FunctionDeclarationTest extends TestCase
             function test(): string
             {
                 return \'Hello world\';
-            }',
+            }'
         );
 
         $fn = new FunctionDeclaration('test');
@@ -43,21 +40,21 @@ final class FunctionDeclarationTest extends TestCase
             ->addAttribute('SomeAttribute')
             ->addComment('Some function');
 
-        self::assertSame($expect, \preg_replace('/\s+/', '', $fn->render()));
-        self::assertSame($expect, \preg_replace('/\s+/', '', $fn->__toString()));
+        $this->assertSame($expect, preg_replace('/\s+/', '', $fn->render()));
+        $this->assertSame($expect, preg_replace('/\s+/', '', $fn->__toString()));
     }
 
     public function testFromElement(): void
     {
         $fn = FunctionDeclaration::fromElement(new GlobalFunction('var_dump'));
 
-        self::assertInstanceOf(FunctionDeclaration::class, $fn);
+        $this->assertInstanceOf(FunctionDeclaration::class, $fn);
     }
 
     public function testGetElement(): void
     {
         $element = (new FunctionDeclaration('var_dump'))->getElement();
 
-        self::assertInstanceOf(GlobalFunction::class, $element);
+        $this->assertInstanceOf(GlobalFunction::class, $element);
     }
 }

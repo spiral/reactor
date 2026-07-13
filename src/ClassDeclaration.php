@@ -9,6 +9,7 @@ use Spiral\Reactor\Partial\Constant;
 use Spiral\Reactor\Partial\Method;
 use Spiral\Reactor\Partial\Property;
 use Spiral\Reactor\Partial\TraitUse;
+use Spiral\Reactor\Traits;
 
 /**
  * @extends AbstractDeclaration<ClassType>
@@ -23,18 +24,6 @@ class ClassDeclaration extends AbstractDeclaration implements AggregableInterfac
     public function __construct(?string $name = null)
     {
         $this->element = new ClassType($name);
-    }
-
-    /**
-     * @internal
-     */
-    public static function fromElement(ClassType $element): static
-    {
-        $class = new static();
-
-        $class->element = $element;
-
-        return $class;
     }
 
     public function setFinal(bool $state = true): static
@@ -83,9 +72,7 @@ class ClassDeclaration extends AbstractDeclaration implements AggregableInterfac
         return $this;
     }
 
-    /**
-     * @return string[]
-     */
+    /** @return string[] */
     public function getImplements(): array
     {
         return $this->element->getImplements();
@@ -110,6 +97,18 @@ class ClassDeclaration extends AbstractDeclaration implements AggregableInterfac
         $this->element->addMember($member->getElement());
 
         return $this;
+    }
+
+    /**
+     * @internal
+     */
+    public static function fromElement(ClassType $element): static
+    {
+        $class = new static();
+
+        $class->element = $element;
+
+        return $class;
     }
 
     /**

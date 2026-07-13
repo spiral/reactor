@@ -7,6 +7,7 @@ namespace Spiral\Reactor;
 use Nette\PhpGenerator\ClassLike;
 use Nette\PhpGenerator\ClassType;
 use Nette\PhpGenerator\EnumType;
+use Nette\PhpGenerator\GlobalFunction;
 use Nette\PhpGenerator\InterfaceType;
 use Nette\PhpGenerator\PhpNamespace as NettePhpNamespace;
 use Nette\PhpGenerator\Factory;
@@ -16,6 +17,7 @@ use Spiral\Reactor\Aggregator\Elements;
 use Spiral\Reactor\Aggregator\Functions;
 use Spiral\Reactor\Aggregator\Namespaces;
 use Spiral\Reactor\Partial\PhpNamespace;
+use Spiral\Reactor\Traits;
 
 /**
  * Provides ability to render file content.
@@ -36,6 +38,11 @@ class FileDeclaration implements \Stringable, DeclarationInterface
         $this->element->setStrictTypes(true);
     }
 
+    public function __toString(): string
+    {
+        return (new Printer())->print($this);
+    }
+
     public static function fromCode(string $code): static
     {
         return self::fromElement((new Factory())->fromCode($code));
@@ -44,18 +51,6 @@ class FileDeclaration implements \Stringable, DeclarationInterface
     public static function fromReflection(\ReflectionClass $reflection): static
     {
         return self::fromElement((new Factory())->fromCode(\file_get_contents($reflection->getFileName())));
-    }
-
-    /**
-     * @internal
-     */
-    public static function fromElement(PhpFile $element): static
-    {
-        $file = new static();
-
-        $file->element = $element;
-
-        return $file;
     }
 
     public function addNamespace(string|PhpNamespace $namespace): PhpNamespace
@@ -77,16 +72,16 @@ class FileDeclaration implements \Stringable, DeclarationInterface
     public function getNamespaces(): Namespaces
     {
         return new Namespaces(\array_map(
-            PhpNamespace::fromElement(...),
-            $this->element->getNamespaces(),
+            static fn (NettePhpNamespace $namespace) => PhpNamespace::fromElement($namespace),
+            $this->element->getNamespaces()
         ));
     }
 
     public function getFunctions(): Functions
     {
         return new Functions(\array_map(
-            FunctionDeclaration::fromElement(...),
-            $this->element->getFunctions(),
+            static fn (GlobalFunction $function) => FunctionDeclaration::fromElement($function),
+            $this->element->getFunctions()
         ));
     }
 
@@ -115,14 +110,26 @@ class FileDeclaration implements \Stringable, DeclarationInterface
     public function getElements(): Elements
     {
         return new Elements(\array_map(
-            static fn(ClassLike $element): AbstractDeclaration => match (true) {
+            static fn (ClassLike $element) => match (true) {
                 $element instanceof ClassType => ClassDeclaration::fromElement($element),
                 $element instanceof InterfaceType => InterfaceDeclaration::fromElement($element),
                 $element instanceof TraitType => TraitDeclaration::fromElement($element),
-                $element instanceof EnumType => EnumDeclaration::fromElement($element),
+                $element instanceof EnumType => EnumDeclaration::fromElement($element)
             },
-            $this->element->getClasses(),
+            $this->element->getClasses()
         ));
+    }
+
+    /**
+     * @internal
+     */
+    public static function fromElement(PhpFile $element): static
+    {
+        $file = new static();
+
+        $file->element = $element;
+
+        return $file;
     }
 
     /**
@@ -136,10 +143,5 @@ class FileDeclaration implements \Stringable, DeclarationInterface
     public function render(): string
     {
         return $this->__toString();
-    }
-
-    public function __toString(): string
-    {
-        return (new Printer())->print($this);
     }
 }
