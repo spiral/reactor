@@ -3,6 +3,12 @@
     "type": "library",
     "description": "Reactor: Code Scaffolding",
     "license": "MIT",
+    "funding": [
+        {
+            "type": "github",
+            "url": "https://github.com/sponsors/spiral"
+        }
+    ],
     "homepage": "https://spiral.dev",
     "support": {
         "issues": "https://github.com/spiral/framework/issues",
@@ -15,11 +21,11 @@
         },
         {
             "name": "Pavel Butchnev (butschster)",
-            "email": "pavel.buchnev@spiralscout.com"
+            "homepage": "https://github.com/butschster"
         },
         {
             "name": "Aleksei Gagarin (roxblnfk)",
-            "email": "alexey.gagarin@spiralscout.com"
+            "homepage": "https://github.com/roxblnfk"
         },
         {
             "name": "Maksim Smakouz (msmakouz)",
@@ -28,15 +34,15 @@
     ],
     "require": {
         "php": ">=8.1",
-        "spiral/files": "^3.13.1",
+        "spiral/files": "^3.18",
         "doctrine/inflector": "^1.4|^2.0",
-        "nette/php-generator": "^4.1.2"
+        "nette/php-generator": "^4.1.7"
     },
     "require-dev": {
-        "phpunit/phpunit": "^10.1",
-        "mockery/mockery": "^1.5",
+        "phpunit/phpunit": "^10.5.41",
+        "mockery/mockery": "^1.6.12",
         "psr/container": "^1.1|^2.0",
-        "vimeo/psalm": "^5.9"
+        "vimeo/psalm": "^6.0"
     },
     "autoload": {
         "psr-4": {
@@ -50,7 +56,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "3.13.x-dev"
+            "dev-master": "3.18.x-dev"
         }
     },
     "config": {

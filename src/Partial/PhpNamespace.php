@@ -10,6 +10,7 @@ use Nette\PhpGenerator\EnumType;
 use Nette\PhpGenerator\InterfaceType;
 use Nette\PhpGenerator\PhpNamespace as NettePhpNamespace;
 use Nette\PhpGenerator\TraitType;
+use Spiral\Reactor\AbstractDeclaration;
 use Spiral\Reactor\AggregableInterface;
 use Spiral\Reactor\Aggregator\Elements;
 use Spiral\Reactor\ClassDeclaration;
@@ -34,9 +35,16 @@ final class PhpNamespace implements NamedInterface, AggregableInterface, \String
         $this->element = new NettePhpNamespace($name);
     }
 
-    public function __toString(): string
+    /**
+     * @internal
+     */
+    public static function fromElement(NettePhpNamespace $element): self
     {
-        return $this->element->__toString();
+        $namespace = new self($element->getName());
+
+        $namespace->element = $element;
+
+        return $namespace;
     }
 
     public function hasBracketedSyntax(): bool
@@ -70,7 +78,9 @@ final class PhpNamespace implements NamedInterface, AggregableInterface, \String
         return $this;
     }
 
-    /** @return string[] */
+    /**
+     * @return string[]
+     */
     public function getUses(string $of = NettePhpNamespace::NameNormal): array
     {
         return $this->element->getUses($of);
@@ -94,13 +104,13 @@ final class PhpNamespace implements NamedInterface, AggregableInterface, \String
     public function getElements(): Elements
     {
         return new Elements(\array_map(
-            static fn (ClassLike $element) => match (true) {
+            static fn(ClassLike $element): AbstractDeclaration => match (true) {
                 $element instanceof ClassType => ClassDeclaration::fromElement($element),
                 $element instanceof InterfaceType => InterfaceDeclaration::fromElement($element),
                 $element instanceof TraitType => TraitDeclaration::fromElement($element),
-                $element instanceof EnumType => EnumDeclaration::fromElement($element)
+                $element instanceof EnumType => EnumDeclaration::fromElement($element),
             },
-            $this->element->getClasses()
+            $this->element->getClasses(),
         ));
     }
 
@@ -123,20 +133,13 @@ final class PhpNamespace implements NamedInterface, AggregableInterface, \String
     /**
      * @internal
      */
-    public static function fromElement(NettePhpNamespace $element): self
-    {
-        $namespace = new self($element->getName());
-
-        $namespace->element = $element;
-
-        return $namespace;
-    }
-
-    /**
-     * @internal
-     */
     public function getElement(): NettePhpNamespace
     {
         return $this->element;
+    }
+
+    public function __toString(): string
+    {
+        return $this->element->__toString();
     }
 }
